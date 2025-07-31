@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
-import CaixasResumo from "./Tela_Inicial";
+import CaixasResumo from "./CaixaResumo";
+import NovaPessoa from "./NovaPessoa";
 
 function App() {
   const caixasDeInformacao = [
@@ -28,6 +29,7 @@ function App() {
 
   return (
     <div className="app">
+      <NovaPessoa />
       <CaixasResumo caixas={caixasDeInformacao} />
     </div>
   );
