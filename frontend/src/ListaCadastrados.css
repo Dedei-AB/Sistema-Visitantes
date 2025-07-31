@@ -1,0 +1,31 @@
+* {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.container {
+  padding: 1rem;
+  min-height: 6rem;
+  width: 30%;
+  background-color: #ffebee;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.visitante {
+  background-color: #ffd3da;
+  padding: 1px;
+}
+
+.arrow {
+  transition: transform 0.3s;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+ul {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+}
