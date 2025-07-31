@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import CaixasResumo from "./Tela_Inicial";
+import CaixasResumo from "./Tela_Inicial";zz
 
 function App() {
   const caixasDeInformacao = [
