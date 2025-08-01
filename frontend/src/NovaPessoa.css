@@ -44,3 +44,22 @@
   align-items: center;
   text-align: center;
 }
+.boxAlert {
+  background-color: aliceblue;
+  height: 20vh;
+  width: 20vw;
+  border: 1px solid;
+  border: none;
+  border-radius: 10px;
+}
+.bottomAlert {
+  background-color: rgb(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
