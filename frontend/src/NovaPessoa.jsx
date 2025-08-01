@@ -6,13 +6,30 @@ export default function NovaPessoa({ children, onClick, ...props }) {
     const button = e.currentTarget;
     const ripple = document.createElement("span");
     ripple.className = "ripple";
+
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + "px";
+
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+
+    button.appendChild(ripple);
+
+    ripple.addEventListener("animationend", () => {
+      ripple.remove();
+    });
+
+    if (onClick) onClick(e);
   };
   return (
     <>
       <div className="caixa-resumo">
-        <button className="AdicionarBtn1">
+        <button className="AdicionarBtn1" onClick={handleClick} {...props}>
           <strong className="strongBtn">
-            Nova Pessoa
+            Nova Pessoa -
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

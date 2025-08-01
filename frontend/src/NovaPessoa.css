@@ -1,13 +1,17 @@
 .AdicionarBtn1 {
   flex: 1;
   min-width: 200px;
-  background-color: #e0f7fa;
+  background-color: #573fc4;
   border: 0px;
   border-radius: 10px;
   padding: 16px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease-in-out;
+  color: aliceblue;
+
+  position: relative;
+  overflow: hidden;
 }
 .AdicionarBtn1:hover {
   transform: scale(1.06);
@@ -18,7 +22,7 @@
   background: rgba(255, 255, 255, 0.6);
   border-radius: 50%;
   transform: scale(0);
-  animation: ripple-animation 6000ms linear;
+  animation: ripple-animation 600ms linear;
 }
 
 @keyframes ripple-animation {
