@@ -102,11 +102,13 @@ input[type="time"] {
   border: none;
   padding: 5px;
   border-radius: 4px;
+  cursor: pointer;
   border-top-left-radius: 10px;
 }
 
 input[type="time"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
+  cursor: pointer;
 }
 
 input[type="time"]:hover {
@@ -117,10 +119,12 @@ input[type="date"] {
   background-color: #555555;
   border: none;
   padding: 5px;
+  cursor: pointer;
   border-radius: 4px;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
+  cursor: pointer;
 }
 
 input[type="date"]:hover {

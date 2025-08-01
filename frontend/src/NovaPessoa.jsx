@@ -93,7 +93,10 @@ export default function NovaPessoa({ children, onClick, ...props }) {
 
                 <button
                   className="Close"
-                  onClick={() => setMostrarAlert(false)}
+                  onClick={() => {
+                    setMostrarAlert(false);
+                    handleClick(e);
+                  }}
                 >
                   <strong className="x">x</strong>
                 </button>
