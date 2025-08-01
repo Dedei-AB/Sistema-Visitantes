@@ -20,7 +20,7 @@ db.connect((err) => {
 });
 
 app.get("/objetos", (req, res) => {
-  db.query("SELECT * FROM objetos", (err, results) => {
+  db.query("SELECT * FROM pessoa", (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(results);
   });
