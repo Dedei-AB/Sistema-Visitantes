@@ -1,8 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./NovaPessoa.css";
 
 export default function NovaPessoa({ children, onClick, ...props }) {
   const [mostrarAlert, setMostrarAlert] = useState(false);
+  const [dataHoje, setDataHoje] = useState("");
+  const [horaExata, setHoraExata] = useState("");
+
+  function pegarHora() {
+    const agora = new Date();
+    const hora = String(agora.getHours()).padStart(2, "0");
+    const minutos = String(agora.getMinutes()).padStart(2, "0");
+    return `${hora}:${minutos}`;
+  }
+
+  useEffect(() => {
+    function catchDay() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+    setDataHoje(catchDay());
+  }, []);
 
   const handleClick = (e) => {
     const button = e.currentTarget;
@@ -35,6 +55,7 @@ export default function NovaPessoa({ children, onClick, ...props }) {
           onClick={(e) => {
             handleClick(e);
             setMostrarAlert(true);
+            setHoraExata(pegarHora());
           }}
           {...props}
         >
@@ -54,7 +75,30 @@ export default function NovaPessoa({ children, onClick, ...props }) {
         </button>
         {mostrarAlert && (
           <div className="bottomAlert">
-            <div className="boxAlert">cccccccccccccccccccccc</div>
+            <div className="boxAlert">
+              <nav>
+                <input
+                  type="time"
+                  value={horaExata}
+                  onClick={handleClick}
+                  onChange={(e) => setHoraExata(e.target.value)}
+                />
+
+                <input
+                  type="date"
+                  value={dataHoje}
+                  onClick={handleClick}
+                  onChange={(e) => setDataHoje(e.target.value)}
+                />
+
+                <button
+                  className="Close"
+                  onClick={() => setMostrarAlert(false)}
+                >
+                  <strong className="x">x</strong>
+                </button>
+              </nav>
+            </div>
           </div>
         )}
       </div>

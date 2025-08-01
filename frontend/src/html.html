@@ -1,62 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <style>
-    button {
-      position: relative;
-      overflow: hidden;
-      background-color: #6200ee;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 8px;
-    }
-
-    .ripple {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 50%;
-      transform: scale(0);
-      animation: ripple-animation 600ms linear;
-      pointer-events: none;
-    }
-
-    @keyframes ripple-animation {
-      to {
-        transform: scale(4);
-        opacity: 0;
+    <title>Ripple em Input</title>
+    <style>
+      body {
+        background-color: #222;
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        gap: 20px;
+        padding: 40px;
       }
-    }
-  </style>
+
+      .ripple-container {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        border: 1px solid white;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: #333;
+      }
+
+      .ripple-container input {
+        background: transparent;
+        color: white;
+        border: none;
+        outline: none;
+        padding: 10px;
+      }
+
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.4);
+        transform: scale(0);
+        animation: ripple-animation 0.6s linear;
+        pointer-events: none;
+      }
+
+      @keyframes ripple-animation {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
   <body>
-    <button onclick="createRipple(event)">Clique Aqui</button>
+    <div class="ripple-container" onclick="aplicarRipple(event)">
+      <input type="date" />
+    </div>
+
+    <div class="ripple-container" onclick="aplicarRipple(event)">
+      <input type="time" />
+    </div>
 
     <script>
-      function createRipple(event) {
-        const button = event.currentTarget;
+      function aplicarRipple(e) {
+        const container = e.currentTarget;
 
         const ripple = document.createElement("span");
-        ripple.classList.add("ripple");
+        ripple.className = "ripple";
 
-        const rect = button.getBoundingClientRect();
+        const rect = container.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
         ripple.style.width = ripple.style.height = size + "px";
 
-        const x = event.clientX - rect.left - size / 2;
-        const y = event.clientY - rect.top - size / 2;
-
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
         ripple.style.left = `${x}px`;
         ripple.style.top = `${y}px`;
 
-        button.appendChild(ripple);
+        container.appendChild(ripple);
 
-        // Remove depois da animação
         ripple.addEventListener("animationend", () => {
           ripple.remove();
         });

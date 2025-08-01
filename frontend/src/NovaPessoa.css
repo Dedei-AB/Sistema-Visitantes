@@ -51,6 +51,7 @@
   border: 1px solid;
   border: none;
   border-radius: 10px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
 }
 .bottomAlert {
   background-color: rgb(0, 0, 0, 0.5);
@@ -62,4 +63,66 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  color: aliceblue;
+  background-color: #333;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.Close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: #322f41 1px;
+  border-radius: 6px;
+  background-color: #212025;
+  cursor: pointer;
+  border-top-right-radius: 10px;
+}
+.x {
+  color: aliceblue;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+  padding: 5px;
+}
+
+input[type="time"] {
+  color: white;
+  background-color: #555555;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  border-top-left-radius: 10px;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+input[type="time"]:hover {
+  transform: scale(1.02);
+}
+input[type="date"] {
+  color: white;
+  background-color: #555555;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+input[type="date"]:hover {
+  transform: scale(1.02);
 }
