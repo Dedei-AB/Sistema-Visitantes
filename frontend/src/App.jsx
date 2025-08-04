@@ -22,6 +22,20 @@ function App() {
       horaEntrada: "09:45",
       observacao: "Cabelo castanho",
     },
+    {
+      id: 4,
+      nome: "Lorenzo cordeiro",
+      cpf: "222.654.123-00",
+      horaEntrada: "10:20",
+      observacao: "Careca",
+    },
+    {
+      id: 5,
+      nome: "Edina Silva",
+      cpf: "2.654.333-00",
+      horaEntrada: "09:45",
+      observacao: "Cabelo castanho",
+    },
   ]);
 
   const removerPessoa = (id) => {
