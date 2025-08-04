@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import InputMask from "react-input-mask";
+
 import "./NovaPessoa.css";
 
 export default function NovaPessoa({ children, onClick, ...props }) {
   const [mostrarAlert, setMostrarAlert] = useState(false);
   const [dataHoje, setDataHoje] = useState("");
   const [horaExata, setHoraExata] = useState("");
-  const [tipoDocumento, setTipoDocumento] = useState("CPF"); // ✅ Estado para o tipo selecionado
+  const [tipoDocumento, setTipoDocumento] = useState("CPF");
 
   function pegarHora() {
     const agora = new Date();
@@ -131,7 +131,8 @@ export default function NovaPessoa({ children, onClick, ...props }) {
                 </div>
               </div>
               <div className="PhoneArea">
-                <InputMask></InputMask>
+                <label htmlFor="telefone">Telefone -</label>
+                <br />
               </div>
             </div>
           </div>
