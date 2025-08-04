@@ -10,13 +10,17 @@ function App() {
       nome: "Maria Macedo",
       cpf: "111.456.999-00",
       horaEntrada: "09:15",
+      observacao: "Cabelo castanho",
     },
-    { id: 2, nome: "Maria Souza", cpf: "222.654.111-00", horaEntrada: "09:45" },
+    { id: 2, nome: "Maria Souza", cpf: "222.654.111-00", horaEntrada: "09:45",
+      observacao: "Cabelo loiro",
+     },
     {
       id: 3,
       nome: "Fulano Oliveira",
       cpf: "222.654.333-00",
       horaEntrada: "09:45",
+      observacao: "Cabelo castanho",
     },
   ]);
 
