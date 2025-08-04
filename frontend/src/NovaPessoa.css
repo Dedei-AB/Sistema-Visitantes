@@ -132,4 +132,27 @@ input[type="date"]:hover {
 }
 
 .CPFInput {
+  margin: 20px;
+}
+.SelectType {
+  display: flex;
+}
+
+.SelectArea {
+  margin-top: 20px;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.SelectRG {
+  margin-right: 20px;
+}
+
+.SelectCPF {
+  margin-right: 30px;
+}
+
+#CpfLabel {
+  margin-left: 10px;
 }

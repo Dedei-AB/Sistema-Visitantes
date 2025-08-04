@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import InputMask from "react-input-mask";
 import "./NovaPessoa.css";
 
 export default function NovaPessoa({ children, onClick, ...props }) {
   const [mostrarAlert, setMostrarAlert] = useState(false);
   const [dataHoje, setDataHoje] = useState("");
   const [horaExata, setHoraExata] = useState("");
+  const [tipoDocumento, setTipoDocumento] = useState("CPF"); // ✅ Estado para o tipo selecionado
 
   function pegarHora() {
     const agora = new Date();
@@ -93,7 +95,7 @@ export default function NovaPessoa({ children, onClick, ...props }) {
 
                 <button
                   className="Close"
-                  onClick={() => {
+                  onClick={(e) => {
                     setMostrarAlert(false);
                     handleClick(e);
                   }}
@@ -101,9 +103,35 @@ export default function NovaPessoa({ children, onClick, ...props }) {
                   <strong className="x">x</strong>
                 </button>
               </nav>
-              <div className="CPFInput">
-                <label htmlFor="">CPF: </label>
-                <input type="text" />
+              <div className="SelectType">
+                <div className="CPFInput">
+                  <label htmlFor="inputDoc">{tipoDocumento} -</label> <br />
+                  <input type="text" id="inputDoc" />
+                </div>
+                <div className="SelectArea">
+                  <label>CPF</label>
+                  <input
+                    className="SelectCPF"
+                    type="radio"
+                    name="typePerson"
+                    value="CPF"
+                    checked={tipoDocumento === "CPF"}
+                    onChange={(e) => setTipoDocumento(e.target.value)}
+                  />
+
+                  <label>RG</label>
+                  <input
+                    className="SelectRG"
+                    type="radio"
+                    name="typePerson"
+                    value="RG"
+                    checked={tipoDocumento === "RG"}
+                    onChange={(e) => setTipoDocumento(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="PhoneArea">
+                <InputMask></InputMask>
               </div>
             </div>
           </div>
