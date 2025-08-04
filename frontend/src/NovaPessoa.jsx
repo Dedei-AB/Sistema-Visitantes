@@ -101,6 +101,10 @@ export default function NovaPessoa({ children, onClick, ...props }) {
                   <strong className="x">x</strong>
                 </button>
               </nav>
+              <div className="CPFInput">
+                <label htmlFor="">CPF: </label>
+                <input type="text" />
+              </div>
             </div>
           </div>
         )}

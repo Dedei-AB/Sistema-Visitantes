@@ -130,3 +130,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 input[type="date"]:hover {
   transform: scale(1.02);
 }
+
+.CPFInput {
+}
