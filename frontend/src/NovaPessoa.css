@@ -46,8 +46,8 @@
 }
 .boxAlert {
   background-color: aliceblue;
-  height: 20vh;
-  width: 20vw;
+  height: auto;
+  width: auto;
   border: 1px solid;
   border: none;
   border-radius: 10px;
@@ -145,18 +145,48 @@ input[type="date"]:hover {
   align-items: center;
 }
 
-.SelectRG {
-  margin-right: 20px;
-}
-
-.SelectCPF {
-  margin-right: 30px;
-}
-
 #CpfLabel {
   margin-left: 10px;
 }
 
 .PhoneArea {
+  margin-top: 20px;
+}
+.CabrasName {
+  display: flex;
   margin-left: 20px;
+  margin-top: 20px;
+}
+
+.colun {
+  display: flex;
+  flex-direction: column;
+}
+
+#nome {
+  width: 6vw;
+  margin-right: 30px;
+}
+
+#sobrenome {
+  margin-right: 20px;
+}
+
+#inputDoc {
+  margin-right: 10px;
+  width: 6vw;
+}
+
+.obs {
+}
+
+.Observações {
+  width: 6rem;
+  margin-left: 20px;
+}
+
+#Detalhes {
+  padding: 0;
+  height: 10vh;
+  width: 13vw;
 }

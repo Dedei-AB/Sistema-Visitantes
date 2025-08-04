@@ -85,14 +85,12 @@ export default function NovaPessoa({ children, onClick, ...props }) {
                   onClick={handleClick}
                   onChange={(e) => setHoraExata(e.target.value)}
                 />
-
                 <input
                   type="date"
                   value={dataHoje}
                   onClick={handleClick}
                   onChange={(e) => setDataHoje(e.target.value)}
                 />
-
                 <button
                   className="Close"
                   onClick={(e) => {
@@ -103,36 +101,35 @@ export default function NovaPessoa({ children, onClick, ...props }) {
                   <strong className="x">x</strong>
                 </button>
               </nav>
-              <div className="SelectType">
-                <div className="CPFInput">
-                  <label htmlFor="inputDoc">{tipoDocumento} -</label> <br />
-                  <input type="text" id="inputDoc" />
-                </div>
-                <div className="SelectArea">
-                  <label>CPF</label>
-                  <input
-                    className="SelectCPF"
-                    type="radio"
-                    name="typePerson"
-                    value="CPF"
-                    checked={tipoDocumento === "CPF"}
-                    onChange={(e) => setTipoDocumento(e.target.value)}
-                  />
+              <div className="CabrasName">
+                <div className="colun">
+                  <label htmlFor="">Nome - </label>
 
-                  <label>RG</label>
-                  <input
-                    className="SelectRG"
-                    type="radio"
-                    name="typePerson"
-                    value="RG"
-                    checked={tipoDocumento === "RG"}
-                    onChange={(e) => setTipoDocumento(e.target.value)}
-                  />
+                  <input type="text" id="nome" />
+                </div>
+
+                <div className="colun">
+                  <label htmlFor="">Sobrenome - </label>
+                  <input type="text" id="sobrenome" />
                 </div>
               </div>
-              <div className="PhoneArea">
-                <label htmlFor="telefone">Telefone -</label>
-                <br />
+
+              <div className="SelectType">
+                <div className="CPFInput">
+                  <label htmlFor="inputDoc">CPF -</label>
+                  <br />
+                  <input type="text" id="inputDoc" />
+                </div>
+                <div className="PhoneArea">
+                  <label htmlFor="telefone">Telefone -</label>
+                  <br />
+                  <input type="text" />
+                </div>
+              </div>
+              <div className="Observações">
+                <nav className="obs">Observações</nav>
+                <textarea name="" id="Detalhes"></textarea>
+                <button>hell yeahhhhhh</button>
               </div>
             </div>
           </div>
