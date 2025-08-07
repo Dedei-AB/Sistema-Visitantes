@@ -1,35 +1,21 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <title>Exemplo Radio</title>
+    <title>Formato CPF</title>
+    <script src="script.js"></script>
   </head>
   <body>
-    <h3>Escolha um documento:</h3>
-
-    <input type="radio" id="cpf" name="documento" value="CPF" checked />
-    <label for="cpf">CPF</label>
-
-    <input type="radio" id="rg" name="documento" value="RG" />
-    <label for="rg">RG</label>
-
-    <input type="radio" id="cnh" name="documento" value="CNH" />
-    <label for="cnh">CNH</label>
-
-    <br /><br />
-
-    <label id="labelDocumento" for="inputDocumento">CPF -</label>
-    <input type="text" id="inputDocumento" />
-
-    <script>
-      const radios = document.querySelectorAll('input[name="documento"]');
-      const labelDocumento = document.getElementById("labelDocumento");
-
-      radios.forEach((radio) => {
-        radio.addEventListener("change", () => {
-          labelDocumento.textContent = `${radio.value} -`;
-        });
-      });
-    </script>
+    <h3>Digite seu CPF:</h3>
+    <form name="cadastro">
+      <input
+        type="text"
+        name="cpf"
+        \
+        pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+        \
+        title="Digite um CPF no formato: xxx.xxx.xxx-xx"
+      />
+      <input type="submit" value="Verificar" />
+    </form>
   </body>
 </html>
