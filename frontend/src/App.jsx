@@ -5,15 +5,14 @@ import ListaPresentes from "./ListaPresentes";
 
 function App() {
   const [pessoasDentro, setPessoasDentro] = useState([
-    {
-      id: 1,
-      nome: "Maria Macedo",
+    {id: 1, nome: "Maria Eduarda Macedo de Souza",
       cpf: "111.456.999-00",
       horaEntrada: "09:15",
-      observacao: "Cabelo castanho",
+      observacao: "Foi falar com ...",
+      telefone: "99813-4721"
     },
     { id: 2, nome: "Maria Souza", cpf: "222.654.111-00", horaEntrada: "09:45",
-      observacao: "Cabelo loiro",
+      observacao: "Cabelo loiro",telefone: "99813-4721"
      },
     {
       id: 3,
@@ -21,6 +20,7 @@ function App() {
       cpf: "222.654.333-00",
       horaEntrada: "09:45",
       observacao: "Cabelo castanho",
+      telefone: "99813-4721"
     },
     {
       id: 4,
@@ -28,13 +28,7 @@ function App() {
       cpf: "222.654.123-00",
       horaEntrada: "10:20",
       observacao: "Careca",
-    },
-    {
-      id: 5,
-      nome: "Edina Silva",
-      cpf: "2.654.333-00",
-      horaEntrada: "09:45",
-      observacao: "Cabelo castanho",
+      telefone: "99813-4721"
     },
   ]);
 

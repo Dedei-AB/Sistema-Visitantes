@@ -2,11 +2,10 @@
   background-color: #333;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  min-width: 550px;
+  box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);
+  min-width: 500px;
   margin-right: 80px;
   margin-top: 32px;
-  box-shadow: 0px 0px 3px black;
 }
 
 .titulo{
@@ -26,23 +25,30 @@
 .lista-pessoas{
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 /*----------------- Conteiner com informações da pessoa ------------ */
 .caixa-pessoa{
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
   display: flex;
-  justify-content: space-between;
-  width: 500px;
-  height: 100px;
+  flex-direction: column;
+  width: 100%;
   align-items: flex-start;
   background-color: rgb(255, 255, 255);
   border: 1px solid rgb(29, 26, 26);
   border-radius: 8px;
-  padding: 16px 20px;
+  padding: 0;
+  overflow: hidden;
 }
 .caixa-pessoa:hover {  
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.linha-horizontal{
+  display: flex;
+  justify-content: space-between;
+  gap: 1px;
 }
 
 /*----------------- Botao Registrar Saida----------------------- */
@@ -53,8 +59,8 @@
   padding: 5px 10px;
   border-radius: 10px;
   cursor: pointer;
-  font-weight: 500;
-  transition: backround-color 2s ease;
+  font-weight: 500px;
+  font-size: 14px;
 }
 .botao-saida:hover {
   background-color: #630101;
@@ -69,5 +75,21 @@
   border-radius: 20px;
   margin-bottom: 20px;
   outline: none;
-  transition: border-color 0.2s ease;
+}
+
+/*-----------------Topo da caixa de informações----------------------- */
+.topo-dados{
+  width: 100%;
+  background-color: #d1d1d1;
+  padding: 1px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+}
+.hora-entrada{
+  font-weight: bold;
+  color: #333;
+  font-size: 15px;
 }
