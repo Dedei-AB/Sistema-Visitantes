@@ -21,11 +21,10 @@ export default function PessoasPresentes({ pessoas, onSaida }) {
         {barraPesquisa.map((pessoa) => (
           <div key={pessoa.id} className="caixa-pessoa">
             <div className="topo-dados">
-              <span className="hora-entrada">Entrada: {pessoa.horaEntrada}</span>
+              <span className="hora-entrada">Horário de entrada: {pessoa.horaEntrada}</span>
               <button onClick={() => onSaida(pessoa.id)} className="botao-saida">Registrar Saída</button>
             </div>
             <div className="dados-pessoa">
-
               <p className="nome"><strong>
               <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -25,7 +25,7 @@
 .lista-pessoas{
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 /*----------------- Container com informações da pessoa ------------ */
@@ -99,7 +99,7 @@
 }
 
 .nome{
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: #222;
 }
