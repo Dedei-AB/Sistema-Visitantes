@@ -1,29 +1,14 @@
-// app.js
-import express from "express";
-import mysql from "mysql2";
-
+const express = require("express");
 const app = express();
+const db = require("./db");
+const objetoRoutes = require("./routes/visitas");
 
-const db = mysql.createConnection({
-  host: "10.1.150.10", // IP do servidor Docker
-  user: "Admin",
-  password: "Mudar@1234",
-  database: "sistemavisita",
+app.use(express.json());
+
+app.use(express.json());
+app.use("/visitas", objetoRoutes);
+
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`Servidor backend rodando na porta ${PORT}`);
 });
-
-db.connect((err) => {
-  if (err) {
-    console.error("Erro ao conectar ao MySQL:", err);
-    return;
-  }
-  console.log("Conectado ao MySQL!");
-});
-
-app.get("/objetos", (req, res) => {
-  db.query("SELECT * FROM pessoa", (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
-  });
-});
-
-app.listen(3000, () => console.log("API rodando na porta 3000"));

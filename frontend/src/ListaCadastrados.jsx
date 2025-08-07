@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { useVisitas } from "./Dados";
 import "./ListaCadastrados.css";
 
 function ListaCadastrados() {
   const [aberto, setAberto] = useState(false);
+  const { visita, setVisita } = useVisitas();
 
   return (
-    <div className="container">
+    <div className="container-cadastro">
       <h1>Quantidade de visitas cadastradas:</h1>
       <p>30</p>
 
