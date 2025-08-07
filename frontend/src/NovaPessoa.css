@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+
 .AdicionarBtn1 {
   flex: 1;
   min-width: 200px;
@@ -182,7 +184,7 @@ h3 {
 }
 
 .obs {
-  width: 6rem;
+  width: 5.5rem;
 }
 
 .Observações {
@@ -256,12 +258,14 @@ input {
 }
 
 p {
+  font-family: "Noto Sans", sans-serif;
   margin-left: 20px;
   margin-right: 20px;
   margin-bottom: 10px;
 }
 
 #RegistrarSaida {
+  font-family: "Noto Sans", sans-serif;
   cursor: pointer;
   padding: 7px;
   border: none;
