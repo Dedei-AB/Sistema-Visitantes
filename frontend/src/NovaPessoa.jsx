@@ -6,7 +6,58 @@ export default function NovaPessoa({ children, onClick, ...props }) {
   const [mostrarAlert, setMostrarAlert] = useState(false);
   const [dataHoje, setDataHoje] = useState("");
   const [horaExata, setHoraExata] = useState("");
-  const [tipoDocumento, setTipoDocumento] = useState("CPF");
+  const [cpf, setCpf] = useState("");
+  const [telefone, setTelefone] = useState("");
+
+  const formatarTelefone = (valor) => {
+    const numeros = valor.replace(/\D/g, "").slice(0, 11); // Máximo 11 dígitos
+
+    if (numeros.length === 0) return "";
+
+    if (numeros.length <= 2) {
+      return `(${numeros}`;
+    }
+
+    if (numeros.length <= 7) {
+      return `(${numeros.slice(0, 2)}) ${numeros.slice(2)}`;
+    }
+
+    if (numeros.length <= 11) {
+      return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 3)} ${numeros.slice(
+        3,
+        7
+      )}-${numeros.slice(7)}`;
+    }
+
+    return numeros;
+  };
+
+  const handleChange3 = (e) => {
+    const telefoneFormatado = formatarTelefone(e.target.value);
+    setTelefone(telefoneFormatado);
+  };
+
+  const formatarCPF = (valor) => {
+    const numeros = valor.replace(/\D/g, "").slice(0, 11);
+    let formatado = numeros;
+
+    if (numeros.length > 3) {
+      formatado = numeros.slice(0, 3) + "." + numeros.slice(3);
+    }
+    if (numeros.length > 6) {
+      formatado = formatado.slice(0, 7) + "." + formatado.slice(7);
+    }
+    if (numeros.length > 9) {
+      formatado = formatado.slice(0, 11) + "-" + formatado.slice(11);
+    }
+
+    return formatado;
+  };
+
+  const handleChange2 = (e) => {
+    const valorFormatado = formatarCPF(e.target.value);
+    setCpf(valorFormatado);
+  };
 
   function pegarHora() {
     const agora = new Date();
@@ -118,12 +169,24 @@ export default function NovaPessoa({ children, onClick, ...props }) {
                 <div className="CPFInput">
                   <label htmlFor="inputDoc">CPF -</label>
                   <br />
-                  <input type="number" id="inputDoc" />
+                  <input
+                    type="text"
+                    id="inputDoc"
+                    value={cpf}
+                    onChange={handleChange2}
+                    maxLength={14} // xxx.xxx.xxx-xx = 14 caracteres
+                  />
                 </div>
                 <div className="PhoneArea">
                   <label htmlFor="telefone">Telefone -</label>
                   <br />
-                  <input type="numer" />
+                  <input
+                    type="text"
+                    id="telefone"
+                    value={telefone}
+                    onChange={handleChange3}
+                    maxLength={17}
+                  />
                 </div>
               </div>
 
