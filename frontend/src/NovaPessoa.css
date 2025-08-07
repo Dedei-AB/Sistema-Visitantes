@@ -178,15 +178,58 @@ input[type="date"]:hover {
 }
 
 .obs {
+  width: 6rem;
 }
 
 .Observações {
+  display: flex;
   width: 6rem;
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 #Detalhes {
+  margin-bottom: 20px;
+  margin-right: 20px;
   padding: 0;
   height: 10vh;
   width: 13vw;
+}
+
+.caixaObs {
+  display: flex;
+  flex-direction: column;
+}
+
+.enviar {
+  cursor: pointer;
+  border: none;
+  background-color: #71c56a;
+  border-radius: 10px;
+  color: aliceblue;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 4vh;
+  width: 2vw;
+}
+
+.enviar:hover {
+  transform: scale(1.05);
+}
+
+.imagemAdd {
+  height: 20px;
+  width: 20px;
+}
+
+.tadificil {
+  display: flex;
+  margin-left: 10px;
+  flex-direction: column-reverse;
+  height: 13vh;
+  width: 7vw;
+}
+
+input {
+  border-radius: 5px;
 }
