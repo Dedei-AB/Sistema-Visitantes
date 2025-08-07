@@ -195,7 +195,9 @@ export default function NovaPessoa({ children, onClick, ...props }) {
                   <nav className="obs">Observações</nav>
                   <textarea name="" id="Detalhes"></textarea>
                 </div>
+
                 <div className="tadificil">
+                  <h3>enviar</h3>
                   <button className="enviar">
                     <svg
                       className="imagemAdd"
@@ -211,6 +213,18 @@ export default function NovaPessoa({ children, onClick, ...props }) {
                     </svg>
                   </button>
                 </div>
+              </div>
+              <div className="SaidaInfo">
+                <strong>Saída</strong>
+              </div>
+              <p>
+                Caso a pessoa tenha entrado e já tiver saído: <br />
+                Aperte o botão de "<strong>Registrar Saída</strong>"
+                <br />
+                isso fará com que já seja regsitrada a saída da pessoa.
+              </p>
+              <div className="hellYeah">
+                <button id="RegistrarSaida">Registrar Saída</button>
               </div>
             </div>
           </div>
