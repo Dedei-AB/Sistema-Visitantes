@@ -28,7 +28,7 @@
   gap: 8px;
 }
 
-/*----------------- Conteiner com informações da pessoa ------------ */
+/*----------------- Container com informações da pessoa ------------ */
 .caixa-pessoa{
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
   display: flex;
@@ -56,11 +56,11 @@
   background-color: #c72c2c;
   color: #fff;
   border: none;
-  padding: 5px 10px;
+  padding: 3px 10px;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 500px;
-  font-size: 14px;
+  font-size: 13px;
 }
 .botao-saida:hover {
   background-color: #630101;
@@ -75,6 +75,10 @@
   border-radius: 20px;
   margin-bottom: 20px;
   outline: none;
+}
+.campo-pesquisa:focus {
+  border-color: #268bff;
+  box-shadow: 0 0 0 5px rgba(1, 90, 192, 0.2)
 }
 
 /*-----------------Topo da caixa de informações----------------------- */
@@ -92,4 +96,10 @@
   font-weight: bold;
   color: #333;
   font-size: 15px;
+}
+
+.nome{
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
 }
