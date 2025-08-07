@@ -197,7 +197,7 @@ export default function NovaPessoa({ children, onClick, ...props }) {
                 </div>
 
                 <div className="tadificil">
-                  <h2>enviar</h2>
+                  <h3>enviar</h3>
                   <button className="enviar">
                     <svg
                       className="imagemAdd"
