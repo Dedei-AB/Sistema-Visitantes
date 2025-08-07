@@ -149,6 +149,10 @@ input[type="date"]:hover {
   margin-left: 10px;
 }
 
+h2 {
+  margin-bottom: 10px;
+}
+
 .PhoneArea {
   margin-top: 20px;
 }
@@ -164,7 +168,7 @@ input[type="date"]:hover {
 }
 
 #nome {
-  width: 6vw;
+  width: 8vw;
   margin-right: 30px;
 }
 
@@ -174,7 +178,7 @@ input[type="date"]:hover {
 
 #inputDoc {
   margin-right: 10px;
-  width: 6vw;
+  width: 8vw;
 }
 
 .obs {
@@ -225,11 +229,54 @@ input[type="date"]:hover {
 .tadificil {
   display: flex;
   margin-left: 10px;
-  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   height: 13vh;
   width: 7vw;
 }
 
 input {
   border-radius: 5px;
+}
+
+.SaidaInfo {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #f1614e;
+  font-weight: bold;
+}
+.SaidaInfo::after,
+.SaidaInfo::before {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #555;
+  margin: 0px 20px 0px;
+}
+
+p {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+#RegistrarSaida {
+  cursor: pointer;
+  padding: 7px;
+  border: none;
+  border-radius: 10px;
+  background-color: #f1614e;
+  color: aliceblue;
+  margin-bottom: 20px;
+}
+#RegistrarSaida:hover {
+  transform: scale(1.05);
+}
+
+.hellYeah {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
