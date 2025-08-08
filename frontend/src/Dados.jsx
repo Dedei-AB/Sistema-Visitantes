@@ -5,7 +5,7 @@ const VisitasContext = createContext();
 export function VisitasProvider({ children }) {
   const [dado, setDado] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/visitas/andrei")
+    fetch("http://localhost:5000/visitas/pessoa_visita")
       .then((response) => response.json())
       .then((data) => {
         setDado(data);
@@ -16,7 +16,9 @@ export function VisitasProvider({ children }) {
   }, []);
 
   return (
-    <VisitasContext.Provider value={dado}>{children}</VisitasContext.Provider>
+    <VisitasContext.Provider value={{ visita: dado, setVisita: setDado }}>
+      {children}
+    </VisitasContext.Provider>
   );
 }
 

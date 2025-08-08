@@ -9,7 +9,7 @@ function ListaCadastrados() {
   return (
     <div className="container-cadastro">
       <h1>Quantidade de visitas cadastradas:</h1>
-      <p>30</p>
+      <p>{visita.length}</p>
 
       <h1
         onClick={() => setAberto(!aberto)}
@@ -30,16 +30,9 @@ function ListaCadastrados() {
       </h1>
 
       <ul style={{ display: aberto ? "block" : "none" }}>
-        <li>Adalberto</li>
-        <li>Ademir</li>
-        <li>Adriano</li>
-        <li>Agostinho</li>
-        <li>Alan</li>
-        <li>Alberto</li>
-        <li>Alexandre</li>
-        <li>Alfredo</li>
-        <li>Aloísio</li>
-        <li>Amadeu</li>
+        {visita.map((pessoa, index) => {
+          return <li key={index}>{pessoa.Nome}</li>;
+        })}
       </ul>
     </div>
   );
