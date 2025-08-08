@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import NovaPessoa from "./NovaPessoa";
 import ListaPresentes from "./ListaPresentes";
@@ -7,6 +7,39 @@ import ListaCadastrados from "./ListaCadastrados";
 import BuscaPorPessoas from "./BuscaPorPessoas";
 
 function App() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMousePosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  const xPercentage = (mousePosition.x / window.innerWidth) * 100;
+  const yPercentage = (mousePosition.y / window.innerHeight) * 100;
+
+  const angle =
+    (Math.atan2(
+      mousePosition.y - window.innerHeight / 2,
+      mousePosition.x - window.innerWidth / 2
+    ) *
+      180) /
+      Math.PI +
+    90;
+
+  const backgroundStyle = {
+    backgroundImage: `linear-gradient(${angle}deg, rgba(185, 67, 67, 1) 0%, rgba(255, 255, 255, 1) 100%)`,
+  };
+
   const [pessoasDentro, setPessoasDentro] = useState([
     {
       id: 1,
@@ -48,7 +81,7 @@ function App() {
 
   return (
     <VisitasProvider>
-      <div className="app-layout">
+      <div className="app-layout" style={backgroundStyle}>
         <div className="lado-esquerdo">
           <NovaPessoa />
           <div className="busca">
