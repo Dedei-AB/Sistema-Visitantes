@@ -39,7 +39,7 @@ function App() {
       observacao: "Careca",
       telefone: "99813-4721",
     },
-      ]);
+  ]);
 
   const removerPessoa = (id) => {
     setPessoasDentro((prev) => prev.filter((p) => p.id !== id));
