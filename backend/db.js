@@ -2,10 +2,10 @@
 const mysql = require("mysql2");
 
 const connection = mysql.createConnection({
-  host: "127.0.0.1", // ou nome do container no Docker (ex: 'db')
+  host: "10.1.150.10", // ou nome do container no Docker (ex: 'db')
   user: "root",
-  password: "Mudar@1234",
-  database: "mydb",
+  password: "root",
+  database: "sistemaVisita",
 });
 
 connection.connect((err) => {

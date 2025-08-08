@@ -3,14 +3,80 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+table {
+  width: 100%;
+  border-collapse: separate; /* IMPORTANTE para que o border-radius funcione */
+  border-spacing: 0; /* remove espaçamento entre células */
+  border: 2px solid #f9f9f9;
+  border-radius: 11px; /* borda arredondada da tabela */
+  font-family: Arial, sans-serif;
+  color: #222;
+  background-color: #f9f9f9;
+}
+
+thead {
+  background-color: #333;
+  color: #eee;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background-color: #333;
+}
+
+th,
+td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #f9f9f9;
+  text-align: left;
+}
+
+/* Arredondar cantos do cabeçalho e rodapé da tabela */
+
+thead th:first-child {
+  border-top-left-radius: 11px;
+}
+
+thead th:last-child {
+  border-top-right-radius: 11px;
+}
+
+tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+/* Cores alternadas */
+tbody tr:nth-child(even) {
+  background-color: #ddd;
+}
+
+tbody tr:hover {
+  background-color: #bbb;
+}
+
+ul {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+}
+
 .container-cadastro {
   padding: 3rem;
-  padding-right: 20rem;
   max-height: auto;
   margin-right: 80px;
-  background-color: #ffebee;
+  background-color: #333;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  color: #ffffff;
 }
 .visitante {
   background-color: #ffd3da;
@@ -25,9 +91,32 @@
 .arrow.rotate {
   transform: rotate(180deg);
 }
+.tabela-lista-cadastrados {
+  overflow-y: scroll;
+  max-height: 50vh;
+  display: flex;
+  background-color: #333;
+}
 
-ul {
-  list-style: none;
-  padding-left: 20px;
-  margin: 0;
+/* largura da barra */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px; /* para scroll horizontal */
+}
+
+/* fundo da barra (faixa onde a barra desliza) */
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+/* a própria barra (thumb) */
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: none; /* cria um espaço interno */
+}
+
+/* quando passa o mouse na barra */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
