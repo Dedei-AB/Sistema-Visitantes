@@ -20,6 +20,7 @@ thead {
 
 thead th {
   position: sticky;
+  z-index: 1;
   top: 0;
   background-color: #333;
 }
