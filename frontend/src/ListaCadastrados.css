@@ -8,7 +8,6 @@ table {
   border-collapse: separate; /* IMPORTANTE para que o border-radius funcione */
   border-spacing: 0; /* remove espaçamento entre células */
   border: 2px solid #f9f9f9;
-  border-radius: 11px; /* borda arredondada da tabela */
   font-family: Arial, sans-serif;
   color: #222;
   background-color: #f9f9f9;
@@ -33,14 +32,6 @@ td {
 }
 
 /* Arredondar cantos do cabeçalho e rodapé da tabela */
-
-thead th:first-child {
-  border-top-left-radius: 11px;
-}
-
-thead th:last-child {
-  border-top-right-radius: 11px;
-}
 
 tbody tr:last-child td:first-child {
   border-bottom-left-radius: 10px;
@@ -92,6 +83,7 @@ ul {
   transform: rotate(180deg);
 }
 .tabela-lista-cadastrados {
+  padding-right: 0.2rem;
   overflow-y: scroll;
   max-height: 50vh;
   display: flex;
@@ -100,7 +92,7 @@ ul {
 
 /* largura da barra */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
   height: 10px; /* para scroll horizontal */
 }
 
