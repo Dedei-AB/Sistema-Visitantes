@@ -5,10 +5,9 @@
   box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);
   min-width: 500px;
   margin-right: 80px;
-  margin-top: 32px;
 }
 
-.titulo{
+.titulo {
   font-size: 24px;
   font-weight: 600;
   color: #ffffff;
@@ -17,19 +16,19 @@
   text-align: center;
 }
 
-.nenhum-visitante{
+.nenhum-visitante {
   color: #d3d3d3;
   font-style: oblique;
 }
 
-.lista-pessoas{
+.lista-pessoas {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
 /*----------------- Container com informações da pessoa ------------ */
-.caixa-pessoa{
+.caixa-pessoa {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
@@ -41,18 +40,18 @@
   padding: 0;
   overflow: hidden;
 }
-.caixa-pessoa:hover {  
+.caixa-pessoa:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.linha-horizontal{
+.linha-horizontal {
   display: flex;
   justify-content: space-between;
   gap: 1px;
 }
 
 /*----------------- Botao Registrar Saida----------------------- */
-.botao-saida{
+.botao-saida {
   background-color: #c72c2c;
   color: #fff;
   border: none;
@@ -67,7 +66,7 @@
 }
 
 /*----------------- Barra de Pesquisa----------------------- */
-.campo-pesquisa{
+.campo-pesquisa {
   width: 100%;
   padding: 8px 3px;
   font-size: 14px;
@@ -78,11 +77,11 @@
 }
 .campo-pesquisa:focus {
   border-color: #268bff;
-  box-shadow: 0 0 0 5px rgba(1, 90, 192, 0.2)
+  box-shadow: 0 0 0 5px rgba(1, 90, 192, 0.2);
 }
 
 /*-----------------Topo da caixa de informações----------------------- */
-.topo-dados{
+.topo-dados {
   width: 100%;
   background-color: #d1d1d1;
   padding: 1px 10px;
@@ -92,13 +91,13 @@
   border-bottom: 1px solid black;
   box-sizing: border-box;
 }
-.hora-entrada{
+.hora-entrada {
   font-weight: bold;
   color: #333;
   font-size: 15px;
 }
 
-.nome{
+.nome {
   font-size: 17px;
   font-weight: 700;
   color: #222;

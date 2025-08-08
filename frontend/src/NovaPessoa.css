@@ -37,7 +37,6 @@
 .caixa-resumo {
   gap: 16px;
   padding: 20px 0px 0px 20px;
-  flex-wrap: wrap;
 }
 
 .strongBtn {

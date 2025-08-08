@@ -8,3 +8,13 @@
   padding: 20px;
 }
 
+.busca {
+  margin: 20px;
+  width: 20vw;
+  display: flex;
+}
+
+.lado-direito {
+  gap: 16px;
+  padding: 20px 0px 0px 20px;
+}

@@ -4,6 +4,7 @@ import NovaPessoa from "./NovaPessoa";
 import ListaPresentes from "./ListaPresentes";
 import { VisitasProvider } from "./Dados";
 import ListaCadastrados from "./ListaCadastrados";
+import BuscaPorPessoas from "./BuscaPorPessoas";
 
 function App() {
   const [pessoasDentro, setPessoasDentro] = useState([
@@ -39,42 +40,23 @@ function App() {
       observacao: "Careca",
       telefone: "99813-4721",
     },
-      ]);
+  ]);
 
   const removerPessoa = (id) => {
     setPessoasDentro((prev) => prev.filter((p) => p.id !== id));
   };
-
-  const caixasDeInformacao = [
-    {
-      id: "1",
-      tipo: "info",
-      titulo: "Usuários Ativos",
-      valor: "30",
-    },
-    {
-      id: "2",
-      tipo: "alerta",
-      titulo: "Pendências",
-      valor: "5",
-      itens: ["Pagamento 1", "Revisão 2", "Bug #123"],
-    },
-    {
-      id: "3",
-      tipo: "sucesso",
-      titulo: "Projetos Concluídos",
-      valor: "12",
-    },
-  ];
 
   return (
     <VisitasProvider>
       <div className="app-layout">
         <div className="lado-esquerdo">
           <NovaPessoa />
+          <div className="busca">
+            <ListaPresentes pessoas={pessoasDentro} onSaida={removerPessoa} />
+            <ListaCadastrados />
+            <BuscaPorPessoas />
+          </div>
         </div>
-        <ListaCadastrados />
-        <ListaPresentes pessoas={pessoasDentro} onSaida={removerPessoa} />
       </div>
     </VisitasProvider>
   );

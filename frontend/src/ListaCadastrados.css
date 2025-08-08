@@ -4,16 +4,18 @@
 }
 
 .container-cadastro {
-  padding: 1rem;
-  min-height: 20vh;
-  width: 30%;
+  padding: 3rem;
+  padding-right: 20rem;
+  max-height: auto;
+  margin-right: 80px;
   background-color: #ffebee;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
 .visitante {
   background-color: #ffd3da;
-  padding: 1px;
+
+  width: 20vw;
 }
 
 .arrow {
