@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "./NovaPessoa.css";
 
 export default function NovaPessoa({ onAddPessoa, ...props }) {
+  const inputRefs = [useRef(null), useRef(null), useRef(null)];
   const [mostrarAlert, setMostrarAlert] = useState(false);
   const [dataHoje, setDataHoje] = useState("");
   const [horaExata, setHoraExata] = useState("");
@@ -10,6 +11,19 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [obs, setObservacao] = useState("");
+
+  // Função corrigida com setas cima/baixo/direita/esquerda
+  function handleKeyDown(e, index) {
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      if (index < inputRefs.length - 1) {
+        inputRefs[index + 1].current.focus();
+      }
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      if (index > 0) {
+        inputRefs[index - 1].current.focus();
+      }
+    }
+  }
 
   const formatarTelefone = (valor) => {
     const numeros = valor.replace(/\D/g, "").slice(0, 11);
@@ -150,6 +164,8 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
                     id="nome"
                     value={nome}
                     onChange={(e) => setNome(e.target.value)}
+                    ref={inputRefs[0]}
+                    onKeyDown={(e) => handleKeyDown(e, 0)}
                   />
                 </div>
 
@@ -160,6 +176,8 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
                     id="sobrenome"
                     value={sobrenome}
                     onChange={(e) => setSobrenome(e.target.value)}
+                    ref={inputRefs[1]}
+                    onKeyDown={(e) => handleKeyDown(e, 1)}
                   />
                 </div>
               </div>
@@ -174,6 +192,8 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
                     value={cpf}
                     onChange={handleChangeCPF}
                     maxLength={14}
+                    ref={inputRefs[2]}
+                    onKeyDown={(e) => handleKeyDown(e, 2)}
                   />
                 </div>
 
