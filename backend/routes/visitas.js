@@ -4,8 +4,11 @@ const db = require("../db");
 
 router.get("/pessoa_visita", (req, res) => {
   db.query(
-    `SELECT idPessoa, Nome, Cpf, DataEntrada, HoraEntrada from pessoa, visitas
-WHERE idPessoa = Pessoa_idPessoa;`,
+    `SELECT DISTINCT p.idPessoa, p.Nome, p.Cpf
+FROM pessoa p
+JOIN visitas v ON p.idPessoa = v.Pessoa_idPessoa
+WHERE v.HoraEntrada IS NOT NULL
+  AND v.HoraSaida IS NOT NULL;`,
     (err, results) => {
       if (err) return res.status(500).send("Erro no banco de dados!");
       res.json(results);

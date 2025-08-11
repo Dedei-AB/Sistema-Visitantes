@@ -3,54 +3,6 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-table {
-  width: 100%;
-  border-collapse: separate; /* IMPORTANTE para que o border-radius funcione */
-  border-spacing: 0; /* remove espaçamento entre células */
-  border: 2px solid #f9f9f9;
-  font-family: Arial, sans-serif;
-  color: #222;
-  background-color: #f9f9f9;
-}
-
-thead {
-  background-color: #333;
-  color: #eee;
-}
-
-thead th {
-  position: sticky;
-  z-index: 1;
-  top: 0;
-  background-color: #333;
-}
-
-th,
-td {
-  padding: 10px 15px;
-  border-bottom: 1px solid #f9f9f9;
-  text-align: left;
-}
-
-/* Arredondar cantos do cabeçalho e rodapé da tabela */
-
-tbody tr:last-child td:first-child {
-  border-bottom-left-radius: 10px;
-}
-
-tbody tr:last-child td:last-child {
-  border-bottom-right-radius: 10px;
-}
-
-/* Cores alternadas */
-tbody tr:nth-child(even) {
-  background-color: #ddd;
-}
-
-tbody tr:hover {
-  background-color: #bbb;
-}
-
 ul {
   list-style: none;
   padding-left: 20px;
@@ -59,8 +11,8 @@ ul {
 
 .container-cadastro {
   padding: 3rem;
-  padding-left: 6rem;
-  padding-right: 6rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   max-height: auto;
   margin-right: 80px;
   background-color: #333;
@@ -85,23 +37,57 @@ ul {
 .arrow.rotate {
   transform: rotate(180deg);
 }
+
 .tabela-lista-cadastrados {
-  padding-right: 0.2rem;
+  padding-right: 0.1rem;
+  min-width: 20rem;
+  max-width: auto;
+  height: 60vh;
   overflow-y: scroll;
-  max-height: 50vh;
+  overflow-x: hidden;
   display: flex;
+  flex-direction: column;
   background-color: #333;
+}
+
+.caixa-pessoa-cadastrada {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 15rem;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(29, 26, 26);
+  color: black;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.caixa-pessoa-cadastrada:hover {
+  filter: brightness(0.7);
+  transition: 0.4s;
+}
+
+.topo-dados-cadastrado {
+  width: 100%;
+  background-color: #d1d1d1;
+  padding: 1px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 /* largura da barra */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 10px; /* para scroll horizontal */
-}
-
-/* fundo da barra (faixa onde a barra desliza) */
-::-webkit-scrollbar-track {
-  background: none;
+  width: 8px;
+  height: 12px;
 }
 
 /* a própria barra (thumb) */
