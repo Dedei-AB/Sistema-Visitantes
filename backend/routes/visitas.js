@@ -19,6 +19,7 @@ router.get("/pessoa_camara", (req, res) => {
 WHERE idPessoa = Pessoa_idPessoa and (DataSaida is null or HoraSaida is null);`,
     (err, results) => {
       if (err) return res.status(500).send("Erro no banco de dados!");
+      res.json(results);
     }
   );
 });
