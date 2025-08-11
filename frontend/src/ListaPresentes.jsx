@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import "./ListaPresentes.css";
+import NovaPessoa from "./NovaPessoa";
 
-export default function PessoasPresentes({ pessoas, onSaida }) {
+export default function ListaPresentes({ pessoas, onSaida }) {
   const [busca, setBusca] = useState("");
+  const [visitantes, setVisitantes] = useState(pessoas || []);
 
-  const barraPesquisa = pessoas.filter((pessoa) =>
+  // Sincronizar visitantes com pessoas sempre que pessoas mudar
+  React.useEffect(() => {
+    setVisitantes(pessoas || []);
+  }, [pessoas]);
+
+  const adicionarVisitante = (pessoa) => {
+    setVisitantes((prev) => [...prev, pessoa]);
+  };
+
+  const listaFiltrada = visitantes.filter((pessoa) =>
     pessoa.nome.toLowerCase().includes(busca.toLowerCase())
   );
 
@@ -20,23 +31,24 @@ export default function PessoasPresentes({ pessoas, onSaida }) {
         onChange={(e) => setBusca(e.target.value)}
       />
 
-      {barraPesquisa.length === 0 ? (
+      {listaFiltrada.length === 0 ? (
         <p className="nenhum-visitante">Nenhuma pessoa encontrada.</p>
       ) : (
         <div className="lista-pessoas">
-          {barraPesquisa.map((pessoa) => (
+          {listaFiltrada.map((pessoa) => (
             <div key={pessoa.id} className="caixa-pessoa">
               <div className="topo-dados">
                 <span className="hora-entrada">
                   Horário de entrada: {pessoa.horaEntrada}
                 </span>
                 <button
-                  onClick={() => onSaida(pessoa.id)}
+                  onClick={() => onSaida && onSaida(pessoa.id)}
                   className="botao-saida"
                 >
                   Registrar Saída
                 </button>
               </div>
+
               <div className="dados-pessoa">
                 <p className="nome">
                   <strong>
@@ -51,7 +63,7 @@ export default function PessoasPresentes({ pessoas, onSaida }) {
                       <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                     </svg>{" "}
                   </strong>{" "}
-                  {pessoa.nome}
+                  {pessoa.nome} {pessoa.sobrenome}
                 </p>
 
                 <div className="linha-horizontal">
@@ -62,6 +74,7 @@ export default function PessoasPresentes({ pessoas, onSaida }) {
                     <strong>Telefone:</strong> {pessoa.telefone}
                   </p>
                 </div>
+
                 <p>
                   <strong>Observação:</strong> {pessoa.observacao}
                 </p>
@@ -73,4 +86,3 @@ export default function PessoasPresentes({ pessoas, onSaida }) {
     </div>
   );
 }
-
