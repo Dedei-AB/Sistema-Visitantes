@@ -73,6 +73,14 @@ function App() {
       observacao: "Careca",
       telefone: "99813-4721",
     },
+    {
+      id: 5,
+      nome: "Lorenzo cordeiro",
+      cpf: "222.654.123-00",
+      horaEntrada: "10:20",
+      observacao: "Careca",
+      telefone: "99813-4721",
+    },
   ]);
 
   const removerPessoa = (id) => {

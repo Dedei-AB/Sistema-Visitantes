@@ -4,7 +4,13 @@
   border-radius: 12px;
   box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);
   min-width: 500px;
+  max-height: 700px;
+  overflow-y: auto;
+
   margin-right: 80px;
+  stroke-width: thin;
+  scrollbar-color: #888 transparent;
+
 }
 
 .titulo {
@@ -22,7 +28,7 @@
 }
 
 .lista-pessoas {
-  display: flex;
+  display: flex;;
   flex-direction: column;
   gap: 4px;
 }
@@ -102,3 +108,5 @@
   font-weight: 700;
   color: #222;
 }
+
+/* */
