@@ -9,36 +9,46 @@ import BuscaPorPessoas from "./BuscaPorPessoas";
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
   useEffect(() => {
-    const handleMouseMove = (event) => {
-      setMousePosition({
-        x: event.clientX,
-        y: event.clientY,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    function MouseMove(e) {
+      setPos({ x: e.clientX, y: e.clientY });
+    }
+    window.addEventListener("mousemove", MouseMove);
+    return () => window.removeEventListener("mousemove", MouseMove);
   }, []);
 
-  const xPercentage = (mousePosition.x / window.innerWidth) * 100;
-  const yPercentage = (mousePosition.y / window.innerHeight) * 100;
+  // useEffect(() => {
+  //   const handleMouseMove = (event) => {
+  //     setMousePosition({
+  //       x: event.clientX,
+  //       y: event.clientY,
+  //     });
+  //   };
 
-  const angle =
-    (Math.atan2(
-      mousePosition.y - window.innerHeight / 2,
-      mousePosition.x - window.innerWidth / 2
-    ) *
-      180) /
-      Math.PI +
-    90;
+  //   window.addEventListener("mousemove", handleMouseMove);
 
-  const backgroundStyle = {
-    backgroundImage: `linear-gradient(${angle}deg, rgba(185, 67, 67, 1) 0%, rgba(255, 255, 255, 1) 100%)`,
-  };
+  //   return () => {
+  //     window.removeEventListener("mousemove", handleMouseMove);
+  //   };
+  // }, []);
+
+  // const xPercentage = (mousePosition.x / window.innerWidth) * 100;
+  // const yPercentage = (mousePosition.y / window.innerHeight) * 100;
+
+  // const angle =
+  //   (Math.atan2(
+  //     mousePosition.y - window.innerHeight / 2,
+  //     mousePosition.x - window.innerWidth / 2
+  //   ) *
+  //     180) /
+  //     Math.PI +
+  //   90;
+
+  // const backgroundStyle = {
+  //   backgroundImage: `linear-gradient(${angle}deg, rgba(185, 67, 67, 1) 0%, rgba(255, 255, 255, 1) 100%)`,
+  // };
 
   const [pessoasDentro, setPessoasDentro] = useState([
     {
@@ -89,7 +99,14 @@ function App() {
 
   return (
     <VisitasProvider>
-      <div className="app-layout" style={backgroundStyle}>
+      <div className="app-layout">
+        <div
+          id="mouse"
+          style={{
+            left: pos.x,
+            top: pos.y,
+          }}
+        ></div>
         <div className="lado-esquerdo">
           <NovaPessoa />
           <div className="busca">

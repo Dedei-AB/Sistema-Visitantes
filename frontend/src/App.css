@@ -25,3 +25,15 @@
   gap: 16px;
   padding: 20px 0px 0px 20px;
 }
+
+#mouse {
+  position: fixed;
+  pointer-events: none;
+  height: 10rem;
+  width: 10rem;
+  border-radius: 100%;
+  background-color: #1f1f1f;
+  transform: translate(-50%, -50%);
+  filter: blur(3rem);
+  z-index: -1;
+}

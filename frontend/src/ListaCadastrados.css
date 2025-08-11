@@ -58,7 +58,6 @@ ul {
   align-items: flex-start;
   justify-content: center;
   background-color: rgb(255, 255, 255);
-  border: 1px solid rgb(29, 26, 26);
   color: black;
   border-radius: 10px;
   margin-bottom: 0.5rem;
@@ -69,6 +68,7 @@ ul {
 .caixa-pessoa-cadastrada:hover {
   filter: brightness(0.7);
   transition: 0.4s;
+  transform: translateY(-2px);
 }
 
 .topo-dados-cadastrado {
@@ -78,7 +78,6 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid black;
   box-sizing: border-box;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -94,7 +93,6 @@ ul {
 ::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 10px;
-  border: none; /* cria um espaço interno */
 }
 
 /* quando passa o mouse na barra */
