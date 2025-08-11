@@ -59,6 +59,8 @@ ul {
 
 .container-cadastro {
   padding: 3rem;
+  padding-left: 6rem;
+  padding-right: 6rem;
   max-height: auto;
   margin-right: 80px;
   background-color: #333;

@@ -5,7 +5,7 @@ const VisitasContext = createContext();
 export function VisitasProvider({ children }) {
   const [dado, setDado] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/visitas/pessoa_visita")
+    fetch("http://localhost:5000/visitas/pessoa_camara")
       .then((response) => response.json())
       .then((data) => {
         setDado(data);

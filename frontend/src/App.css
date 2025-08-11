@@ -9,6 +9,7 @@
 }
 
 .lado-esquerdo {
+  margin-left: 35px;
   flex: 1;
   padding: 20px;
 }
@@ -20,6 +21,7 @@
 }
 
 .lado-direito {
+  margin: 90px;
   gap: 16px;
   padding: 20px 0px 0px 20px;
 }
