@@ -88,6 +88,7 @@ nav {
   border-top-right-radius: 10px;
 }
 .x {
+  font-family: "Noto Sans", sans-serif;
   color: aliceblue;
   padding-left: 5px;
   padding-right: 5px;
@@ -100,6 +101,7 @@ p {
 }
 
 input[type="time"] {
+  font-family: "Noto Sans", sans-serif;
   color: white;
   background-color: #555555;
   border: none;
@@ -118,6 +120,7 @@ input[type="time"]:hover {
   transform: scale(1.02);
 }
 input[type="date"] {
+  font-family: "Noto Sans", sans-serif;
   color: white;
   background-color: #555555;
   border: none;
@@ -149,6 +152,7 @@ input[type="date"]:hover {
 }
 
 #CpfLabel {
+  font-family: "Noto Sans", sans-serif;
   margin-left: 10px;
 }
 
@@ -185,7 +189,8 @@ h3 {
 }
 
 .obs {
-  width: 5.5rem;
+  font-family: "Noto Sans", sans-serif;
+  width: 6rem;
 }
 
 .Observações {
@@ -284,4 +289,8 @@ p {
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+label {
+  font-family: "Noto Sans", sans-serif;
 }
