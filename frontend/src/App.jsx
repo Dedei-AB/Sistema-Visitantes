@@ -25,7 +25,7 @@ function App() {
       nome: "Maria Eduarda Macedo de Souza",
       cpf: "111.456.999-00",
       horaEntrada: "09:15",
-      observacao: "Foi falar com ...",
+      observacao: "Foi falar com o Macedo",
       telefone: "99813-4721",
     },
     {
