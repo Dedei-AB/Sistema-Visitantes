@@ -4,6 +4,7 @@
   border-radius: 12px;
   box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);
   min-width: 500px;
+  margin-right: 80px;
   max-height: 700px;
   overflow-y: auto;
 
@@ -28,9 +29,12 @@
 }
 
 .lista-pessoas {
-  display: flex;;
+  display: flex;
   flex-direction: column;
   gap: 4px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /*----------------- Container com informações da pessoa ------------ */
