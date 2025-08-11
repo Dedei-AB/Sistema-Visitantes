@@ -19,37 +19,6 @@ function App() {
     return () => window.removeEventListener("mousemove", MouseMove);
   }, []);
 
-  // useEffect(() => {
-  //   const handleMouseMove = (event) => {
-  //     setMousePosition({
-  //       x: event.clientX,
-  //       y: event.clientY,
-  //     });
-  //   };
-
-  //   window.addEventListener("mousemove", handleMouseMove);
-
-  //   return () => {
-  //     window.removeEventListener("mousemove", handleMouseMove);
-  //   };
-  // }, []);
-
-  // const xPercentage = (mousePosition.x / window.innerWidth) * 100;
-  // const yPercentage = (mousePosition.y / window.innerHeight) * 100;
-
-  // const angle =
-  //   (Math.atan2(
-  //     mousePosition.y - window.innerHeight / 2,
-  //     mousePosition.x - window.innerWidth / 2
-  //   ) *
-  //     180) /
-  //     Math.PI +
-  //   90;
-
-  // const backgroundStyle = {
-  //   backgroundImage: `linear-gradient(${angle}deg, rgba(185, 67, 67, 1) 0%, rgba(255, 255, 255, 1) 100%)`,
-  // };
-
   const [pessoasDentro, setPessoasDentro] = useState([
     {
       id: 1,
@@ -108,7 +77,12 @@ function App() {
           }}
         ></div>
         <div className="lado-esquerdo">
-          <NovaPessoa />
+          {/* Passa a função para adicionar pessoa */}
+          <NovaPessoa
+            onAddPessoa={(pessoa) =>
+              setPessoasDentro((prev) => [...prev, pessoa])
+            }
+          />
           <div className="busca">
             <ListaPresentes pessoas={pessoasDentro} onSaida={removerPessoa} />
             <ListaCadastrados />
