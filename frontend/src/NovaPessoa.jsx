@@ -12,16 +12,11 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
   const [telefone, setTelefone] = useState("");
   const [obs, setObservacao] = useState("");
 
-  // Função corrigida com setas cima/baixo/direita/esquerda
   function handleKeyDown(e, index) {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-      if (index < inputRefs.length - 1) {
-        inputRefs[index + 1].current.focus();
-      }
+      if (index < inputRefs.length - 1) inputRefs[index + 1].current.focus();
     } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-      if (index > 0) {
-        inputRefs[index - 1].current.focus();
-      }
+      if (index > 0) inputRefs[index - 1].current.focus();
     }
   }
 
@@ -51,13 +46,9 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
     return formatado;
   };
 
-  const handleChangeTelefone = (e) => {
+  const handleChangeTelefone = (e) =>
     setTelefone(formatarTelefone(e.target.value));
-  };
-
-  const handleChangeCPF = (e) => {
-    setCpf(formatarCPF(e.target.value));
-  };
+  const handleChangeCPF = (e) => setCpf(formatarCPF(e.target.value));
 
   const pegarHora = () => {
     const agora = new Date();
@@ -104,13 +95,49 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
       dataEntrada: dataHoje,
       horaEntrada: horaExata,
     };
-    onAddPessoa(novaPessoa);
+    if (onAddPessoa) onAddPessoa(novaPessoa);
     setNome("");
     setSobrenome("");
     setCpf("");
     setTelefone("");
     setObservacao("");
     setMostrarAlert(false);
+  };
+
+  // >>> NOVO: registrar saída (copia para a outra lista sem remover nada)
+  const registrarSaida = () => {
+    if (!nome.trim() && !cpf.trim()) {
+      alert("Preencha pelo menos o Nome ou o CPF para registrar a saída.");
+      return;
+    }
+
+    const registroSaida = {
+      id: Date.now(),
+      nome: nome.trim(),
+      sobrenome: sobrenome.trim(),
+      cpf,
+      telefone,
+      observacao: obs,
+      dataEntrada: dataHoje, // mantém se você quiser exibir na caixinha
+      horaEntrada: horaExata, // idem
+      dataSaida: new Date().toISOString().split("T")[0],
+      horaSaida: pegarHora(),
+    };
+
+    // salva em localStorage
+    const atual = JSON.parse(localStorage.getItem("saidas")) || [];
+    atual.push(registroSaida);
+    localStorage.setItem("saidas", JSON.stringify(atual));
+
+    // emite evento para outros componentes atualizarem na hora
+    window.dispatchEvent(
+      new CustomEvent("saida-registrada", { detail: registroSaida })
+    );
+
+    // (opcional) feedback rápido
+    alert("Saída registrada!");
+
+    // NÃO remove ninguém de lugar nenhum; apenas copia para a outra lista
   };
 
   return (
@@ -237,17 +264,20 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
                   </button>
                 </div>
               </div>
+
               <div className="SaidaInfo">
                 <strong>Saída</strong>
               </div>
               <p>
                 Caso a pessoa já tenha saído: <br />
-                Aperte o botão de "<strong>Registrar Saída</strong>"
-                <br />
-                Isso ira salvar a saída da pessoa.
+                Aperte o botão de "<strong>Registrar Saída</strong>" <br />
+                Isso irá salvar a saída da pessoa.
               </p>
               <div className="hellYeah">
-                <button id="RegistrarSaida">Registrar Saída</button>
+                {/* >>> aqui liga a função nova */}
+                <button id="RegistrarSaida" onClick={registrarSaida}>
+                  Registrar Saída
+                </button>
               </div>
             </div>
           </div>

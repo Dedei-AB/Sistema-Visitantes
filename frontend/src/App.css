@@ -11,7 +11,7 @@
 }
 
 .lado-esquerdo {
-  flex: 2;
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
