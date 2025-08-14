@@ -33,8 +33,6 @@ function ListaCadastrados() {
       <h2 className="titulo-cdastrados">Visitas cadastradas:</h2>
       <p>{dado.length}</p>
 
-      <h2>Visitas:</h2>
-
       <div className="data-filtro-cadastrados">
         <h3>Selecione um período:</h3>
         <span
