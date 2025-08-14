@@ -35,8 +35,10 @@
 }
 
 .caixa-resumo {
+  flex: 2;
   gap: 16px;
-  padding: 20px 0px 0px 20px;
+  margin-top: 20px;
+  margin-left: 90px;
 }
 
 .strongBtn {

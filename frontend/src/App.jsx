@@ -77,12 +77,15 @@ function App() {
           }}
         ></div>
         <div className="lado-esquerdo">
-          {/* Passa a função para adicionar pessoa */}
-          <NovaPessoa
-            onAddPessoa={(pessoa) =>
-              setPessoasDentro((prev) => [...prev, pessoa])
-            }
-          />
+          <div className="botaoAdd">
+            {/* Passa a função para adicionar pessoa */}
+            <NovaPessoa
+              onAddPessoa={(pessoa) =>
+                setPessoasDentro((prev) => [...prev, pessoa])
+              }
+            />
+          </div>
+
           <div className="busca">
             <ListaPresentes pessoas={pessoasDentro} onSaida={removerPessoa} />
             <ListaCadastrados />
