@@ -67,31 +67,30 @@ function App() {
   };
 
   return (
-    <div className="app-layout">
-      <div
-        id="mouse"
-        style={{
-          left: pos.x,
-          top: pos.y,
-        }}
-      ></div>
-      <div className="lado-esquerdo">
-        <div className="botaoAdd">
+    <VisitasProvider>
+      <div className="app-layout">
+        <div
+          id="mouse"
+          style={{
+            left: pos.x,
+            top: pos.y,
+          }}
+        ></div>
+        <div className="lado-esquerdo">
           {/* Passa a função para adicionar pessoa */}
           <NovaPessoa
             onAddPessoa={(pessoa) =>
               setPessoasDentro((prev) => [...prev, pessoa])
             }
           />
-        </div>
-
-        <div className="busca">
-          <ListaPresentes pessoas={pessoasDentro} onSaida={removerPessoa} />
-          <ListaCadastrados />
-          <BuscaPorPessoas />
+          <div className="busca">
+            <ListaPresentes pessoas={pessoasDentro} onSaida={removerPessoa} />
+            <ListaCadastrados />
+            <BuscaPorPessoas />
+          </div>
         </div>
       </div>
-    </div>
+    </VisitasProvider>
   );
 }
 

@@ -6,7 +6,6 @@ export default function ListaPresentes({ pessoas, onSaida }) {
   const [busca, setBusca] = useState("");
   const [visitantes, setVisitantes] = useState(pessoas || []);
 
-  // Sincronizar visitantes com pessoas sempre que pessoas mudar
   React.useEffect(() => {
     setVisitantes(pessoas || []);
   }, [pessoas]);
@@ -20,72 +19,71 @@ export default function ListaPresentes({ pessoas, onSaida }) {
   );
 
   return (
-  <div className="container-lista-presenca">
-    <h2 className="titulo">Visitantes Presentes: </h2>
+    <div className="container-lista-presenca">
+      <h2 className="titulo">Visitantes Presentes: </h2>
 
-    <input
-      type="text"
-      placeholder="Pesquisar nome..."
-      className="campo-pesquisa"
-      value={busca}
-      onChange={(e) => setBusca(e.target.value)}
-    />
+      <input
+        type="text"
+        placeholder="Pesquisar nome..."
+        className="campo-pesquisa"
+        value={busca}
+        onChange={(e) => setBusca(e.target.value)}
+      />
 
-    <div className="scroll-lista">
-      {listaFiltrada.length === 0 ? (
-        <p className="nenhum-visitante">Nenhuma pessoa encontrada.</p>
-      ) : (
-        <div className="lista-pessoas">
-          {listaFiltrada.map((pessoa) => (
-            <div key={pessoa.id} className="caixa-pessoa">
-              <div className="topo-dados">
-                <span className="hora-entrada">
-                  Horário de entrada: {pessoa.horaEntrada}
-                </span>
-                <button
-                  onClick={() => onSaida && onSaida(pessoa.id)}
-                  className="botao-saida"
-                >
-                  Registrar Saída
-                </button>
-              </div>
-
-              <div className="dados-pessoa">
-                <p className="nome">
-                  <strong>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-person-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                    </svg>{" "}
-                  </strong>{" "}
-                  {pessoa.nome} {pessoa.sobrenome}
-                </p>
-
-                <div className="linha-horizontal">
-                  <p>
-                    <strong>CPF:</strong> {pessoa.cpf}
-                  </p>
-                  <p>
-                    <strong>Telefone:</strong> {pessoa.telefone}
-                  </p>
+      <div className="scroll-lista">
+        {listaFiltrada.length === 0 ? (
+          <p className="nenhum-visitante">Nenhuma pessoa encontrada.</p>
+        ) : (
+          <div className="lista-pessoas">
+            {listaFiltrada.map((pessoa) => (
+              <div key={pessoa.id} className="caixa-pessoa">
+                <div className="topo-dados">
+                  <span className="hora-entrada">
+                    Horário de entrada: {pessoa.horaEntrada}
+                  </span>
+                  <button
+                    onClick={() => onSaida && onSaida(pessoa.id)}
+                    className="botao-saida"
+                  >
+                    Registrar Saída
+                  </button>
                 </div>
 
-                <p>
-                  <strong>Observação:</strong> {pessoa.observacao}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  </div>
-);
+                <div className="dados-pessoa">
+                  <p className="nome">
+                    <strong>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className="bi bi-person-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                      </svg>{" "}
+                    </strong>{" "}
+                    {pessoa.nome} {pessoa.sobrenome}
+                  </p>
 
+                  <div className="linha-horizontal">
+                    <p>
+                      <strong>CPF:</strong> {pessoa.cpf}
+                    </p>
+                    <p>
+                      <strong>Telefone:</strong> {pessoa.telefone}
+                    </p>
+                  </div>
+
+                  <p>
+                    <strong>Observação:</strong> {pessoa.observacao}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
