@@ -6,12 +6,23 @@
   min-width: 500px;
   margin-right: 80px;
   max-height: 700px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+ /*---- barra de rolagem----*/
+.scroll-lista {
+  flex: 1;
   overflow-y: auto;
-
-  margin-right: 80px;
-  stroke-width: thin;
-  scrollbar-color: #888 transparent;
-
+  padding-right: 4px;
+}
+.scroll-lista::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-lista::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 4px;
 }
 
 .titulo {
@@ -32,9 +43,6 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 /*----------------- Container com informações da pessoa ------------ */

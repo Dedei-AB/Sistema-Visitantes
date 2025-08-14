@@ -20,17 +20,18 @@ export default function ListaPresentes({ pessoas, onSaida }) {
   );
 
   return (
-    <div className="container-lista-presenca">
-      <h2 className="titulo">Visitantes Presentes: </h2>
+  <div className="container-lista-presenca">
+    <h2 className="titulo">Visitantes Presentes: </h2>
 
-      <input
-        type="text"
-        placeholder="Pesquisar nome..."
-        className="campo-pesquisa"
-        value={busca}
-        onChange={(e) => setBusca(e.target.value)}
-      />
+    <input
+      type="text"
+      placeholder="Pesquisar nome..."
+      className="campo-pesquisa"
+      value={busca}
+      onChange={(e) => setBusca(e.target.value)}
+    />
 
+    <div className="scroll-lista">
       {listaFiltrada.length === 0 ? (
         <p className="nenhum-visitante">Nenhuma pessoa encontrada.</p>
       ) : (
@@ -84,5 +85,7 @@ export default function ListaPresentes({ pessoas, onSaida }) {
         </div>
       )}
     </div>
-  );
+  </div>
+);
+
 }
