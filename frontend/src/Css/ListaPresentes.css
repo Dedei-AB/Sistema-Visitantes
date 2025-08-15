@@ -29,14 +29,14 @@
   gap: 4px;
 }
 
- /*---- barra de rolagem----*/
+/*---- barra de rolagem----*/
 .scroll-lista {
   flex: 1;
   overflow-y: auto;
   padding-right: 4px;
 }
 .scroll-lista::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 .scroll-lista::-webkit-scrollbar-thumb {
   background-color: #ffffff;

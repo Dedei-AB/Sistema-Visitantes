@@ -1,0 +1,73 @@
+.bi-calendar-range {
+  padding-right: 5px;
+  font-size: 1.3rem;
+  transition: 0.3s;
+}
+
+.bi-calendar-range:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+}
+
+.data-filtro-cadastrados {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+}
+
+.descricao-calendario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.calendario-cadastrados {
+  position: fixed;
+  top: 50%;
+  left: 67%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  transition: 0.5s;
+}
+
+.botao-calendario {
+  margin-left: 10px;
+  border-radius: 5px;
+  height: 2rem;
+  width: 2rem;
+  border: none;
+  background-color: #e23601;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.botao-calendario:hover {
+  transform: scale(1.1);
+  transition: 0.2s;
+}
+
+.rdrCalendarWrapper {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #888;
+}
+
+.rdrMonthAndYearPickers {
+  background-color: #ffffff;
+  color: white;
+}
+
+.rdrMonthName {
+  color: #000000;
+  font-weight: bold;
+}

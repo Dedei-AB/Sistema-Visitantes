@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import "./Css/App.css";
 import NovaPessoa from "./NovaPessoa";
 import ListaPresentes from "./ListaPresentes";
 import { VisitasProvider } from "./Dados";

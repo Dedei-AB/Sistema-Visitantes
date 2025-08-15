@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ListaPresentes.css";
+import "./Css/ListaPresentes.css";
 import NovaPessoa from "./NovaPessoa";
 
 export default function ListaPresentes({ pessoas, onSaida }) {

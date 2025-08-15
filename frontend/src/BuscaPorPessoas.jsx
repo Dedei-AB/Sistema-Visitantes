@@ -1,4 +1,4 @@
-import "./BuscaPorPessoas.css";
+import "./Css/BuscaPorPessoas.css";
 
 export default function BuscaPorPessoas() {
   return (

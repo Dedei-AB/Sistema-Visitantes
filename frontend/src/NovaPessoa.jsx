@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import "./NovaPessoa.css";
+import "./Css/NovaPessoa.css";
 
 export default function NovaPessoa({ onAddPessoa, ...props }) {
   const inputRefs = [useRef(null), useRef(null), useRef(null)];
