@@ -38,4 +38,21 @@ WHERE v.DataSaida IS NULL OR v.HoraSaida IS NULL;
   );
 });
 
+router.post("/nova_pessoa", (req, res) => {
+  const { nome, cpf } = req.body;
+
+  if (!nome || !cpf) {
+    return res.status(400).send("Preencha todos os campos");
+  }
+
+  db.query(
+    `INSERT INTO pessoa (Cpf, Nome, Sobrenome, Telefone, Observacao)
+    VALUES (?, ?, ?, ?, ?)`,
+    (err, results) => {
+      if (err) return res.status(500).send("Erro no banco de dados!!");
+      res.json(results);
+    }
+  );
+});
+
 module.exports = router;
