@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./Css/App.css";
 import NovaPessoa from "./NovaPessoa";
 import ListaPresentes from "./ListaPresentes";
-import { VisitasProvider } from "./Dados";
 import ListaCadastrados from "./ListaCadastrados";
 import BuscaPorPessoas from "./BuscaPorPessoas";
 
@@ -30,8 +29,8 @@ function App() {
     },
     {
       id: 2,
-      nome: "Maria Souza",
-      cpf: "222.654.111-00",
+      Nome: "Maria Souza",
+      Cpf: "222.654.111-00",
       horaEntrada: "09:45",
       observacao: "Cabelo loiro",
       telefone: "99813-4721",
@@ -67,30 +66,24 @@ function App() {
   };
 
   return (
-    <VisitasProvider>
-      <div className="app-layout">
-        <div
-          id="mouse"
-          style={{
-            left: pos.x,
-            top: pos.y,
-          }}
-        ></div>
-        <div className="lado-esquerdo">
-          {/* Passa a função para adicionar pessoa */}
-          <NovaPessoa
-            onAddPessoa={(pessoa) =>
-              setPessoasDentro((prev) => [...prev, pessoa])
-            }
-          />
-          <div className="busca">
-            <ListaPresentes pessoas={pessoasDentro} onSaida={removerPessoa} />
-            <ListaCadastrados />
-            <BuscaPorPessoas />
-          </div>
-        </div>
+    <div className="app-layout">
+      <div
+        id="mouse"
+        style={{
+          left: pos.x,
+          top: pos.y,
+        }}
+      ></div>
+
+      <NovaPessoa
+        onAddPessoa={(pessoa) => setPessoasDentro((prev) => [...prev, pessoa])}
+      />
+      <div className="busca">
+        <ListaPresentes pessoas={pessoasDentro} onSaida={removerPessoa} />
+        <ListaCadastrados />
+        <BuscaPorPessoas />
       </div>
-    </VisitasProvider>
+    </div>
   );
 }
 

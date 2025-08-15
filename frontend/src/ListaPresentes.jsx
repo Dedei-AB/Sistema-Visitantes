@@ -1,21 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Css/ListaPresentes.css";
 import NovaPessoa from "./NovaPessoa";
 
-export default function ListaPresentes({ pessoas, onSaida }) {
+export default function ListaPresentes({ onSaida }) {
   const [busca, setBusca] = useState("");
-  const [visitantes, setVisitantes] = useState(pessoas || []);
+  const [visitantes, setVisitantes] = useState([]);
 
-  React.useEffect(() => {
-    setVisitantes(pessoas || []);
-  }, [pessoas]);
+  useEffect(() => {
+    fetch("http://localhost:5000/visitas/pessoa_camara")
+      .then((response) => response.json())
+      .then((data) => {
+        setVisitantes(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar visitas:", error);
+      });
+  }, []);
 
   const adicionarVisitante = (pessoa) => {
     setVisitantes((prev) => [...prev, pessoa]);
   };
 
   const listaFiltrada = visitantes.filter((pessoa) =>
-    pessoa.nome.toLowerCase().includes(busca.toLowerCase())
+    pessoa.Nome.toLowerCase().includes(busca.toLowerCase())
   );
 
   return (
@@ -39,10 +46,10 @@ export default function ListaPresentes({ pessoas, onSaida }) {
               <div key={pessoa.id} className="caixa-pessoa">
                 <div className="topo-dados">
                   <span className="hora-entrada">
-                    Horário de entrada: {pessoa.horaEntrada}
+                    Horário de entrada: {pessoa.HoraEntrada}
                   </span>
                   <button
-                    onClick={() => onSaida && onSaida(pessoa.id)}
+                    onClick={() => onSaida && onSaida(pessoa.IdPessoa)}
                     className="botao-saida"
                   >
                     Registrar Saída
@@ -63,20 +70,20 @@ export default function ListaPresentes({ pessoas, onSaida }) {
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                       </svg>{" "}
                     </strong>{" "}
-                    {pessoa.nome} {pessoa.sobrenome}
+                    {pessoa.Nome}
                   </p>
 
                   <div className="linha-horizontal">
                     <p>
-                      <strong>CPF:</strong> {pessoa.cpf}
+                      <strong>CPF:</strong> {pessoa.Cpf}
                     </p>
                     <p>
-                      <strong>Telefone:</strong> {pessoa.telefone}
+                      <strong>Telefone:</strong> {pessoa.Telefone}
                     </p>
                   </div>
 
                   <p>
-                    <strong>Observação:</strong> {pessoa.observacao}
+                    <strong>Observação:</strong> {pessoa.Observacao}
                   </p>
                 </div>
               </div>

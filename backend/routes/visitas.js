@@ -4,7 +4,7 @@ const db = require("../db");
 
 router.get("/pessoa_visita", (req, res) => {
   db.query(
-    `SELECT DISTINCT p.idPessoa, p.Nome, p.Cpf
+    `SELECT DISTINCT p.idPessoa, p.Nome, p.Cpf, pessoa.HoraEntrada, pessoa.DataEntrada
 FROM pessoa p
 JOIN visitas v ON p.idPessoa = v.Pessoa_idPessoa
 WHERE v.HoraEntrada IS NOT NULL
@@ -18,8 +18,19 @@ WHERE v.HoraEntrada IS NOT NULL
 
 router.get("/pessoa_camara", (req, res) => {
   db.query(
-    `SELECT idPessoa, Nome, Cpf, DataEntrada, HoraEntrada from pessoa, visitas
-WHERE idPessoa = Pessoa_idPessoa and (DataSaida is null or HoraSaida is null);`,
+    `SELECT 
+    p.idPessoa, 
+    p.Nome, 
+    p.Cpf, 
+    v.DataEntrada, 
+    v.HoraEntrada, 
+    p.Telefone, 
+    p.Observacao
+FROM pessoa p
+JOIN visitas v ON p.idPessoa = v.Pessoa_idPessoa
+WHERE v.DataSaida IS NULL OR v.HoraSaida IS NULL;
+;
+`,
     (err, results) => {
       if (err) return res.status(500).send("Erro no banco de dados!");
       res.json(results);
