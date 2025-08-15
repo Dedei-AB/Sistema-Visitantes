@@ -4,9 +4,15 @@ const db = require("../db");
 
 router.get("/pessoa_visita", (req, res) => {
   db.query(
-    `SELECT DISTINCT p.idPessoa, p.Nome, p.Cpf, pessoa.HoraEntrada, pessoa.DataEntrada
+    `SELECT 
+    p.idPessoa, 
+    p.Nome, 
+    p.Cpf, 
+    v.HoraEntrada, 
+    v.DataEntrada
 FROM pessoa p
-JOIN visitas v ON p.idPessoa = v.Pessoa_idPessoa
+JOIN visitas v 
+    ON p.idPessoa = v.Pessoa_idPessoa
 WHERE v.HoraEntrada IS NOT NULL
   AND v.HoraSaida IS NOT NULL;`,
     (err, results) => {
