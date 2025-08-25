@@ -1,6 +1,10 @@
 function Pessoas({ visitas }) {
   return (
-    <div key={visitas.id} className="caixa-pessoa-cadastrada">
+    <div
+      key={visitas.id}
+      id={`caixa-pessoa-cadastrada-${visitas.idPessoa}`}
+      className="caixa-pessoa-cadastrada"
+    >
       <div className="topo-dados-cadastrado">
         <span className="hora-entrada">
           Horário de entrada: {visitas.HoraEntrada}

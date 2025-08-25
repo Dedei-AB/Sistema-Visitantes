@@ -1,5 +1,3 @@
-import { DateRange } from "react-date-range";
-import { addDays } from "date-fns";
 import { useEffect, useState } from "react";
 import Pessoas from "./Pessoas";
 import "./Css/ListaCadastrados.css";
@@ -13,7 +11,8 @@ function ListaCadastrados() {
   const [mostrarAlerta, setMostrarAlerta] = useState(false);
   const [dado, setDado] = useState([]);
 
-  function mudarAlerta() {
+  function mudarAlerta(texto) {
+    setMensagem(texto);
     setMostrarAlerta(!mostrarAlerta);
   }
 
@@ -37,9 +36,18 @@ function ListaCadastrados() {
 
       <div className="tabela-lista-cadastrados">
         {dado.map((pessoa, index) => {
-          return <Pessoas key={index} visitas={pessoa} onClick={mudarAlerta} />;
+          return (
+            <Pessoas
+              key={index}
+              visitas={pessoa}
+              onClick={() => {
+                mudarAlerta(`Você clicou na pessoa: ${pessoa.Nome}`);
+              }}
+            />
+          );
         })}
         {mostrarAlerta && <Alerta mensagem={mensagem} />}
+        <Alerta mensagem={mensagem} />
       </div>
     </div>
   );
