@@ -54,7 +54,8 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
     const agora = new Date();
     const hora = String(agora.getHours()).padStart(2, "0");
     const minutos = String(agora.getMinutes()).padStart(2, "0");
-    return `${hora}:${minutos}`;
+    const segundos = String(agora.getSeconds()).padStart(2, "0");
+    return `${hora}:${minutos}:${segundos}`;
   };
 
   useEffect(() => {
@@ -80,64 +81,77 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
     setHoraExata(pegarHora());
   };
 
-  const handleEnviar = () => {
+  // >>> FUNÇÃO PARA ENTRADA (POST)
+  const handleEnviar = async () => {
     if (!nome.trim()) {
       alert("O nome é obrigatório!");
       return;
     }
+
     const novaPessoa = {
-      id: Date.now(),
-      nome: nome.trim(),
-      sobrenome: sobrenome.trim(),
-      cpf,
-      telefone,
-      observacao: obs,
-      dataEntrada: dataHoje,
-      horaEntrada: horaExata,
+      Nome: nome.trim(),
+      Cpf: cpf,
+      Telefone: telefone,
+      Observacao: obs,
+      DataEntrada: dataHoje,
+      HoraEntrada: horaExata,
     };
-    if (onAddPessoa) onAddPessoa(novaPessoa);
-    setNome("");
-    setSobrenome("");
-    setCpf("");
-    setTelefone("");
-    setObservacao("");
-    setMostrarAlert(false);
+
+    try {
+      const response = await fetch("http://localhost:5000/visitas/entrada", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(novaPessoa),
+      });
+
+      if (!response.ok) throw new Error("Erro ao registrar entrada");
+
+      const data = await response.json();
+      console.log("Entrada registrada:", data);
+
+      if (onAddPessoa) onAddPessoa({ id: data.idVisita, ...novaPessoa });
+
+      setNome("");
+      setSobrenome("");
+      setCpf("");
+      setTelefone("");
+      setObservacao("");
+      setMostrarAlert(false);
+    } catch (err) {
+      console.error(err);
+      alert("Falha ao salvar entrada!");
+    }
   };
 
-  // >>> NOVO: registrar saída (copia para a outra lista sem remover nada)
-  const registrarSaida = () => {
-    if (!nome.trim() && !cpf.trim()) {
-      alert("Preencha pelo menos o Nome ou o CPF para registrar a saída.");
+  // >>> FUNÇÃO PARA SAÍDA (POST)
+  const registrarSaida = async () => {
+    if (!cpf.trim()) {
+      alert("Informe o CPF para registrar saída.");
       return;
     }
 
-    const registroSaida = {
-      id: Date.now(),
-      nome: nome.trim(),
-      sobrenome: sobrenome.trim(),
+    const saida = {
       cpf,
-      telefone,
-      observacao: obs,
-      dataEntrada: dataHoje, // mantém se você quiser exibir na caixinha
-      horaEntrada: horaExata, // idem
       dataSaida: new Date().toISOString().split("T")[0],
       horaSaida: pegarHora(),
     };
 
-    // salva em localStorage
-    const atual = JSON.parse(localStorage.getItem("saidas")) || [];
-    atual.push(registroSaida);
-    localStorage.setItem("saidas", JSON.stringify(atual));
+    try {
+      const response = await fetch("http://localhost:5000/visitas/saida", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(saida),
+      });
 
-    // emite evento para outros componentes atualizarem na hora
-    window.dispatchEvent(
-      new CustomEvent("saida-registrada", { detail: registroSaida })
-    );
+      if (!response.ok) throw new Error("Erro ao registrar saída");
 
-    // (opcional) feedback rápido
-    alert("Saída registrada!");
-
-    // NÃO remove ninguém de lugar nenhum; apenas copia para a outra lista
+      const data = await response.json();
+      console.log("Saída registrada:", data);
+      alert(data.message || "Saída registrada!");
+    } catch (err) {
+      console.error(err);
+      alert("Falha ao salvar saída!");
+    }
   };
 
   return (

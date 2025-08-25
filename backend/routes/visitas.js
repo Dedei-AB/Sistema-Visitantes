@@ -2,19 +2,20 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
+// listar visitas já concluídas
 router.get("/pessoa_visita", (req, res) => {
   db.query(
     `SELECT 
-    p.idPessoa, 
-    p.Nome, 
-    p.Cpf, 
-    v.HoraEntrada, 
-    v.DataEntrada
-FROM pessoa p
-JOIN visitas v 
-    ON p.idPessoa = v.Pessoa_idPessoa
-WHERE v.HoraEntrada IS NOT NULL
-  AND v.HoraSaida IS NOT NULL;`,
+      p.idPessoa, 
+      p.Nome, 
+      p.Cpf, 
+      v.HoraEntrada, 
+      v.DataEntrada
+    FROM pessoa p
+    JOIN visitas v 
+      ON p.idPessoa = v.Pessoa_idPessoa
+    WHERE v.HoraEntrada IS NOT NULL
+      AND v.HoraSaida IS NOT NULL;`,
     (err, results) => {
       if (err) return res.status(500).send("Erro no banco de dados!");
       res.json(results);
@@ -22,21 +23,21 @@ WHERE v.HoraEntrada IS NOT NULL
   );
 });
 
+// listar pessoas atualmente na câmara
 router.get("/pessoa_camara", (req, res) => {
   db.query(
     `SELECT 
-    p.idPessoa, 
-    p.Nome, 
-    p.Cpf, 
-    v.DataEntrada, 
-    v.HoraEntrada, 
-    p.Telefone, 
-    p.Observacao
-FROM pessoa p
-JOIN visitas v ON p.idPessoa = v.Pessoa_idPessoa
-WHERE v.DataSaida IS NULL OR v.HoraSaida IS NULL;
-;
-`,
+      p.idPessoa, 
+      p.Nome, 
+      p.Cpf, 
+      v.DataEntrada, 
+      v.HoraEntrada, 
+      p.Telefone, 
+      p.Observacao
+    FROM pessoa p
+    JOIN visitas v 
+      ON p.idPessoa = v.Pessoa_idPessoa
+    WHERE v.DataSaida IS NULL OR v.HoraSaida IS NULL;`,
     (err, results) => {
       if (err) return res.status(500).send("Erro no banco de dados!");
       res.json(results);
@@ -44,21 +45,71 @@ WHERE v.DataSaida IS NULL OR v.HoraSaida IS NULL;
   );
 });
 
-router.post("/nova_pessoa", (req, res) => {
-  const { nome, cpf } = req.body;
+// registrar entrada
+router.post("/entrada", (req, res) => {
+  const { Nome, Cpf, Telefone, Observacao, DataEntrada, HoraEntrada } =
+    req.body;
 
-  if (!nome || !cpf) {
-    return res.status(400).send("Preencha todos os campos");
-  }
+  if (!Nome || !Cpf) return res.status(400).send("Preencha todos os campos");
 
-  db.query(
-    `INSERT INTO pessoa (Cpf, Nome, Sobrenome, Telefone, Observacao)
-    VALUES (?, ?, ?, ?, ?)`,
-    (err, results) => {
-      if (err) return res.status(500).send("Erro no banco de dados!!");
-      res.json(results);
+  const pessoaSql = `
+    INSERT INTO pessoa (Nome, Cpf, Telefone, Observacao)
+    VALUES (?, ?, ?, ?)
+    ON DUPLICATE KEY UPDATE Nome=VALUES(Nome), Telefone=VALUES(Telefone), Observacao=VALUES(Observacao)
+  `;
+
+  db.query(pessoaSql, [Nome, Cpf, Telefone, Observacao], (err, results) => {
+    if (err) {
+      console.error("Erro no insert pessoa:", err);
+      return res.status(500).json({ error: "Erro ao salvar pessoa" });
     }
-  );
+
+    const getIdSql = `SELECT idPessoa FROM pessoa WHERE Cpf=?`;
+    db.query(getIdSql, [Cpf], (err2, rows) => {
+      if (err2) return res.status(500).json({ error: "Erro ao buscar pessoa" });
+
+      const idPessoa = rows[0].idPessoa;
+      const visitaSql = `
+        INSERT INTO visitas (Pessoa_idPessoa, DataEntrada, HoraEntrada)
+        VALUES (?, ?, ?)
+      `;
+
+      db.query(
+        visitaSql,
+        [idPessoa, DataEntrada, HoraEntrada],
+        (err3, result2) => {
+          if (err3) {
+            console.error("Erro no insert visitas:", err3);
+            return res.status(500).json({ error: "Erro ao salvar visita" });
+          }
+          res.status(200).json({
+            message: "Entrada registrada!",
+            idVisitas: result2.insertId,
+          });
+        }
+      );
+    });
+  });
+});
+
+// registrar saída
+router.post("/saida", (req, res) => {
+  const { cpf, dataSaida, horaSaida } = req.body;
+  if (!cpf) return res.status(400).json({ error: "Informe o CPF" });
+
+  const updateSql = `
+    UPDATE visitas v
+    JOIN pessoa p ON v.Pessoa_idPessoa = p.idPessoa
+    SET v.DataSaida=?, v.HoraSaida=?
+    WHERE p.Cpf=? AND v.DataSaida IS NULL AND v.HoraSaida IS NULL
+    ORDER BY v.idVisitas DESC
+    LIMIT 1
+  `;
+
+  db.query(updateSql, [dataSaida, horaSaida, cpf], (err, result) => {
+    if (err) return res.status(500).json({ error: "Erro ao registrar saída" });
+    res.status(200).json({ message: "Saída registrada!" });
+  });
 });
 
 module.exports = router;
