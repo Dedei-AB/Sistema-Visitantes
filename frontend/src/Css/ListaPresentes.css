@@ -4,7 +4,6 @@
   border-radius: 12px;
   box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);
   min-width: 500px;
-  margin-right: 80px;
   height: 770px;
   display: flex;
   flex-direction: column;
@@ -93,6 +92,10 @@
 .campo-pesquisa:focus {
   border-color: #268bff;
   box-shadow: 0 0 0 5px rgba(1, 90, 192, 0.2);
+}
+
+::-webkit-scrollbar-track {
+  background: #4e4e4e; /* azul escuro */
 }
 
 /*-----------------Topo da caixa de informações----------------------- */

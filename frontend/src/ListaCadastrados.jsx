@@ -6,9 +6,16 @@ import "./Css/ListaCadastrados.css";
 import "react-date-range/dist/styles.css"; // estilo principal
 import "react-date-range/dist/theme/default.css"; // tema default
 import FiltroCalendario from "./FiltroCalendario";
+import Alerta from "./Alerta";
 
 function ListaCadastrados() {
+  const [mensagem, setMensagem] = useState("");
+  const [mostrarAlerta, setMostrarAlerta] = useState(false);
   const [dado, setDado] = useState([]);
+
+  function mudarAlerta() {
+    setMostrarAlerta(!mostrarAlerta);
+  }
 
   useEffect(() => {
     fetch("http://localhost:5000/visitas/pessoa_visita")
@@ -30,8 +37,9 @@ function ListaCadastrados() {
 
       <div className="tabela-lista-cadastrados">
         {dado.map((pessoa, index) => {
-          return <Pessoas key={index} visitas={pessoa} />;
+          return <Pessoas key={index} visitas={pessoa} onClick={mudarAlerta} />;
         })}
+        {mostrarAlerta && <Alerta mensagem={mensagem} />}
       </div>
     </div>
   );

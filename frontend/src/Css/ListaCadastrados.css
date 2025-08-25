@@ -12,7 +12,7 @@ ul {
 .container-cadastro {
   padding: 2rem;
   max-height: auto;
-  margin-right: 80px;
+  width: 23%;
   background-color: #333;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -37,8 +37,7 @@ ul {
 
 .tabela-lista-cadastrados {
   padding-right: 0.1rem;
-  min-width: 20rem;
-  max-width: auto;
+  width: 90%;
   height: 60vh;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -95,5 +94,5 @@ ul {
 
 /* quando passa o mouse na barra */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+  background-color: #a0a0a0;
 }

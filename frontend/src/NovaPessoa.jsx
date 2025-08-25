@@ -239,7 +239,7 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
 
               <div className="Observações">
                 <div className="caixaObs">
-                  <nav className="obs">Observações</nav>
+                  <nav className="obs">Observação</nav>
                   <textarea
                     id="Detalhes"
                     value={obs}

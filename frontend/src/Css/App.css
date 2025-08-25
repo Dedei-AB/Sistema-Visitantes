@@ -10,6 +10,12 @@
   align-items: center;
   height: 100vh;
   width: 100vw;
+  background: #f2f2f2;
+  background: radial-gradient(
+    circle,
+    rgb(255, 255, 255) 0%,
+    rgba(189, 189, 189, 1) 100%
+  );
 }
 
 .lado-esquerdo {
@@ -22,9 +28,10 @@
 }
 
 .busca {
-  margin: 20px;
+  width: 90%;
+  height: auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .lado-direito {
@@ -39,7 +46,7 @@
   height: 10rem;
   width: 10rem;
   border-radius: 100%;
-  background-color: #7e7b7b;
+  background-color: rgb(160, 160, 160);
   transform: translate(-50%, -50%);
   filter: blur(3rem);
   z-index: -1;

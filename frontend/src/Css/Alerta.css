@@ -1,0 +1,8 @@
+.alerta {
+  height: 30%;
+  width: 25%;
+  border-radius: 15px;
+  position: fixed; /* fica fixo na tela */
+  top: 50%;
+  left: 50%;
+}

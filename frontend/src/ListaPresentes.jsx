@@ -42,8 +42,8 @@ export default function ListaPresentes({ onSaida }) {
           <p className="nenhum-visitante">Nenhuma pessoa encontrada.</p>
         ) : (
           <div className="lista-pessoas">
-            {listaFiltrada.map((pessoa) => (
-              <div key={pessoa.id} className="caixa-pessoa">
+            {listaFiltrada.map((pessoa, index) => (
+              <div key={index} className="caixa-pessoa">
                 <div className="topo-dados">
                   <span className="hora-entrada">
                     Horário de entrada: {pessoa.HoraEntrada}
