@@ -50,7 +50,8 @@ router.post("/entrada", (req, res) => {
   const { Nome, Cpf, Telefone, Observacao, DataEntrada, HoraEntrada } =
     req.body;
 
-  if (!Nome || !Cpf) return res.status(400).send("Preencha todos os campos");
+  if (!Nome || !Cpf)
+    return res.status(400).json({ error: "Nome e CPF são obrigatórios" });
 
   const pessoaSql = `
     INSERT INTO pessoa (Nome, Cpf, Telefone, Observacao)
@@ -60,31 +61,33 @@ router.post("/entrada", (req, res) => {
 
   db.query(pessoaSql, [Nome, Cpf, Telefone, Observacao], (err, results) => {
     if (err) {
-      console.error("Erro no insert pessoa:", err);
+      console.error("Erro insert pessoa:", err);
       return res.status(500).json({ error: "Erro ao salvar pessoa" });
     }
 
     const getIdSql = `SELECT idPessoa FROM pessoa WHERE Cpf=?`;
     db.query(getIdSql, [Cpf], (err2, rows) => {
       if (err2) return res.status(500).json({ error: "Erro ao buscar pessoa" });
+      if (!rows || rows.length === 0)
+        return res
+          .status(500)
+          .json({ error: "Pessoa não encontrada após insert" });
 
       const idPessoa = rows[0].idPessoa;
-      const visitaSql = `
-        INSERT INTO visitas (Pessoa_idPessoa, DataEntrada, HoraEntrada)
-        VALUES (?, ?, ?)
-      `;
+      const visitaSql = `INSERT INTO visitas (Pessoa_idPessoa, DataEntrada, HoraEntrada) VALUES (?, ?, ?)`;
 
       db.query(
         visitaSql,
         [idPessoa, DataEntrada, HoraEntrada],
         (err3, result2) => {
           if (err3) {
-            console.error("Erro no insert visitas:", err3);
+            console.error("Erro insert visitas:", err3);
             return res.status(500).json({ error: "Erro ao salvar visita" });
           }
+
           res.status(200).json({
             message: "Entrada registrada!",
-            idVisitas: result2.insertId,
+            idVisita: result2.insertId,
           });
         }
       );
