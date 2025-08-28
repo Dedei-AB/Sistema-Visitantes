@@ -10,6 +10,7 @@ ul {
 }
 
 .container-cadastro {
+  position: relative;
   padding: 2rem;
   max-height: auto;
   width: 23%;
@@ -21,6 +22,7 @@ ul {
   align-items: center;
   justify-content: top;
   color: #ffffff;
+  overflow: visible;
 }
 .visitante {
   background-color: #ffd3da;
@@ -80,6 +82,7 @@ ul {
   border-top-right-radius: 10px;
 }
 
+/**/
 /* largura da barra */
 ::-webkit-scrollbar {
   width: 8px;
