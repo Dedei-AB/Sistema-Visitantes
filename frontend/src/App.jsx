@@ -81,7 +81,6 @@ function App() {
       <div className="busca">
         <ListaPresentes pessoas={pessoasDentro} onSaida={removerPessoa} />
         <ListaCadastrados />
-        <BuscaPorPessoas />
       </div>
     </div>
   );
