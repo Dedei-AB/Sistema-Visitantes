@@ -9,13 +9,12 @@ router.get("/pessoa_visita", (req, res) => {
       p.idPessoa, 
       p.Nome, 
       p.Cpf, 
-      v.HoraEntrada, 
-      v.DataEntrada
+      v.DateTimeEntrada
     FROM pessoa p
     JOIN visitas v 
       ON p.idPessoa = v.Pessoa_idPessoa
-    WHERE v.HoraEntrada IS NOT NULL
-      AND v.HoraSaida IS NOT NULL;`,
+    WHERE v.DateTimeEntrada IS NOT NULL
+      AND v.DateTimeSaida IS NOT NULL;`,
     (err, results) => {
       if (err) return res.status(500).send("Erro no banco de dados!");
       res.json(results);
@@ -30,14 +29,13 @@ router.get("/pessoa_camara", (req, res) => {
       p.idPessoa, 
       p.Nome, 
       p.Cpf, 
-      v.DataEntrada, 
-      v.HoraEntrada, 
+      v.DateTimeEntrada, 
       p.Telefone, 
       p.Observacao
     FROM pessoa p
     JOIN visitas v 
       ON p.idPessoa = v.Pessoa_idPessoa
-    WHERE v.DataSaida IS NULL OR v.HoraSaida IS NULL;`,
+    WHERE v.DateTimeSaida IS NULL;`,
     (err, results) => {
       if (err) return res.status(500).send("Erro no banco de dados!");
       res.json(results);
