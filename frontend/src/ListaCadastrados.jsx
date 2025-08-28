@@ -47,7 +47,6 @@ function ListaCadastrados() {
           );
         })}
         {mostrarAlerta && <Alerta mensagem={mensagem} />}
-        <Alerta mensagem={mensagem} />
       </div>
     </div>
   );
