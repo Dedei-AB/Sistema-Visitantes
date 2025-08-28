@@ -6,21 +6,42 @@ export default function ListaPresentes({ onSaida }) {
   const [busca, setBusca] = useState("");
   const [visitantes, setVisitantes] = useState([]);
 
+  const buscarVisitantes = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/visitas/pessoa_camara");
+      const data = await res.json();
+      setVisitantes(data);
+    } catch (err) {
+      console.error("Erro ao buscar visitantes:", err);
+    }
+  };
   useEffect(() => {
-    fetch("http://localhost:5000/visitas/pessoa_camara")
-      .then((response) => response.json())
-      .then((data) => {
-        setVisitantes(data);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar visitas:", error);
-      });
+    buscarVisitantes();
   }, []);
 
-  const adicionarVisitante = (pessoa) => {
-    setVisitantes((prev) => [...prev, pessoa]);
-  };
-
+  function finalizarVisitaBtn(idVisita) {
+    const finalizarVisita = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/visitas/finalizar/${idVisita}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        alert(data.message || "Erro ao finalizar visita");
+        buscarVisitantes();
+      } catch (err) {
+        console.error(err);
+        alert("Erro na conexão com o servidor");
+      }
+    };
+    finalizarVisita();
+  }
   const listaFiltrada = visitantes.filter((pessoa) =>
     pessoa.Nome.toLowerCase().includes(busca.toLowerCase())
   );
@@ -50,7 +71,9 @@ export default function ListaPresentes({ onSaida }) {
                     {pessoa.DateTimeEntrada.split("T")[1].split(".")[0]}
                   </span>
                   <button
-                    onClick={() => onSaida && onSaida(pessoa.IdPessoa)}
+                    onClick={() => {
+                      finalizarVisitaBtn(pessoa.idVisitas);
+                    }}
                     className="botao-saida"
                   >
                     Registrar Saída
