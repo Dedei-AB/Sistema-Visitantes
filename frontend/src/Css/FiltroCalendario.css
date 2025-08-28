@@ -37,7 +37,7 @@
   width: 18.5vw;
   padding: 10px;
   border-radius: 10px;
-  z-index: 999;
+  z-index: 50;
 }
 
 .botao-calendario {
