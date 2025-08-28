@@ -1,116 +1,123 @@
+// routes/visitas.js
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-// listar visitas já concluídas
-router.get("/pessoa_visita", (req, res) => {
-  db.query(
-    `SELECT 
-      p.idPessoa, 
-      p.Nome, 
-      p.Cpf, 
-      v.DateTimeEntrada
-    FROM pessoa p
-    JOIN visitas v 
-      ON p.idPessoa = v.Pessoa_idPessoa
-    WHERE v.DateTimeEntrada IS NOT NULL
-      AND v.DateTimeSaida IS NOT NULL;`,
-    (err, results) => {
-      if (err) return res.status(500).send("Erro no banco de dados!");
-      res.json(results);
-    }
-  );
+// Listar visitas já concluídas
+router.get("/pessoa_visita", async (req, res) => {
+  try {
+    const [results] = await db.query(`
+      SELECT 
+        p.idPessoa, 
+        p.Nome, 
+        p.Cpf, 
+        v.DateTimeEntrada
+      FROM pessoa p
+      JOIN visitas v 
+        ON p.idPessoa = v.Pessoa_idPessoa
+      WHERE v.DateTimeEntrada IS NOT NULL
+        AND v.DateTimeSaida IS NOT NULL;
+    `);
+    res.json(results);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erro no banco de dados!");
+  }
 });
 
-// listar pessoas atualmente na câmara
-router.get("/pessoa_camara", (req, res) => {
-  db.query(
-    `SELECT 
-      p.idPessoa, 
-      p.Nome, 
-      p.Cpf, 
-      v.DateTimeEntrada, 
-      p.Telefone, 
-      p.Observacao
-    FROM pessoa p
-    JOIN visitas v 
-      ON p.idPessoa = v.Pessoa_idPessoa
-    WHERE v.DateTimeSaida IS NULL;`,
-    (err, results) => {
-      if (err) return res.status(500).send("Erro no banco de dados!");
-      res.json(results);
-    }
-  );
+// Listar pessoas atualmente na câmara
+router.get("/pessoa_camara", async (req, res) => {
+  try {
+    const [results] = await db.query(`
+      SELECT 
+        p.idPessoa, 
+        v.idVisitas,
+        p.Nome, 
+        p.Cpf, 
+        v.DateTimeEntrada, 
+        p.Telefone, 
+        p.Observacao
+      FROM pessoa p
+      JOIN visitas v 
+        ON p.idPessoa = v.Pessoa_idPessoa
+      WHERE v.DateTimeSaida IS NULL;
+    `);
+    res.json(results);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erro no banco de dados!");
+  }
 });
 
-// registrar entrada
-router.post("/entrada", (req, res) => {
+// Registrar entrada
+router.post("/entrada", async (req, res) => {
   const { Nome, Cpf, Telefone, Observacao, DataEntrada, HoraEntrada } =
     req.body;
 
   if (!Nome || !Cpf)
     return res.status(400).json({ error: "Nome e CPF são obrigatórios" });
 
-  const pessoaSql = `
-    INSERT INTO pessoa (Nome, Cpf, Telefone, Observacao)
-    VALUES (?, ?, ?, ?)
-    ON DUPLICATE KEY UPDATE Nome=VALUES(Nome), Telefone=VALUES(Telefone), Observacao=VALUES(Observacao)
-  `;
+  try {
+    const pessoaSql = `
+      INSERT INTO pessoa (Nome, Cpf, Telefone, Observacao)
+      VALUES (?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE Nome=VALUES(Nome), Telefone=VALUES(Telefone), Observacao=VALUES(Observacao)
+    `;
+    await db.query(pessoaSql, [Nome, Cpf, Telefone, Observacao]);
 
-  db.query(pessoaSql, [Nome, Cpf, Telefone, Observacao], (err, results) => {
-    if (err) {
-      console.error("Erro insert pessoa:", err);
-      return res.status(500).json({ error: "Erro ao salvar pessoa" });
-    }
+    const [rows] = await db.query(`SELECT idPessoa FROM pessoa WHERE Cpf=?`, [
+      Cpf,
+    ]);
+    if (!rows || rows.length === 0)
+      return res
+        .status(500)
+        .json({ error: "Pessoa não encontrada após insert" });
 
-    const getIdSql = `SELECT idPessoa FROM pessoa WHERE Cpf=?`;
-    db.query(getIdSql, [Cpf], (err2, rows) => {
-      if (err2) return res.status(500).json({ error: "Erro ao buscar pessoa" });
-      if (!rows || rows.length === 0)
-        return res
-          .status(500)
-          .json({ error: "Pessoa não encontrada após insert" });
+    const idPessoa = rows[0].idPessoa;
+    const visitaSql = `INSERT INTO visitas (Pessoa_idPessoa, DataEntrada, HoraEntrada) VALUES (?, ?, ?)`;
+    const [result2] = await db.query(visitaSql, [
+      idPessoa,
+      DataEntrada,
+      HoraEntrada,
+    ]);
 
-      const idPessoa = rows[0].idPessoa;
-      const visitaSql = `INSERT INTO visitas (Pessoa_idPessoa, DataEntrada, HoraEntrada) VALUES (?, ?, ?)`;
-
-      db.query(
-        visitaSql,
-        [idPessoa, DataEntrada, HoraEntrada],
-        (err3, result2) => {
-          if (err3) {
-            console.error("Erro insert visitas:", err3);
-            return res.status(500).json({ error: "Erro ao salvar visita" });
-          }
-
-          res.status(200).json({
-            message: "Entrada registrada!",
-            idVisita: result2.insertId,
-          });
-        }
-      );
+    res.status(200).json({
+      message: "Entrada registrada!",
+      idVisita: result2.insertId,
     });
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao salvar visita" });
+  }
 });
 
-// registrar saída
-router.post("/saida", (req, res) => {
-  const { cpf, dataSaida, horaSaida } = req.body;
-  if (!cpf) return res.status(400).json({ error: "Informe o CPF" });
+// Registrar saída
+router.post("/finalizar/:id", async (req, res) => {
+  try {
+    const idVisita = req.params.id;
 
-  const updateSql = `
-    UPDATE visitas v
-    JOIN pessoa p ON v.Pessoa_idPessoa = p.idPessoa
-    SET v.DataSaida=?, v.HoraSaida=?
-    WHERE p.Cpf=? AND v.DataSaida IS NULL AND v.HoraSaida IS NULL
-    ORDER BY v.idVisitas DESC
-    LIMIT 1
-  `;
+    // Pega a hora atual
+    const agora = new Date();
+    const formatado = agora.toISOString().slice(0, 19).replace("T", " ");
 
-  db.query(updateSql, [dataSaida, horaSaida, cpf], (err, result) => {
-    if (err) return res.status(500).json({ error: "Erro ao registrar saída" });
-    res.status(200).json({ message: "Saída registrada!" });
-  });
+    const [result] = await db.query(
+      `UPDATE visitas 
+       SET DateTimeSaida = ? 
+       WHERE idVisitas = ? AND DateTimeSaida IS NULL`,
+      [formatado, idVisita]
+    );
+
+    if (result.affectedRows > 0) {
+      res.json({ message: "Visita finalizada com sucesso!" });
+    } else {
+      res
+        .status(404)
+        .json({ message: "Visita não encontrada ou já finalizada." });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao finalizar visita." });
+  }
 });
 
 module.exports = router;

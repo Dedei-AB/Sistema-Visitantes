@@ -8,6 +8,8 @@ const connection = mysql.createConnection({
   database: "sistemaVisita",
 });
 
+const db = connection.promise();
+
 connection.connect((err) => {
   if (err) {
     console.error("Erro ao conectar ao banco:", err);
@@ -16,4 +18,4 @@ connection.connect((err) => {
   console.log("Conectado ao MySQL!");
 });
 
-module.exports = connection;
+module.exports = db;
