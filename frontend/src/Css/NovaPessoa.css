@@ -191,8 +191,9 @@ h3 {
 }
 
 .obs {
+  width: 40%;
   font-family: "Noto Sans", sans-serif;
-  width: auto;
+
   display: flex;
   text-align: center;
 }

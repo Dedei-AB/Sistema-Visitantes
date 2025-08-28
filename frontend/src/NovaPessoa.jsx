@@ -4,13 +4,24 @@ import "./Css/NovaPessoa.css";
 export default function NovaPessoa({ onAddPessoa, ...props }) {
   const inputRefs = [useRef(null), useRef(null), useRef(null)];
   const [mostrarAlert, setMostrarAlert] = useState(false);
-  const [dataHoje, setDataHoje] = useState("");
-  const [horaExata, setHoraExata] = useState("");
+  //------------Informações-----------------------
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [obs, setObservacao] = useState("");
+  //------------Horario--------------------------
+  const [dataHoje, setDataHoje] = useState("");
+  const [horaExata, setHoraExata] = useState("");
+  const [dateTimeEntrada, setDateTimeEntrada] = useState("");
+
+  const pegarHora = () => {
+    const agora = new Date();
+    const hora = String(agora.getHours()).padStart(2, "0");
+    const minutos = String(agora.getMinutes()).padStart(2, "0");
+    const segundos = String(agora.getSeconds()).padStart(2, "0");
+    return `${hora}:${minutos}:${segundos}`;
+  };
 
   function handleKeyDown(e, index) {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
@@ -50,20 +61,6 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
     setTelefone(formatarTelefone(e.target.value));
   const handleChangeCPF = (e) => setCpf(formatarCPF(e.target.value));
 
-  const pegarHora = () => {
-    const agora = new Date();
-    const hora = String(agora.getHours()).padStart(2, "0");
-    const minutos = String(agora.getMinutes()).padStart(2, "0");
-    const segundos = String(agora.getSeconds()).padStart(2, "0");
-    return `${hora}:${minutos}:${segundos}`;
-  };
-
-  useEffect(() => {
-    const hoje = new Date();
-    setDataHoje(hoje.toISOString().split("T")[0]);
-    setHoraExata(hoje.toTimeString().slice(0, 5));
-  }, []);
-
   const handleClickBtn = (e) => {
     const button = e.currentTarget;
     const ripple = document.createElement("span");
@@ -79,6 +76,19 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
     ripple.addEventListener("animationend", () => ripple.remove());
     setMostrarAlert(true);
     setHoraExata(pegarHora());
+
+    const agora = new Date();
+    const horaAtual = pegarHora();
+    setHoraExata(horaAtual);
+
+    const dataAtual = agora.toISOString().split("T")[0];
+    setDataHoje(dataAtual);
+
+    const [hora, minuto, segundo = "00"] = horaAtual.split(":");
+    agora.setHours(hora, minuto, segundo, 0);
+    setDateTimeEntrada(agora.toISOString());
+
+    console.log("DateTimeEntrada:", agora.toISOString());
   };
 
   // >>> FUNÇÃO PARA ENTRADA (POST)
@@ -93,8 +103,7 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
       Cpf: cpf,
       Telefone: telefone,
       Observacao: obs,
-      DataEntrada: dataHoje,
-      HoraEntrada: horaExata,
+      DateTimeEntrada: dateTimeEntrada,
     };
 
     try {
@@ -129,12 +138,6 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
       alert("Informe o CPF para registrar saída.");
       return;
     }
-
-    const saida = {
-      cpf,
-      dataSaida: new Date().toISOString().split("T")[0],
-      horaSaida: pegarHora(),
-    };
 
     try {
       const response = await fetch("http://localhost:5000/visitas/saida", {
@@ -179,6 +182,7 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
               <nav>
                 <input
                   type="time"
+                  step={1}
                   value={horaExata}
                   onChange={(e) => setHoraExata(e.target.value)}
                   onClick={handleClickBtn}
