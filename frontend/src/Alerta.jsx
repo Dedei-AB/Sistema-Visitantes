@@ -1,14 +1,27 @@
+import { useState } from "react";
 import "./Css/Alerta.css";
 
 function Alerta({ mensagem }) {
+  const [fecharAlerta, setFecharAlerta] = useState(true);
+
   return (
-    <div className="alerta-fundo">
-      <div className="alerta">
-        <h1>Atenção!</h1>
-        <p>{mensagem}</p>
+    fecharAlerta && (
+      <div className="alerta-fundo">
+        <div className="alerta">
+          <nav className="atention">
+            <h1>Atenção!</h1>
+            <div className="alerta-fechar">
+              <button
+                className="alerta-fechar-button"
+                onClick={() => setFecharAlerta(false)}
+              >
+                X
+              </button>
+            </div>
+          </nav>
+        </div>
       </div>
-      <div className="alerta-fechar">X</div>
-    </div>
+    )
   );
 }
 
