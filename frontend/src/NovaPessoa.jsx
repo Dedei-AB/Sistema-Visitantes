@@ -175,8 +175,9 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
             </svg>
           </strong>
         </button>
+      </div>
 
-        {mostrarAlert && (
+       {mostrarAlert && (
           <div className="bottomAlert">
             <div className="boxAlert">
               <nav>
@@ -300,7 +301,6 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
             </div>
           </div>
         )}
-      </div>
     </>
   );
 }

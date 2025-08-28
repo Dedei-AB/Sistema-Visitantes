@@ -58,16 +58,16 @@
   position: relative;
 }
 .bottomAlert {
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
   top: 0;
   left: 0;
-  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
 }
 
 nav {
