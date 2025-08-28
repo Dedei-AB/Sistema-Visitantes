@@ -1,4 +1,14 @@
+import { useState } from "react";
+
 function Pessoas({ visitas }) {
+  const entrada = new Date(visitas.DateTimeEntrada);
+  const [dataEntrada, setDataEntrada] = useState(
+    visitas.DateTimeEntrada.split("T")[0]
+  );
+  const [horaEntrada, setHoraEntrada] = useState(
+    visitas.DateTimeEntrada.split("T")[1].split(".")[0]
+  );
+
   return (
     <div
       key={visitas.id}
@@ -6,9 +16,7 @@ function Pessoas({ visitas }) {
       className="caixa-pessoa-cadastrada"
     >
       <div className="topo-dados-cadastrado">
-        <span className="hora-entrada">
-          Horário de entrada: {visitas.HoraEntrada}
-        </span>
+        <span className="hora-entrada">Horário de entrada: {horaEntrada}</span>
       </div>
       <div className="dados-pessoa">
         <p className="nome">

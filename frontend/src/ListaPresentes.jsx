@@ -46,7 +46,8 @@ export default function ListaPresentes({ onSaida }) {
               <div key={index} className="caixa-pessoa">
                 <div className="topo-dados">
                   <span className="hora-entrada">
-                    Horário de entrada: {pessoa.HoraEntrada}
+                    Horário de entrada:{" "}
+                    {pessoa.DateTimeEntrada.split("T")[1].split(".")[0]}
                   </span>
                   <button
                     onClick={() => onSaida && onSaida(pessoa.IdPessoa)}
