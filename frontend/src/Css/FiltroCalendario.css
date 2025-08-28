@@ -18,6 +18,7 @@
   height: auto;
   padding: 1rem;
   background-color: rgb(255, 0, 0);
+  position: relative;
 }
 
 .descricao-calendario {
@@ -28,9 +29,9 @@
 }
 
 .calendario-cadastrados {
-  position: fixed;
-  top: 50%;
-  left: 67%;
+  position: absolute;
+  top: 0;
+  right: 0;
   transform: translate(-50%, -50%);
   background-color: rgb(255, 255, 255);
   padding: 10px;
@@ -39,6 +40,7 @@
   align-items: start;
   justify-content: center;
   transition: 0.5s;
+  z-index: 10;
 }
 
 .botao-calendario {
