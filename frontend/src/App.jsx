@@ -35,30 +35,6 @@ function App() {
       observacao: "Cabelo loiro",
       telefone: "99813-4721",
     },
-    {
-      id: 3,
-      nome: "Fulano Oliveira",
-      cpf: "222.654.333-00",
-      horaEntrada: "09:45",
-      observacao: "Cabelo castanho",
-      telefone: "99813-4721",
-    },
-    {
-      id: 4,
-      nome: "Lorenzo cordeiro",
-      cpf: "222.654.123-00",
-      horaEntrada: "10:20",
-      observacao: "Careca",
-      telefone: "99813-4721",
-    },
-    {
-      id: 5,
-      nome: "Lorenzo cordeiro",
-      cpf: "222.654.123-00",
-      horaEntrada: "10:20",
-      observacao: "Careca",
-      telefone: "99813-4721",
-    },
   ]);
 
   const removerPessoa = (id) => {
