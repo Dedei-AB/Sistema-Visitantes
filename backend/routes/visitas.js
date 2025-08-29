@@ -48,49 +48,46 @@ router.get("/pessoa_camara", async (req, res) => {
     res.status(500).send("Erro no banco de dados!");
   }
 });
-
+//
+//
+//
+//
+//
 // Registrar entrada
 router.post("/entrada", async (req, res) => {
-  const { Nome, Cpf, Telefone, Observacao, DataEntrada, HoraEntrada } =
-    req.body;
+  const { Nome, Cpf, Telefone, Observacao } = req.body;
 
   if (!Nome || !Cpf)
-    return res.status(400).json({ error: "Nome e CPF são obrigatórios" });
+    return res.status(400).json({ error: "Nome é obrigatório" });
 
   try {
-    const pessoaSql = `
-    INSERT INTO pessoa (Nome, Cpf, Telefone, Observacao)
-    VALUES (?, ?, ?, ?)
-      ON DUPLICATE KEY UPDATE Nome=VALUES(Nome), Telefone=VALUES(Telefone), Observacao=VALUES(Observacao)
-      `;
-    await db.query(pessoaSql, [Nome, Cpf, Telefone, Observacao]);
+    const hora = new Date();
+    const horaExata = hora.toISOString().slice(0, 19).replace("T", " ");
 
-    const [rows] = await db.query(`SELECT idPessoa FROM pessoa WHERE Cpf=?`, [
-      Cpf,
-    ]);
-    if (!rows || rows.length === 0)
-      return res
-        .status(500)
-        .json({ error: "Pessoa não encontrada após insert" });
+    const [pessoaSql] = await db.query(
+      `INSERT INTO pessoa AND visita (Nome, Cpf, Telefone, Observacao, DateTimeEntrada) VALUES (?, ?, ?, ?, ?) WHERE idPessoa=Pessoa.idPessoa;
+      
+      SET @ultimo_id = LAST_INSERT_ID();
 
-    const idPessoa = rows[0].idPessoa;
-    const visitaSql = `INSERT INTO visitas (Pessoa_idPessoa, DataEntrada, HoraEntrada) VALUES (?, ?, ?)`;
-    const [result2] = await db.query(visitaSql, [
-      idPessoa,
-      DataEntrada,
-      HoraEntrada,
-    ]);
+      INSERT INTO visita (Pessoa_idPessoa, DateTimeEntrada)
+      VALUES (@ultimo_id, ?);`,
+      [Nome, Cpf, Telefone, Observacao, horaExata]
+    );
 
-    res.status(200).json({
-      message: "Entrada registrada!",
-      idVisita: result2.insertId,
-    });
+    if (pessoaSql.affectedRows > 0) {
+      res.json({ message: "Visita Cadastrada! >:)" });
+    } else {
+      res.status(404).json({ message: "Visita não conseguiu cadastrada" });
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erro ao salvar visita" });
   }
 });
-
+//
+//
+//
+//
 // Registrar saída
 router.post("/finalizar/:id", async (req, res) => {
   try {
