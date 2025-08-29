@@ -4,7 +4,7 @@
 }
 
 .titulo-cadastrados {
-  padding-top: 2rem;
+  padding-top: 1.4rem;
 }
 
 ul {
@@ -31,6 +31,10 @@ ul {
 .visitante {
   background-color: #ffd3da;
   width: 20vw;
+}
+
+::placeholder {
+  padding-left: 10px;
 }
 
 .arrow {
@@ -102,4 +106,18 @@ ul {
 /* quando passa o mouse na barra */
 ::-webkit-scrollbar-thumb:hover {
   background-color: #a0a0a0;
+}
+
+.busca-lista-cadastro {
+  width: 90%;
+  padding: 8px 3px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+}
+
+.busca-lista-cadastro:focus {
+  border-color: #268bff;
+  box-shadow: 0 0 0 5px rgba(1, 90, 192, 0.2);
 }

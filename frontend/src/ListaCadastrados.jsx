@@ -35,6 +35,11 @@ function ListaCadastrados() {
   return (
     <div className="container-cadastro">
       <h2 className="titulo-cadastrados">Visitas cadastradas:</h2>
+      <input
+        type="text"
+        className="busca-lista-cadastro"
+        placeholder="Pesquisar por campo..."
+      />
       {/* <input
         type="text"
         placeholder="Pesquisar..."
