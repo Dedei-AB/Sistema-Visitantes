@@ -28,19 +28,19 @@ function ListaCadastrados() {
       });
   }, []);
 
-  const listaFiltrada = visitantes.filter((pessoa) =>
-    pessoa.Nome.toLowerCase().includes(busca.toLowerCase())
-  );
+  // const listaFiltrada = visitantes.filter((pessoa) =>
+  //   pessoa.Nome.toLowerCase().includes(busca.toLowerCase())
+  // );
 
   return (
     <div className="container-cadastro">
       <h2 className="titulo-cadastrados">Visitas cadastradas:</h2>
-      <input
+      {/* <input
         type="text"
         placeholder="Pesquisar..."
         value={busca}
         onChange={(e) => setBusca(e.target.value)}
-      />
+      /> */}
 
       <FiltroCalendario />
 
@@ -56,7 +56,9 @@ function ListaCadastrados() {
             />
           );
         })}
-        {mostrarAlerta && <Alerta mensagem={mensagem} />}
+        {mostrarAlerta && (
+          <Alerta onClick={() => setMostrarAlerta(false)} mensagem={mensagem} />
+        )}
       </div>
     </div>
   );

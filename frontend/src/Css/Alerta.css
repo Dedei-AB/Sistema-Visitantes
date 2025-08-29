@@ -23,27 +23,16 @@
   transition: 0.3s;
 }
 
-.alerta-fechar {
-  border-radius: 10px;
-  border: none;
-  padding: 5px 7px 5px 7px;
-  color: rgb(0, 0, 0);
-}
-
 .alerta-fechar-button {
-  width: 1.5rem;
-  height: 1.5rem;
-  /* Estilo e transição */
   color: white;
-  background-color: white; /* Usando cor hexadecimal para melhor padronização */
-  cursor: pointer; /* Corrigido para tornar o botão clicável */
-  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 /* Efeito ao passar o mouse */
 .alerta-fechar-button:hover {
-  background-color: #c82333; /* Uma cor ligeiramente mais escura */
-  transform: scale(1.1); /* Efeito de crescimento sutil */
+  transform: scale(1.1);
+  transform: rotate(90deg);
 }
 
 .atention {
