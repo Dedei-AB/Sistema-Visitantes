@@ -32,7 +32,10 @@ export default function Editar({ idPessoa, onClick }) {
     <div className="editar-container">
       <div className="editar-caixa">
         <nav className="editar-nav">
-          <h2 className="editar-titulo">Editar Infomações de: {nome}</h2>
+          <h3 className="editar-titulo">
+            Editar Infomações de:{" "}
+            {dado.length > 0 ? dado[0].Nome : "Aguarde..."}
+          </h3>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="27"
@@ -46,9 +49,41 @@ export default function Editar({ idPessoa, onClick }) {
           </svg>
         </nav>
         <div className="editar-informacoes">
-          <div className="editar-input-nome">
+          <div className="editar-caixa-input">
             <label htmlFor="nome">Nome:</label>
-            <input type="text" />
+            <input
+              type="text"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+            />
+          </div>
+
+          <div className="editar-caixa-input">
+            <label htmlFor="cpf">Cpf:</label>
+            <input
+              type="text"
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
+            />
+          </div>
+
+          <div className="editar-caixa-input">
+            <label htmlFor="telefone">Telefone:</label>
+            <input
+              type="text"
+              value={telefone}
+              onChange={(e) => setTelefone(e.target.value)}
+            />
+          </div>
+
+          <div className="editar-caixa-input">
+            <label htmlFor="observacao">Observação:</label>
+            <textarea
+              name="observacao"
+              id="editar-input-observacao"
+              value={observacao}
+              onChange={(e) => setObservacao(e.target.value)}
+            ></textarea>
           </div>
         </div>
       </div>
