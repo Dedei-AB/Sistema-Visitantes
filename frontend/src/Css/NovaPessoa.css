@@ -85,7 +85,7 @@ nav {
   justify-content: center;
   border: #322f41 1px;
   border-radius: 6px;
-  background-color: #212025;
+  background-color: #333;
   cursor: pointer;
   border-top-right-radius: 10px;
 }
@@ -163,26 +163,25 @@ h3 {
 }
 
 .PhoneArea {
+  margin-right: 25px;
   margin-top: 20px;
 }
 .CabrasName {
+  width: 94%;
   display: flex;
   margin-left: 20px;
   margin-top: 20px;
 }
 
 .colun {
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
 #nome {
-  width: 8vw;
+  width: 95%;
   margin-right: 30px;
-}
-
-#sobrenome {
-  margin-right: 20px;
 }
 
 #inputDoc {
@@ -255,7 +254,22 @@ h3 {
 }
 
 input {
-  border-radius: 5px;
+  border-bottom: 1px solid rgb(139, 127, 127);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background-color: rgb(255, 255, 255);
+  height: 3vh;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+  border-bottom: 2px solid #322f41;
+  transform: scale(1.01);
+  transition: all 0.2s ease-in-out;
+  background-color: aliceblue;
 }
 
 .SaidaInfo {

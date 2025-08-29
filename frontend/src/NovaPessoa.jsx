@@ -120,130 +120,125 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
         </button>
       </div>
 
-       {mostrarAlert && (
-          <div className="bottomAlert">
-            <div className="boxAlert">
-              <nav>
-                <input
-                  type="time"
-                  step={1}
-                  value={horaExata}
-                  onChange={(e) => setHoraExata(e.target.value)}
-                  onClick={handleClickBtn}
-                />
-                <input
-                  type="date"
-                  value={dataHoje}
-                  onChange={(e) => setDataHoje(e.target.value)}
-                  onClick={handleClickBtn}
-                />
-                <button
-                  className="Close"
-                  onClick={() => setMostrarAlert(false)}
+      {mostrarAlert && (
+        <div className="bottomAlert">
+          <div className="boxAlert">
+            <nav>
+              <input
+                type="time"
+                step={1}
+                value={horaExata}
+                onChange={(e) => setHoraExata(e.target.value)}
+                onClick={handleClickBtn}
+              />
+              <input
+                type="date"
+                value={dataHoje}
+                onChange={(e) => setDataHoje(e.target.value)}
+                onClick={handleClickBtn}
+              />
+              <button className="Close" onClick={() => setMostrarAlert(false)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="27"
+                  height="27"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                  className="alerta-fechar-button"
+                  onClick={() => setFecharAlerta(false)}
                 >
-                  <strong className="x">x</strong>
-                </button>
-              </nav>
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                </svg>
+              </button>
+            </nav>
 
-              <div className="CabrasName">
-                <div className="colun">
-                  <label htmlFor="nome">Nome - </label>
-                  <input
-                    type="text"
-                    id="nome"
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
-                    ref={inputRefs[0]}
-                    onKeyDown={(e) => handleKeyDown(e, 0)}
-                  />
-                </div>
+            <div className="CabrasName">
+              <div className="colun">
+                <label htmlFor="nome">Nome:</label>
+                <input
+                  type="text"
+                  id="nome"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  ref={inputRefs[0]}
+                  onKeyDown={(e) => handleKeyDown(e, 0)}
+                />
+              </div>
+            </div>
 
-                <div className="colun">
-                  <label htmlFor="sobrenome">Sobrenome - </label>
-                  <input
-                    type="text"
-                    id="sobrenome"
-                    value={sobrenome}
-                    onChange={(e) => setSobrenome(e.target.value)}
-                    ref={inputRefs[1]}
-                    onKeyDown={(e) => handleKeyDown(e, 1)}
-                  />
-                </div>
+            <div className="SelectType">
+              <div className="CPFInput">
+                <label htmlFor="inputDoc">CPF:</label>
+                <br />
+                <input
+                  type="text"
+                  id="inputDoc"
+                  value={cpf}
+                  onChange={handleChangeCPF}
+                  maxLength={14}
+                  ref={inputRefs[2]}
+                  onKeyDown={(e) => handleKeyDown(e, 2)}
+                />
               </div>
 
-              <div className="SelectType">
-                <div className="CPFInput">
-                  <label htmlFor="inputDoc">CPF -</label>
-                  <br />
-                  <input
-                    type="text"
-                    id="inputDoc"
-                    value={cpf}
-                    onChange={handleChangeCPF}
-                    maxLength={14}
-                    ref={inputRefs[2]}
-                    onKeyDown={(e) => handleKeyDown(e, 2)}
-                  />
-                </div>
+              <div className="PhoneArea">
+                <label htmlFor="telefone">Telefone: </label>
+                <br />
+                <input
+                  type="text"
+                  id="telefone"
+                  value={telefone}
+                  onChange={handleChangeTelefone}
+                  maxLength={17}
+                />
+              </div>
+            </div>
 
-                <div className="PhoneArea">
-                  <label htmlFor="telefone">Telefone -</label>
-                  <br />
-                  <input
-                    type="text"
-                    id="telefone"
-                    value={telefone}
-                    onChange={handleChangeTelefone}
-                    maxLength={17}
-                  />
-                </div>
+            <div className="Observações">
+              <div className="caixaObs">
+                <nav className="obs">Observação</nav>
+                <textarea
+                  id="Detalhes"
+                  value={obs}
+                  onChange={(e) => setObservacao(e.target.value)}
+                />
               </div>
 
-              <div className="Observações">
-                <div className="caixaObs">
-                  <nav className="obs">Observação</nav>
-                  <textarea
-                    id="Detalhes"
-                    value={obs}
-                    onChange={(e) => setObservacao(e.target.value)}
-                  />
-                </div>
-
-                <div className="tadificil">
-                  <h3>enviar</h3>
-                  <button className="enviar" onClick={handleEnviar}>
-                    <svg
-                      className="imagemAdd bi bi-person-fill-add"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                      <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <div className="SaidaInfo">
-                <strong>Saída</strong>
-              </div>
-              <p>
-                Caso a pessoa já tenha saído: <br />
-                Aperte o botão de "<strong>Registrar Saída</strong>" <br />
-                Isso irá salvar a saída da pessoa.
-              </p>
-              <div className="hellYeah">
-                {/* >>> aqui liga a função nova */}
-                <button id="RegistrarSaida" onClick={registrarSaida}>
-                  Registrar Saída
+              <div className="tadificil">
+                <h3>enviar</h3>
+                <button className="enviar" onClick={handleEnviar}>
+                  <svg
+                    className="imagemAdd bi bi-person-fill-add"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
+                  </svg>
                 </button>
               </div>
             </div>
+
+            <div className="SaidaInfo">
+              <strong>Saída</strong>
+            </div>
+            <p>
+              Caso a pessoa já tenha saído: <br />
+              Aperte o botão de "<strong>Registrar Saída</strong>" <br />
+              Isso irá salvar a saída da pessoa.
+            </p>
+            <div className="hellYeah">
+              {/* >>> aqui liga a função nova */}
+              <button id="RegistrarSaida" onClick={registrarSaida}>
+                Registrar Saída
+              </button>
+            </div>
           </div>
-        )}
+        </div>
+      )}
     </>
   );
 }
