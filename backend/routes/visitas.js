@@ -59,10 +59,10 @@ router.post("/entrada", async (req, res) => {
 
   try {
     const pessoaSql = `
-      INSERT INTO pessoa (Nome, Cpf, Telefone, Observacao)
-      VALUES (?, ?, ?, ?)
+    INSERT INTO pessoa (Nome, Cpf, Telefone, Observacao)
+    VALUES (?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE Nome=VALUES(Nome), Telefone=VALUES(Telefone), Observacao=VALUES(Observacao)
-    `;
+      `;
     await db.query(pessoaSql, [Nome, Cpf, Telefone, Observacao]);
 
     const [rows] = await db.query(`SELECT idPessoa FROM pessoa WHERE Cpf=?`, [
@@ -101,9 +101,7 @@ router.post("/finalizar/:id", async (req, res) => {
     const formatado = agora.toISOString().slice(0, 19).replace("T", " ");
 
     const [result] = await db.query(
-      `UPDATE visitas 
-       SET DateTimeSaida = ? 
-       WHERE idVisitas = ? AND DateTimeSaida IS NULL`,
+      `UPDATE visitas SET DateTimeSaida = ? WHERE idVisitas = ? AND DateTimeSaida IS NULL`,
       [formatado, idVisita]
     );
 
@@ -117,6 +115,23 @@ router.post("/finalizar/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erro ao finalizar visita." });
+  }
+});
+
+// Select para editar pessoa:
+router.get("/pessoa/:id", async (req, res) => {
+  try {
+    const idPessoa = Number(req.params.id);
+    const [result] = await db.query(
+      `
+      SELECT * FROM pessoa WHERE idPessoa = ?;
+    `,
+      [idPessoa]
+    );
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erro no banco de dados!");
   }
 });
 

@@ -4,18 +4,18 @@ import "./Css/ListaCadastrados.css";
 import "react-date-range/dist/styles.css"; // estilo principal
 import "react-date-range/dist/theme/default.css"; // tema default
 import FiltroCalendario from "./FiltroCalendario";
-import Alerta from "./Alerta";
+import Editar from "./Editar";
 
 function ListaCadastrados() {
-  const [mensagem, setMensagem] = useState("");
-  const [mostrarAlerta, setMostrarAlerta] = useState(false);
+  const [pessoaSelecionada, setPessoaSelecionada] = useState(false);
+  const [showEditar, setShowEditar] = useState(false);
   const [dado, setDado] = useState([]);
 
-  function mudarAlerta(texto) {
-    console.log("sgjs");
-    setMensagem(texto);
-    setMostrarAlerta(!mostrarAlerta);
-  }
+  const mudarPessoa = (texto, idPessoa) => {
+    console.log(texto);
+    setPessoaSelecionada(idPessoa);
+    setShowEditar(true);
+  };
 
   useEffect(() => {
     fetch("http://localhost:5000/visitas/pessoa_visita")
@@ -56,15 +56,22 @@ function ListaCadastrados() {
               key={index}
               visitas={pessoa}
               onClick={() => {
-                mudarAlerta(`Você clicou na pessoa: ${pessoa.Nome}`);
+                mudarPessoa(
+                  `Você clicou na pessoa: ${pessoa.Nome}`,
+                  pessoa.idPessoa
+                );
               }}
             />
           );
         })}
-        {mostrarAlerta && (
-          <Alerta onClick={() => setMostrarAlerta(false)} mensagem={mensagem} />
-        )}
       </div>
+
+      {showEditar && (
+        <Editar
+          onClick={() => setShowEditar(false)}
+          idPessoa={pessoaSelecionada}
+        />
+      )}
     </div>
   );
 }
