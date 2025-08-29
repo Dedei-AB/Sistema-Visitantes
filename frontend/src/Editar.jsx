@@ -46,8 +46,10 @@ export default function Editar({ idPessoa, onClick }) {
           </svg>
         </nav>
         <div className="editar-informacoes">
-          <label htmlFor="nome">Nome:</label>
-          <input type="text" />
+          <div className="editar-input-nome">
+            <label htmlFor="nome">Nome:</label>
+            <input type="text" />
+          </div>
         </div>
       </div>
     </div>
