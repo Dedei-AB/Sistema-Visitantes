@@ -12,6 +12,7 @@ function ListaCadastrados() {
   const [dado, setDado] = useState([]);
 
   function mudarAlerta(texto) {
+    console.log("sgjs");
     setMensagem(texto);
     setMostrarAlerta(!mostrarAlerta);
   }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Pessoas({ visitas }) {
+function Pessoas({ visitas, onClick }) {
   const entrada = new Date(visitas.DateTimeEntrada);
   const [dataEntrada, setDataEntrada] = useState(
     visitas.DateTimeEntrada.split("T")[0]
@@ -14,6 +14,7 @@ function Pessoas({ visitas }) {
       key={visitas.id}
       id={`caixa-pessoa-cadastrada-${visitas.idPessoa}`}
       className="caixa-pessoa-cadastrada"
+      onClick={onClick}
     >
       <div className="topo-dados-cadastrado">
         <span className="hora-entrada">Horário de entrada: {horaEntrada}</span>

@@ -18,8 +18,8 @@
   background-color: white;
   color: black;
   display: flex;
+  flex-direction: column;
   box-shadow: 0 0 15px #000000;
-  justify-content: space-around;
   transition: 0.3s;
 }
 
@@ -31,17 +31,21 @@
 }
 
 .alerta-fechar-button {
-  cursor: pointer;
-  border-radius: 10px;
-  border: none;
-  padding: 5px 7px 5px 7px;
-  background-color: rgb(221, 65, 65);
+  width: 1.5rem;
+  height: 1.5rem;
+  /* Estilo e transição */
+  color: white;
+  background-color: white; /* Usando cor hexadecimal para melhor padronização */
+  cursor: pointer; /* Corrigido para tornar o botão clicável */
+  transition: 0.3s ease-in-out;
 }
 
+/* Efeito ao passar o mouse */
 .alerta-fechar-button:hover {
-  transform: scale(1.02);
-  transition: 0.3s;
+  background-color: #c82333; /* Uma cor ligeiramente mais escura */
+  transform: scale(1.1); /* Efeito de crescimento sutil */
 }
+
 .atention {
   display: flex;
   align-items: center;
