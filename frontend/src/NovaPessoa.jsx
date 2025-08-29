@@ -91,71 +91,14 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
     console.log("DateTimeEntrada:", agora.toISOString());
   };
 
-  // >>> FUNÇÃO PARA ENTRADA (POST)
-  const handleEnviar = async () => {
-    if (!nome.trim()) {
-      alert("O nome é obrigatório!");
-      return;
-    }
-
-    const novaPessoa = {
-      Nome: nome.trim(),
-      Cpf: cpf,
-      Telefone: telefone,
-      Observacao: obs,
-      DateTimeEntrada: dateTimeEntrada,
-    };
-
-    try {
-      const response = await fetch("http://localhost:5000/visitas/entrada", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(novaPessoa),
-      });
-
-      if (!response.ok) throw new Error("Erro ao registrar entrada");
-
-      const data = await response.json();
-      console.log("Entrada registrada:", data);
-
-      if (onAddPessoa) onAddPessoa({ id: data.idVisita, ...novaPessoa });
-
-      setNome("");
-      setSobrenome("");
-      setCpf("");
-      setTelefone("");
-      setObservacao("");
-      setMostrarAlert(false);
-    } catch (err) {
-      console.error(err);
-      alert("Falha ao salvar entrada!");
-    }
+  const handleEnviar = () => {
+    console.log("Função handleEnviar chamada");
   };
 
-  // >>> FUNÇÃO PARA SAÍDA (POST)
-  const registrarSaida = async () => {
-    if (!cpf.trim()) {
-      alert("Informe o CPF para registrar saída.");
-      return;
-    }
-
-    try {
-      const response = await fetch("http://localhost:5000/visitas/saida", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(saida),
-      });
-
-      if (!response.ok) throw new Error("Erro ao registrar saída");
-
-      const data = await response.json();
-      console.log("Saída registrada:", data);
-      alert(data.message || "Saída registrada!");
-    } catch (err) {
-      console.error(err);
-      alert("Falha ao salvar saída!");
-    }
+  const registrarSaida = () => {
+    console.log("Função registrarSaida chamada");
   };
+  //-------------- Saida de Visitas --------------
 
   return (
     <>
