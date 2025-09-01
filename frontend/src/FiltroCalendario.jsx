@@ -5,7 +5,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "./Css/FiltroCalendario.css"
 
-function FiltroCalendario() {
+function FiltroCalendario({ onPeriodoChange}) {
   const [periodo, setPeriodo] = useState([
     {
       startDate: new Date(),
@@ -13,6 +13,12 @@ function FiltroCalendario() {
       key: "selection",
     },
   ]);
+
+  const handlePeriodoChange = (item) => {
+    const novoPeriodo = [item.selection];
+    setPeriodo(novoPeriodo);
+    onPeriodoChange(item.selection);
+  }
 
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -34,7 +40,7 @@ function FiltroCalendario() {
         <div className="calendario-cadastrados">
           <DateRange
             editableDateInputs={true}
-            onChange={(item) => setPeriodo([item.selection])}
+            onChange={handlePeriodoChange}
             ranges={periodo}
             dateDisplayFormat="dd-MM-yyyy"
             direction="horizontal"
