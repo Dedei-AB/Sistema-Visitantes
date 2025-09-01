@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import "./Css/Editar.css";
+import Alerta from "./Alerta";
 
 export default function Editar({ idPessoa, onClick }) {
+  const [mostrarAlerta, setMostrarAlerta] = useState(false);
+
   const [dado, setDado] = useState([]);
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -84,9 +87,17 @@ export default function Editar({ idPessoa, onClick }) {
               value={observacao}
               onChange={(e) => setObservacao(e.target.value)}
             ></textarea>
+
+            <button onClick={() => setMostrarAlerta(true)}>Salvar</button>
           </div>
         </div>
       </div>
+      {mostrarAlerta && (
+        <Alerta
+          mensagem="Alerta teste"
+          onClick={() => setMostrarAlerta(false)}
+        />
+      )}
     </div>
   );
 }
