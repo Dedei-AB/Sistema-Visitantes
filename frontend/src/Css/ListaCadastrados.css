@@ -56,41 +56,6 @@ ul {
   background-color: #333;
 }
 
-.caixa-pessoa-cadastrada {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 15rem;
-  align-items: flex-start;
-  justify-content: center;
-  background-color: rgb(255, 255, 255);
-  color: black;
-  border-radius: 10px;
-  margin-bottom: 0.5rem;
-  transition: 0.4s;
-  cursor: pointer;
-
-  flex-basis: 1rem;
-}
-
-.caixa-pessoa-cadastrada:hover {
-  filter: brightness(0.7);
-  transition: 0.4s;
-  transform: translateY(-2px);
-}
-
-.topo-dados-cadastrado {
-  width: 100%;
-  background-color: #d1d1d1;
-  padding: 1px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
 /**/
 /* largura da barra */
 ::-webkit-scrollbar {

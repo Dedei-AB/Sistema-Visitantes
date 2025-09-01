@@ -11,7 +11,8 @@ router.get("/pessoa_visita", async (req, res) => {
         p.idPessoa, 
         p.Nome, 
         p.Cpf, 
-        v.DateTimeEntrada
+        v.DateTimeEntrada,
+        v.DateTimeSaida
       FROM pessoa p
       JOIN visitas v 
         ON p.idPessoa = v.Pessoa_idPessoa

@@ -1,0 +1,51 @@
+.caixa-pessoa-cadastrada {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 15rem;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  color: black;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  transition: 0.4s;
+  cursor: pointer;
+
+  flex-basis: 1rem;
+}
+
+.caixa-pessoa-cadastrada:hover {
+  filter: brightness(0.7);
+  transition: 0.4s;
+  transform: translateY(-2px);
+}
+
+.topo-dados-cadastrado {
+  width: 100%;
+  background-color: #d1d1d1;
+  color: black;
+  padding: 1px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.dados-pessoa {
+  height: 7rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 0.7rem;
+  padding-top: 0.2rem;
+}
+
+.informacao {
+  margin: 0.2rem;
+  padding: 0;
+}
