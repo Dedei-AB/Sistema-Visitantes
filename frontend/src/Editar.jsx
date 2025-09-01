@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Css/Editar.css";
+import style from "./Css/Editar.module.css";
 import Alerta from "./Alerta";
 
 export default function Editar({ idPessoa, onClick }) {
@@ -32,8 +32,8 @@ export default function Editar({ idPessoa, onClick }) {
   }, [dado]);
 
   return (
-    <div className="editar-container">
-      <div className="editar-caixa">
+    <div className={style["editar-container"]}>
+      <div className={style["editar-caixa"]}>
         <nav className="editar-nav">
           <h3 className="editar-titulo">
             Editar Infomações de:{" "}
