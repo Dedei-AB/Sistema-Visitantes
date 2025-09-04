@@ -10,6 +10,10 @@ export default function ListaPresentes({ onSaida }) {
   const [visitantes, setVisitantes] = useState([]);
   const [showEditar, setShowEditar] = useState(false);
 
+  const removerAcentos = (texto) =>
+  texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+
   const buscarVisitantes = async () => {
     try {
       const res = await fetch("http://localhost:5000/visitas/pessoa_camara");
@@ -25,7 +29,6 @@ export default function ListaPresentes({ onSaida }) {
     setPessoaSelecionada(idPessoa);
     setShowEditar(true);
   };
-
 
   useEffect(() => {
     buscarVisitantes();
@@ -54,9 +57,22 @@ export default function ListaPresentes({ onSaida }) {
     };
     finalizarVisita();
   }
-  const listaFiltrada = visitantes.filter((pessoa) =>
-    pessoa.Nome.toLowerCase().includes(busca.toLowerCase())
-  );
+  const listaFiltrada = visitantes.filter((pessoa) => {
+  const buscaEhNumerica = /^\d+$/.test(busca.replace(/\D/g, ""));
+  const nome = pessoa.Nome || "";
+  const cpf = (pessoa.Cpf || "").replace(/\D/g, "");
+
+  const termoBusca = removerAcentos(busca.toLowerCase());
+  const nomeNormalizado = removerAcentos(nome.toLowerCase());
+  const termoNumerico = busca.replace(/\D/g, "");
+
+  const correspondeBusca = buscaEhNumerica
+    ? cpf.includes(termoNumerico)
+    : nomeNormalizado.includes(termoBusca);
+
+  return correspondeBusca;
+});
+
 
   return (
     <div className="container-lista-presenca">
@@ -64,7 +80,7 @@ export default function ListaPresentes({ onSaida }) {
 
       <input
         type="text"
-        placeholder="Pesquisar nome..."
+        placeholder="Pesquisar nome ou CPF..."
         className="campo-pesquisa"
         value={busca}
         onChange={(e) => setBusca(e.target.value)}
@@ -86,7 +102,7 @@ export default function ListaPresentes({ onSaida }) {
                       pessoa.idPessoa
                     );
                   }}
-                  registrarSaida={() => finalizarVisitaBtn(pessoa.idPessoa)}
+                   registrarSaida={() => finalizarVisitaBtn(pessoa.idPessoa)}
                 />
               );
             })}
