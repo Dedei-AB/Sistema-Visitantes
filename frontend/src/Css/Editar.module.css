@@ -12,7 +12,7 @@
 }
 
 .editar-caixa {
-  height: 70%;
+  height: auto;
   width: 30%;
   background-color: white;
   border-radius: 15px;
@@ -67,4 +67,60 @@
   outline: none;
   border-color: rgb(0, 0, 0);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.botoes {
+  height: 2rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.btn-salvar {
+  height: 1.7rem;
+  width: 4.6rem;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(67, 199, 41);
+  color: white;
+  transition: 0.2s;
+}
+
+.btn-salvar:hover {
+  transform: scale(1.05);
+  filter: brightness(0.8);
+  transition: 0.2s;
+}
+
+.btn-reverter {
+  height: 1.7rem;
+  width: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(199, 52, 41);
+  color: white;
+  transition: 0.2s;
+}
+
+.btn-reverter:hover {
+  transform: scale(1.05);
+  filter: brightness(0.8);
+  transition: 0.2s;
+}
+
+.reverter-svg {
+  fill: white;
+  margin: 3px;
+  transition: 0.3s;
+}
+
+.btn-reverter:hover .reverter-svg {
+  transform: rotate(-90deg);
+  transition: 0.3s;
 }

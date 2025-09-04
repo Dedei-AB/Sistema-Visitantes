@@ -1,15 +1,25 @@
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import style from "./Css/Editar.module.css";
 import Alerta from "./Alerta";
+import { set } from "date-fns";
 
 export default function Editar({ idPessoa, onClick }) {
   const [mostrarAlerta, setMostrarAlerta] = useState(false);
+
+  const [inicialNome, setinicialNome] = useState("");
+  const [inicialCpf, setinicialCpf] = useState("");
+  const [inicialTelefone, setinicialTelefone] = useState("");
+  const [inicialObservacao, setinicialObservacao] = useState("");
 
   const [dado, setDado] = useState([]);
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [observacao, setObservacao] = useState("");
+
+  const handleChangeCPF = (e) => setCpf(formatarCPF(e.target.value));
+  const handleChangeTelefone = (e) =>
+    setTelefone(formatarTelefone(e.target.value));
 
   useEffect(() => {
     fetch(`http://localhost:5000/visitas/pessoa/${idPessoa}`)
@@ -28,8 +38,39 @@ export default function Editar({ idPessoa, onClick }) {
       setCpf(dado[0].Cpf);
       setTelefone(dado[0].Telefone);
       setObservacao(dado[0].Observacao);
+
+      setinicialNome(nome);
+      setinicialCpf(cpf);
+      setinicialTelefone(telefone);
+      setinicialObservacao(observacao);
     }
   }, [dado]);
+
+  const formatarCPF = (valor) => {
+    const numeros = valor.replace(/\D/g, "").slice(0, 11);
+    let formatado = numeros;
+    if (numeros.length > 3)
+      formatado = numeros.slice(0, 3) + "." + numeros.slice(3);
+    if (numeros.length > 6)
+      formatado = formatado.slice(0, 7) + "." + formatado.slice(7);
+    if (numeros.length > 9)
+      formatado = formatado.slice(0, 11) + "-" + formatado.slice(11);
+    return formatado;
+  };
+
+  const formatarTelefone = (valor) => {
+    const numeros = valor.replace(/\D/g, "").slice(0, 11);
+    if (numeros.length === 0) return "";
+    if (numeros.length <= 2) return `(${numeros}`;
+    if (numeros.length <= 7)
+      return `(${numeros.slice(0, 2)}) ${numeros.slice(2)}`;
+    if (numeros.length <= 11)
+      return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 3)} ${numeros.slice(
+        3,
+        7
+      )}-${numeros.slice(7)}`;
+    return numeros;
+  };
 
   return (
     <div className={style["editar-container"]}>
@@ -66,7 +107,9 @@ export default function Editar({ idPessoa, onClick }) {
             <input
               type="text"
               value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
+              onChange={handleChangeCPF}
+              maxLength={14}
+              placeholder="XXX.XXX.XXX-XX"
             />
           </div>
 
@@ -74,8 +117,11 @@ export default function Editar({ idPessoa, onClick }) {
             <label htmlFor="telefone">Telefone:</label>
             <input
               type="text"
+              id="telefone"
               value={telefone}
-              onChange={(e) => setTelefone(e.target.value)}
+              onChange={handleChangeTelefone}
+              maxLength={17}
+              placeholder="(XX) X XXXX-XXXX"
             />
           </div>
 
@@ -87,14 +133,47 @@ export default function Editar({ idPessoa, onClick }) {
               value={observacao}
               onChange={(e) => setObservacao(e.target.value)}
             ></textarea>
+          </div>
 
-            <button onClick={() => setMostrarAlerta(true)}>Salvar</button>
+          <div className={style["botoes"]}>
+            <button
+              className={style["btn-salvar"]}
+              onClick={() => setMostrarAlerta(true)}
+            >
+              <strong>Salvar</strong>
+            </button>
+            <button
+              className={style["btn-reverter"]}
+              onClick={() => {
+                setCpf(inicialCpf);
+                setNome(inicialNome);
+                setObservacao(inicialObservacao);
+                setTelefone(inicialTelefone);
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="19"
+                height="19"
+                fill="white"
+                class={style["reverter-svg"]}
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"
+                />
+                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466" />
+              </svg>
+              <strong>Reverter</strong>
+            </button>
           </div>
         </div>
       </div>
+
       {mostrarAlerta && (
         <Alerta
-          mensagem="Alerta teste"
+          mensagem="Salvo com sucesso!"
           onClick={() => setMostrarAlerta(false)}
         />
       )}
