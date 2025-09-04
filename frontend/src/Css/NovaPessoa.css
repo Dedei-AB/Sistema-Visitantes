@@ -319,3 +319,14 @@ p {
 label {
   font-family: "Noto Sans", sans-serif;
 }
+
+.editar-fechar {
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.editar-fechar:hover {
+  transform: scale(1.1);
+  transform: rotate(90deg);
+}

@@ -34,8 +34,8 @@ export default function Editar({ idPessoa, onClick }) {
   return (
     <div className={style["editar-container"]}>
       <div className={style["editar-caixa"]}>
-        <nav className="editar-nav">
-          <h3 className="editar-titulo">
+        <nav className={style["editar-nav"]}>
+          <h3 className={style["editar-titulo"]}>
             Editar Infomações de:{" "}
             {dado.length > 0 ? dado[0].Nome : "Aguarde..."}
           </h3>
@@ -45,14 +45,14 @@ export default function Editar({ idPessoa, onClick }) {
             height="27"
             fill="currentColor"
             viewBox="0 0 16 16"
-            className="editar-fechar"
+            className={style["editar-fechar"]}
             onClick={onClick}
           >
             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
           </svg>
         </nav>
-        <div className="editar-informacoes">
-          <div className="editar-caixa-input">
+        <div className={style["editar-informacoes"]}>
+          <div className={style["editar-caixa-input"]}>
             <label htmlFor="nome">Nome:</label>
             <input
               type="text"
@@ -61,7 +61,7 @@ export default function Editar({ idPessoa, onClick }) {
             />
           </div>
 
-          <div className="editar-caixa-input">
+          <div className={style["editar-caixa-input"]}>
             <label htmlFor="cpf">Cpf:</label>
             <input
               type="text"
@@ -70,7 +70,7 @@ export default function Editar({ idPessoa, onClick }) {
             />
           </div>
 
-          <div className="editar-caixa-input">
+          <div className={style["editar-caixa-input"]}>
             <label htmlFor="telefone">Telefone:</label>
             <input
               type="text"
@@ -79,7 +79,7 @@ export default function Editar({ idPessoa, onClick }) {
             />
           </div>
 
-          <div className="editar-caixa-input">
+          <div className={style["editar-caixa-input"]}>
             <label htmlFor="observacao">Observação:</label>
             <textarea
               name="observacao"
