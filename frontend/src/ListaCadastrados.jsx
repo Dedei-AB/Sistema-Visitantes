@@ -11,6 +11,7 @@ function ListaCadastrados() {
   const [pessoaSelecionada, setPessoaSelecionada] = useState(false);
   const [showEditar, setShowEditar] = useState(false);
   const [dado, setDado] = useState([]);
+  const [busca, setBusca] = useState("");
 
   const mudarPessoa = (texto, idPessoa) => {
     console.log(texto);
@@ -18,16 +19,27 @@ function ListaCadastrados() {
     setShowEditar(true);
   };
 
-  const dadosFiltrados = dado.filter((pessoa) =>{
-    if (!periodoSelecionado) return true;
-    const dataEntrada = new Date(pessoa.DateTimeEntrada);
-    const startDate = new Date(periodoSelecionado.startDate)
-    const endDate = new Date(periodoSelecionado.endDate);
-    endDate.setHours(23, 59, 59, 999); //ajusta para incluir o dia inteiro
-    return(
-      dataEntrada >= startDate && dataEntrada <= endDate
-    );
-  });
+  const dadosFiltrados = dado.filter((pessoa) => {
+  const dataEntrada = new Date(pessoa.DateTimeEntrada);
+  const startDate = periodoSelecionado ? new Date(periodoSelecionado.startDate) : null;
+  const endDate = periodoSelecionado ? new Date(periodoSelecionado.endDate) : null;
+  if (endDate) endDate.setHours(23, 59, 59, 999);
+
+  const dentroDoPeriodo = !periodoSelecionado || (dataEntrada >= startDate && dataEntrada <= endDate);
+
+  const buscaEhNumerica = /^\d+$/.test(busca.replace(/\D/g, "")); //verifica se a busca é numérica(provavelmente CPF) ou texto(nome)
+  const nome = pessoa.Nome?.toLowerCase() || "";
+  const cpf = (pessoa.Cpf || "").replace(/\D/g, "");
+  const termoBusca = busca.toLowerCase();
+  const termoNumerico = busca.replace(/\D/g, "");
+
+  const correspondeBusca = buscaEhNumerica
+    ? cpf.includes(termoNumerico)
+    : nome.includes(termoBusca);
+
+  return dentroDoPeriodo && correspondeBusca;
+});
+
 
   useEffect(() => {
     fetch("http://localhost:5000/visitas/pessoa_visita")
@@ -41,9 +53,9 @@ function ListaCadastrados() {
       
   }, []);
 
-  // const listaFiltrada = visitantes.filter((pessoa) =>
-  //   pessoa.Nome.toLowerCase().includes(busca.toLowerCase())
-  // );
+   //const listaFiltrada = visitantes.filter((pessoa) =>
+     //pessoa.Nome.toLowerCase().includes(busca.toLowerCase())
+   //);
 
   return (
     <div className="container-cadastro">
@@ -51,14 +63,11 @@ function ListaCadastrados() {
       <input
         type="text"
         className="busca-lista-cadastro"
-        placeholder="Pesquisar por campo..."
-      />
-      {/* <input
-        type="text"
-        placeholder="Pesquisar..."
+        placeholder="Pesquisar nome ou CPF..."
         value={busca}
         onChange={(e) => setBusca(e.target.value)}
-      /> */}
+      />
+    
 
       <FiltroCalendario onPeriodoChange={setPeriodoSelecionado} />
 
