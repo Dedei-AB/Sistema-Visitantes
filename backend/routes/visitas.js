@@ -10,7 +10,8 @@ router.get("/pessoa_visita", async (req, res) => {
       SELECT 
         p.idPessoa, 
         p.Nome, 
-        p.Cpf, 
+        p.Cpf,
+        p.Telefone,
         v.DateTimeEntrada,
         v.DateTimeSaida
       FROM pessoa p

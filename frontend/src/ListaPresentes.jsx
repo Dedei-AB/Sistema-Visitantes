@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Css/ListaPresentes.css";
 import NovaPessoa from "./NovaPessoa";
+import Pessoas from "./Pessoas";
+import Editar from "./Editar";
 
 export default function ListaPresentes({ onSaida }) {
+  const [pessoaSelecionada, setPessoaSelecionada] = useState(false);
   const [busca, setBusca] = useState("");
   const [visitantes, setVisitantes] = useState([]);
+  const [showEditar, setShowEditar] = useState(false);
 
   const buscarVisitantes = async () => {
     try {
@@ -15,6 +19,13 @@ export default function ListaPresentes({ onSaida }) {
       console.error("Erro ao buscar visitantes:", err);
     }
   };
+
+  const mudarPessoa = (texto, idPessoa) => {
+    console.log(texto);
+    setPessoaSelecionada(idPessoa);
+    setShowEditar(true);
+  };
+
   useEffect(() => {
     buscarVisitantes();
   }, []);
@@ -63,58 +74,31 @@ export default function ListaPresentes({ onSaida }) {
           <p className="nenhum-visitante">Nenhuma pessoa encontrada.</p>
         ) : (
           <div className="lista-pessoas">
-            {listaFiltrada.map((pessoa, index) => (
-              <div key={index} className="caixa-pessoa">
-                <div className="topo-dados">
-                  <span className="hora-entrada">
-                    Horário de entrada:{" "}
-                    {pessoa.DateTimeEntrada.split("T")[1].split(".")[0]}
-                  </span>
-                  <button
-                    onClick={() => {
-                      finalizarVisitaBtn(pessoa.idVisitas);
-                    }}
-                    className="botao-saida"
-                  >
-                    Registrar Saída
-                  </button>
-                </div>
-
-                <div className="dados-pessoa">
-                  <p className="nome">
-                    <strong>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        className="bi bi-person-fill"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                      </svg>{" "}
-                    </strong>{" "}
-                    {pessoa.Nome}
-                  </p>
-
-                  <div className="linha-horizontal">
-                    <p>
-                      <strong>CPF:</strong> {pessoa.Cpf}
-                    </p>
-                    <p>
-                      <strong>Telefone:</strong> {pessoa.Telefone}
-                    </p>
-                  </div>
-
-                  <p>
-                    <strong>Observação:</strong> {pessoa.Observacao}
-                  </p>
-                </div>
-              </div>
-            ))}
+            {listaFiltrada.map((pessoa, index) => {
+              return (
+                <Pessoas
+                  key={index}
+                  visitas={pessoa}
+                  onClick={() => {
+                    mudarPessoa(
+                      `Você clicou na pessoa: ${pessoa.Nome}`,
+                      pessoa.idPessoa
+                    );
+                  }}
+                  registrarSaida={() => finalizarVisitaBtn(pessoa.idPessoa)}
+                />
+              );
+            })}
           </div>
         )}
       </div>
+
+      {showEditar && (
+        <Editar
+          onClick={() => setShowEditar(false)}
+          idPessoa={pessoaSelecionada}
+        />
+      )}
     </div>
   );
 }
