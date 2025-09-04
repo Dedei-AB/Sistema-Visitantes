@@ -26,6 +26,7 @@ export default function ListaPresentes({ onSaida }) {
     setShowEditar(true);
   };
 
+
   useEffect(() => {
     buscarVisitantes();
   }, []);

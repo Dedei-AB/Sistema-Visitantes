@@ -13,6 +13,10 @@ function ListaCadastrados() {
   const [dado, setDado] = useState([]);
   const [busca, setBusca] = useState("");
 
+  const removerAcentos = (texto) =>
+  texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+
   const mudarPessoa = (texto, idPessoa) => {
     console.log(texto);
     setPessoaSelecionada(idPessoa);
@@ -23,19 +27,22 @@ function ListaCadastrados() {
   const dataEntrada = new Date(pessoa.DateTimeEntrada);
   const startDate = periodoSelecionado ? new Date(periodoSelecionado.startDate) : null;
   const endDate = periodoSelecionado ? new Date(periodoSelecionado.endDate) : null;
-  if (endDate) endDate.setHours(23, 59, 59, 999);
+  if (endDate) endDate.setHours(23, 59, 59, 999); //inclue o dia inreiro
 
   const dentroDoPeriodo = !periodoSelecionado || (dataEntrada >= startDate && dataEntrada <= endDate);
 
   const buscaEhNumerica = /^\d+$/.test(busca.replace(/\D/g, "")); //verifica se a busca é numérica(provavelmente CPF) ou texto(nome)
-  const nome = pessoa.Nome?.toLowerCase() || "";
+  const nome = pessoa.Nome || "";
   const cpf = (pessoa.Cpf || "").replace(/\D/g, "");
-  const termoBusca = busca.toLowerCase();
+
+  const termoBusca = removerAcentos(busca.toLowerCase());
+  const nomeNormalizado = removerAcentos(nome.toLowerCase());
+
   const termoNumerico = busca.replace(/\D/g, "");
 
   const correspondeBusca = buscaEhNumerica
     ? cpf.includes(termoNumerico)
-    : nome.includes(termoBusca);
+    : nomeNormalizado.includes(termoBusca);
 
   return dentroDoPeriodo && correspondeBusca;
 });
