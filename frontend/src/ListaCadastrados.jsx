@@ -21,16 +21,8 @@ function ListaCadastrados() {
     setPessoaSelecionada(idPessoa);
     setShowEditar(true);
   };
-  
-
 
   const dadosFiltrados = dado.filter((pessoa) => {
-<<<<<<< HEAD
-  const dataEntrada = new Date(pessoa.DateTimeEntrada);
-  const startDate = periodoSelecionado ? new Date(periodoSelecionado.startDate) : null;
-  const endDate = periodoSelecionado ? new Date(periodoSelecionado.endDate) : null;
-  if (endDate) endDate.setHours(23, 59, 59, 999); //inclue o dia inteiro
-=======
     const dataEntrada = new Date(pessoa.DateTimeEntrada);
     const startDate = periodoSelecionado
       ? new Date(periodoSelecionado.startDate)
@@ -38,8 +30,7 @@ function ListaCadastrados() {
     const endDate = periodoSelecionado
       ? new Date(periodoSelecionado.endDate)
       : null;
-    if (endDate) endDate.setHours(23, 59, 59, 999); //inclue o dia inreiro
->>>>>>> 23874b5142a896ac74046bfc8f34caa66ed6841c
+    if (endDate) endDate.setHours(23, 59, 59, 999); //inclue o dia inteiro
 
     const dentroDoPeriodo =
       !periodoSelecionado ||

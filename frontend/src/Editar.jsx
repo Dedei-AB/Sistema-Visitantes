@@ -4,6 +4,8 @@ import Alerta from "./Alerta";
 import { set } from "date-fns";
 
 export default function Editar({ idPessoa, onClick }) {
+  const [msgAlerta, setMsgAlerta] = useState("Aguarde...");
+
   const [mostrarAlerta, setMostrarAlerta] = useState(false);
 
   const [inicialNome, setinicialNome] = useState("");
@@ -20,6 +22,41 @@ export default function Editar({ idPessoa, onClick }) {
   const handleChangeCPF = (e) => setCpf(formatarCPF(e.target.value));
   const handleChangeTelefone = (e) =>
     setTelefone(formatarTelefone(e.target.value));
+
+  const handleSalvar = async () => {
+    // Monta o objeto com os dados atualizados
+    const pessoaAtualizada = {
+      nome,
+      cpf,
+      telefone,
+      observacao,
+    };
+    console.log(pessoaAtualizada);
+    try {
+      const response = await fetch(
+        `http://localhost:5000/visitas/pessoas/editar/${idPessoa}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(pessoaAtualizada),
+        }
+      );
+
+      if (response.ok) {
+        const resultado = await response.json();
+        console.log("Pessoa atualizada:", resultado);
+        setMsgAlerta("Dados atualizados com sucesso!");
+      } else {
+        console.error("Erro ao atualizar pessoa");
+        setMsgAlerta("Erro ao atualizar pessoa!");
+      }
+    } catch (err) {
+      setMsgAlerta("Erro ao atualizar pessoa!", err);
+      console.error("Erro na requisição:", err);
+    }
+  };
 
   useEffect(() => {
     fetch(`http://localhost:5000/visitas/pessoa/${idPessoa}`)
@@ -138,7 +175,10 @@ export default function Editar({ idPessoa, onClick }) {
           <div className={style["botoes"]}>
             <button
               className={style["btn-salvar"]}
-              onClick={() => setMostrarAlerta(true)}
+              onClick={() => {
+                handleSalvar();
+                setMostrarAlerta(true);
+              }}
             >
               <strong>Salvar</strong>
             </button>
@@ -156,11 +196,11 @@ export default function Editar({ idPessoa, onClick }) {
                 width="19"
                 height="19"
                 fill="white"
-                class={style["reverter-svg"]}
+                className={style["reverter-svg"]}
                 viewBox="0 0 16 16"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"
                 />
                 <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466" />
@@ -172,10 +212,7 @@ export default function Editar({ idPessoa, onClick }) {
       </div>
 
       {mostrarAlerta && (
-        <Alerta
-          mensagem="Salvo com sucesso!"
-          onClick={() => setMostrarAlerta(false)}
-        />
+        <Alerta mensagem={msgAlerta} onClick={() => setMostrarAlerta(false)} />
       )}
     </div>
   );
