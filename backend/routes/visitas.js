@@ -132,5 +132,39 @@ router.get("/pessoa/:id", async (req, res) => {
     res.status(500).send("Erro no banco de dados!");
   }
 });
+//
+//
+//
+//
+// Editar Pessoa:
+router.post("/pessoas/editar/:id", async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { nome, cpf, telefone, observacao } = req.body;
 
+    // Atualiza os dados no banco de dados
+    const query = `
+      UPDATE pessoa
+      SET nome = ?, cpf = ?, telefone = ?, observacao = ?
+      WHERE idPessoa = ?
+    `;
+
+    const [resultado] = await db.execute(query, [
+      nome,
+      cpf,
+      telefone,
+      observacao,
+      id,
+    ]);
+
+    if (resultado.affectedRows === 0) {
+      return res.status(404).json({ message: "Pessoa não encontrada" });
+    }
+
+    res.json({ message: "Pessoa atualizada com sucesso!" });
+  } catch (error) {
+    console.error("Erro ao atualizar pessoa:", error);
+    res.status(500).json({ message: "Erro interno do servidor" });
+  }
+});
 module.exports = router;
