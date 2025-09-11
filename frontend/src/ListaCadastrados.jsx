@@ -22,12 +22,14 @@ function ListaCadastrados() {
     setPessoaSelecionada(idPessoa);
     setShowEditar(true);
   };
+  
+
 
   const dadosFiltrados = dado.filter((pessoa) => {
   const dataEntrada = new Date(pessoa.DateTimeEntrada);
   const startDate = periodoSelecionado ? new Date(periodoSelecionado.startDate) : null;
   const endDate = periodoSelecionado ? new Date(periodoSelecionado.endDate) : null;
-  if (endDate) endDate.setHours(23, 59, 59, 999); //inclue o dia inreiro
+  if (endDate) endDate.setHours(23, 59, 59, 999); //inclue o dia inteiro
 
   const dentroDoPeriodo = !periodoSelecionado || (dataEntrada >= startDate && dataEntrada <= endDate);
 
