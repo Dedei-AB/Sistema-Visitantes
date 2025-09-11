@@ -56,34 +56,33 @@ router.get("/pessoa_camara", async (req, res) => {
 //
 //
 // Registrar entrada
-router.post("/entrada", async (req, res) => {
-  const { Nome, Cpf, Telefone, Observacao } = req.body;
+router.post("/entrada_de_pessoas", async (req, res) => {
+  const { Nome, Cpf, Telefone, Observacao, DateTimeEntrada } = req.body;
 
-  if (!Nome || !Cpf)
-    return res.status(400).json({ error: "Nome é obrigatório" });
+  if (!Nome) {
+    return res.status(400).json({ error: "Nome é uma área obrigatória" });
+  }
+
+  console.log("Recebido DateTimeEntrada:", DateTimeEntrada); // Log para depuração
 
   try {
-    const hora = new Date();
-    const horaExata = hora.toISOString().slice(0, 19).replace("T", " ");
-
-    const [pessoaSql] = await db.query(
-      `INSERT INTO pessoa AND visita (Nome, Cpf, Telefone, Observacao, DateTimeEntrada) VALUES (?, ?, ?, ?, ?) WHERE idPessoa=Pessoa.idPessoa;
-      
-      SET @ultimo_id = LAST_INSERT_ID();
-
-      INSERT INTO visita (Pessoa_idPessoa, DateTimeEntrada)
-      VALUES (@ultimo_id, ?);`,
-      [Nome, Cpf, Telefone, Observacao, horaExata]
+    const [result] = await db.query(
+      "INSERT INTO pessoa (Nome, Cpf, Telefone, Observacao) VALUES (?,?,?,?) ",
+      [Nome, Cpf, Telefone, Observacao]
     );
 
-    if (pessoaSql.affectedRows > 0) {
-      res.json({ message: "Visita Cadastrada! >:)" });
-    } else {
-      res.status(404).json({ message: "Visita não conseguiu cadastrada" });
-    }
+    const pessoaId = result.insertId;
+
+    await db.query(
+      `INSERT INTO visitas ( Pessoa_idPessoa, DateTimeEntrada) VALUES ( ?, ?)`,
+      [pessoaId, DateTimeEntrada]
+    );
+    res
+      .status(201)
+      .json({ message: "Pessoa Cadastrada com Sucesso", id: pessoaId });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Erro ao salvar visita" });
+    console.error("Erro no backend:", err);
+    res.status(500).json({ error: "Erro ao Cadastrar Pessoa" });
   }
 });
 //

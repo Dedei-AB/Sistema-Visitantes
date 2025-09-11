@@ -1,12 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import "./Css/NovaPessoa.css";
 
 export default function NovaPessoa({ onAddPessoa, ...props }) {
   const inputRefs = [useRef(null), useRef(null), useRef(null)];
   const [mostrarAlert, setMostrarAlert] = useState(false);
-  //------------Informações-----------------------
+  //------------Informações----------------------
   const [nome, setNome] = useState("");
-  const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [obs, setObservacao] = useState("");
@@ -15,6 +14,57 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
   const [horaExata, setHoraExata] = useState("");
   const [dateTimeEntrada, setDateTimeEntrada] = useState("");
 
+  //-------------Código de linkagem com BD---------
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!nome) {
+      alert("O campo Nome é obrigatório");
+      return;
+    }
+    if (
+      !dateTimeEntrada ||
+      !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(dateTimeEntrada)
+    ) {
+      alert("Data e hora de entrada inválidas");
+      return;
+    }
+
+    try {
+      console.log("Enviando DateTimeEntrada:", dateTimeEntrada); // Log para depuração
+      const responsePessoa = await fetch(
+        "http://localhost:5000/entrada_de_pessoas",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            Nome: nome,
+            Cpf: cpf,
+            Telefone: telefone,
+            Observacao: obs,
+            DateTimeEntrada: dateTimeEntrada,
+          }),
+        }
+      );
+      const dataRes = await responsePessoa.json();
+      if (!responsePessoa.ok) throw new Error(dataRes.error);
+
+      alert(`Cadastro realizado! ID: ${dataRes.id}`);
+      if (onAddPessoa) {
+        onAddPessoa({
+          id: dataRes.id,
+          nome,
+          cpf,
+          telefone,
+          obs,
+          dateTimeEntrada,
+        });
+      }
+    } catch (error) {
+      console.error("Erro no frontend:", error);
+      alert("Erro ao cadastrar");
+    }
+  };
   const pegarHora = () => {
     const agora = new Date();
     const hora = String(agora.getHours()).padStart(2, "0");
@@ -53,7 +103,7 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
     if (numeros.length > 6)
       formatado = formatado.slice(0, 7) + "." + formatado.slice(7);
     if (numeros.length > 9)
-      formatado = formatado.slice(0, 11) + "-" + formatado.slice(11);
+      formatado = formatado.slice(0, 11) + "-" + formatado.slice(9);
     return formatado;
   };
 
@@ -61,22 +111,7 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
     setTelefone(formatarTelefone(e.target.value));
   const handleChangeCPF = (e) => setCpf(formatarCPF(e.target.value));
 
-  const handleClickBtn = (e) => {
-    const button = e.currentTarget;
-    const ripple = document.createElement("span");
-    ripple.className = "ripple";
-    const rect = button.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    ripple.style.width = ripple.style.height = size + "px";
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-    ripple.style.left = `${x}px`;
-    ripple.style.top = `${y}px`;
-    button.appendChild(ripple);
-    ripple.addEventListener("animationend", () => ripple.remove());
-    setMostrarAlert(true);
-    setHoraExata(pegarHora());
-
+  const handleClickBtn = () => {
     const agora = new Date();
     const horaAtual = pegarHora();
     setHoraExata(horaAtual);
@@ -84,21 +119,23 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
     const dataAtual = agora.toISOString().split("T")[0];
     setDataHoje(dataAtual);
 
-    const [hora, minuto, segundo = "00"] = horaAtual.split(":");
-    agora.setHours(hora, minuto, segundo, 0);
-    setDateTimeEntrada(agora.toISOString());
+    setDateTimeEntrada(`${dataAtual} ${horaAtual}`);
+    setMostrarAlert(true);
 
-    console.log("DateTimeEntrada:", agora.toISOString());
+    // efeito ripple
+    const button = document.querySelector(".AdicionarBtn1");
+    const ripple = document.createElement("span");
+    ripple.className = "ripple";
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + "px";
+    const x = rect.width / 2 - size / 2;
+    const y = rect.height / 2 - size / 2;
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+    button.appendChild(ripple);
+    ripple.addEventListener("animationend", () => ripple.remove());
   };
-
-  const handleEnviar = () => {
-    console.log("Função handleEnviar chamada");
-  };
-
-  const registrarSaida = () => {
-    console.log("Função registrarSaida chamada");
-  };
-  //-------------- Saida de Visitas --------------
 
   return (
     <>
@@ -122,20 +159,18 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
 
       {mostrarAlert && (
         <div className="bottomAlert">
-          <div className="boxAlert">
+          <form className="boxAlert" onSubmit={handleSubmit}>
             <nav>
               <input
                 type="time"
                 step={1}
                 value={horaExata}
                 onChange={(e) => setHoraExata(e.target.value)}
-                onClick={handleClickBtn}
               />
               <input
                 type="date"
                 value={dataHoje}
                 onChange={(e) => setDataHoje(e.target.value)}
-                onClick={handleClickBtn}
               />
               <button className="Close" onClick={() => setMostrarAlert(false)}>
                 <svg
@@ -189,6 +224,8 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
                   value={telefone}
                   onChange={handleChangeTelefone}
                   maxLength={17}
+                  ref={inputRefs[1]}
+                  onKeyDown={(e) => handleKeyDown(e, 1)}
                 />
               </div>
             </div>
@@ -205,7 +242,7 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
 
               <div className="tadificil">
                 <h3>enviar</h3>
-                <button className="enviar" onClick={handleEnviar}>
+                <button className="enviar" type="submit">
                   <svg
                     className="imagemAdd bi bi-person-fill-add"
                     xmlns="http://www.w3.org/2000/svg"
@@ -230,12 +267,9 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
               Isso irá salvar a saída da pessoa.
             </p>
             <div className="hellYeah">
-              {/* >>> aqui liga a função nova */}
-              <button id="RegistrarSaida" onClick={registrarSaida}>
-                Registrar Saída
-              </button>
+              <button id="RegistrarSaida">Registrar Saída</button>
             </div>
-          </div>
+          </form>
         </div>
       )}
     </>
