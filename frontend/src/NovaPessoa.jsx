@@ -22,18 +22,11 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
       alert("O campo Nome é obrigatório");
       return;
     }
-    if (
-      !dateTimeEntrada ||
-      !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(dateTimeEntrada)
-    ) {
-      alert("Data e hora de entrada inválidas");
-      return;
-    }
 
     try {
       console.log("Enviando DateTimeEntrada:", dateTimeEntrada); // Log para depuração
       const responsePessoa = await fetch(
-        "http://localhost:5000/entrada_de_pessoas",
+        "http://localhost:5000/visitas/entrada_de_pessoas",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -73,14 +66,6 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
     return `${hora}:${minutos}:${segundos}`;
   };
 
-  function handleKeyDown(e, index) {
-    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-      if (index < inputRefs.length - 1) inputRefs[index + 1].current.focus();
-    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-      if (index > 0) inputRefs[index - 1].current.focus();
-    }
-  }
-
   const formatarTelefone = (valor) => {
     const numeros = valor.replace(/\D/g, "").slice(0, 11);
     if (numeros.length === 0) return "";
@@ -97,14 +82,10 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
 
   const formatarCPF = (valor) => {
     const numeros = valor.replace(/\D/g, "").slice(0, 11);
-    let formatado = numeros;
-    if (numeros.length > 3)
-      formatado = numeros.slice(0, 3) + "." + numeros.slice(3);
-    if (numeros.length > 6)
-      formatado = formatado.slice(0, 7) + "." + formatado.slice(7);
-    if (numeros.length > 9)
-      formatado = formatado.slice(0, 11) + "-" + formatado.slice(9);
-    return formatado;
+    return numeros
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
   };
 
   const handleChangeTelefone = (e) =>
@@ -194,8 +175,6 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
                   id="nome"
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
-                  ref={inputRefs[0]}
-                  onKeyDown={(e) => handleKeyDown(e, 0)}
                 />
               </div>
             </div>
@@ -210,8 +189,6 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
                   value={cpf}
                   onChange={handleChangeCPF}
                   maxLength={14}
-                  ref={inputRefs[2]}
-                  onKeyDown={(e) => handleKeyDown(e, 2)}
                 />
               </div>
 
@@ -224,8 +201,6 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
                   value={telefone}
                   onChange={handleChangeTelefone}
                   maxLength={17}
-                  ref={inputRefs[1]}
-                  onKeyDown={(e) => handleKeyDown(e, 1)}
                 />
               </div>
             </div>
