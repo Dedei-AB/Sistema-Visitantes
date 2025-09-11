@@ -11,8 +11,7 @@ export default function ListaPresentes({ onSaida }) {
   const [showEditar, setShowEditar] = useState(false);
 
   const removerAcentos = (texto) =>
-  texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
+    texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
   const buscarVisitantes = async () => {
     try {
@@ -58,21 +57,20 @@ export default function ListaPresentes({ onSaida }) {
     finalizarVisita();
   }
   const listaFiltrada = visitantes.filter((pessoa) => {
-  const buscaEhNumerica = /^\d+$/.test(busca.replace(/\D/g, ""));
-  const nome = pessoa.Nome || "";
-  const cpf = (pessoa.Cpf || "").replace(/\D/g, "");
+    const buscaEhNumerica = /^\d+$/.test(busca.replace(/\D/g, ""));
+    const nome = pessoa.Nome || "";
+    const cpf = (pessoa.Cpf || "").replace(/\D/g, "");
 
-  const termoBusca = removerAcentos(busca.toLowerCase());
-  const nomeNormalizado = removerAcentos(nome.toLowerCase());
-  const termoNumerico = busca.replace(/\D/g, "");
+    const termoBusca = removerAcentos(busca.toLowerCase());
+    const nomeNormalizado = removerAcentos(nome.toLowerCase());
+    const termoNumerico = busca.replace(/\D/g, "");
 
-  const correspondeBusca = buscaEhNumerica
-    ? cpf.includes(termoNumerico)
-    : nomeNormalizado.includes(termoBusca);
+    const correspondeBusca = buscaEhNumerica
+      ? cpf.includes(termoNumerico)
+      : nomeNormalizado.includes(termoBusca);
 
-  return correspondeBusca;
-});
-
+    return correspondeBusca;
+  });
 
   return (
     <div className="container-lista-presenca">
@@ -96,13 +94,13 @@ export default function ListaPresentes({ onSaida }) {
                 <Pessoas
                   key={index}
                   visitas={pessoa}
-                  onClick={() => {
+                  editar={() => {
                     mudarPessoa(
                       `Você clicou na pessoa: ${pessoa.Nome}`,
                       pessoa.idPessoa
                     );
                   }}
-                   registrarSaida={() => finalizarVisitaBtn(pessoa.idPessoa)}
+                  registrarSaida={() => finalizarVisitaBtn(pessoa.idPessoa)}
                 />
               );
             })}
