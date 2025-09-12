@@ -6,12 +6,14 @@
   align-items: center;
   justify-content: center;
   position: fixed;
+  z-index: 999;
   top: 0;
   left: 0;
   transition: 1s;
 }
 
 .alerta {
+  z-index: 999;
   height: 12rem;
   width: 20rem;
   border-radius: 15px;

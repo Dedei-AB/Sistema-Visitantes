@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
+import Alerta from "./Alerta";
 import "./Css/NovaPessoa.css";
 
 export default function NovaPessoa() {
-  const inputRefs = [useRef(null), useRef(null), useRef(null)];
   const [mostrarAlert, setMostrarAlert] = useState(false);
+  const [msgAlertaComponente, setMsgAlertaComponente] = useState("Aguarde...");
+  const [mostrarAlertaComponente, setMostrarAlertaComponente] = useState(false);
   //------------Informações----------------------
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -42,10 +44,13 @@ export default function NovaPessoa() {
       );
       const dataRes = await responsePessoa.json();
       if (!responsePessoa.ok) throw new Error(dataRes.error);
+      setMsgAlertaComponente("Visita cadastrada com sucesso!");
     } catch (error) {
       console.error("Erro no frontend:", error);
-      alert("Erro ao cadastrar");
+      setMsgAlertaComponente("Erro ao cadastrar visita.");
     }
+    setMostrarAlert(false);
+    setMostrarAlertaComponente(true);
   };
   const pegarDiaHora = () => {
     const agora = new Date();
@@ -231,6 +236,13 @@ export default function NovaPessoa() {
             </div>
           </form>
         </div>
+      )}
+
+      {mostrarAlertaComponente && (
+        <Alerta
+          mensagem={msgAlertaComponente}
+          onClick={() => setMostrarAlertaComponente(false)}
+        />
       )}
     </>
   );
