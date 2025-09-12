@@ -57,13 +57,15 @@ router.get("/pessoa_camara", async (req, res) => {
 //
 // Registrar entrada
 router.post("/entrada_de_pessoas", async (req, res) => {
-  const { Nome, Cpf, Telefone, Observacao, DateTimeEntrada } = req.body;
+  const { Nome, Cpf, Telefone, Observacao } = req.body;
+
+  const dtForMySQL = req.body.DateTimeEntrada;
 
   if (!Nome) {
     return res.status(400).json({ error: "Nome é uma área obrigatória" });
   }
 
-  console.log("Recebido DateTimeEntrada:", DateTimeEntrada); // Log para depuração
+  console.log("Recebido DateTimeEntrada:", dtForMySQL); // Log para depuração
 
   try {
     const [result] = await db.query(
@@ -75,7 +77,7 @@ router.post("/entrada_de_pessoas", async (req, res) => {
 
     await db.query(
       `INSERT INTO visitas ( Pessoa_idPessoa, DateTimeEntrada) VALUES ( ?, ?)`,
-      [pessoaId, DateTimeEntrada]
+      [pessoaId, dtForMySQL]
     );
     res
       .status(201)

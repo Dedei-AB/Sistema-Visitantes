@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import "./Css/NovaPessoa.css";
 
-export default function NovaPessoa({ onAddPessoa, ...props }) {
+export default function NovaPessoa() {
   const inputRefs = [useRef(null), useRef(null), useRef(null)];
   const [mostrarAlert, setMostrarAlert] = useState(false);
   //------------Informações----------------------
@@ -16,6 +16,7 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
 
   //-------------Código de linkagem com BD---------
   const handleSubmit = async (e) => {
+    console.log("variavel que salva: ", dateTimeEntrada);
     e.preventDefault();
 
     if (!nome) {
@@ -41,29 +42,34 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
       );
       const dataRes = await responsePessoa.json();
       if (!responsePessoa.ok) throw new Error(dataRes.error);
-
-      alert(`Cadastro realizado! ID: ${dataRes.id}`);
-      if (onAddPessoa) {
-        onAddPessoa({
-          id: dataRes.id,
-          nome,
-          cpf,
-          telefone,
-          obs,
-          dateTimeEntrada,
-        });
-      }
     } catch (error) {
       console.error("Erro no frontend:", error);
       alert("Erro ao cadastrar");
     }
   };
-  const pegarHora = () => {
+  const pegarDiaHora = () => {
     const agora = new Date();
-    const hora = String(agora.getHours()).padStart(2, "0");
-    const minutos = String(agora.getMinutes()).padStart(2, "0");
-    const segundos = String(agora.getSeconds()).padStart(2, "0");
-    return `${hora}:${minutos}:${segundos}`;
+
+    const partes = new Intl.DateTimeFormat("pt-BR", {
+      timeZone: "America/Sao_Paulo",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    }).formatToParts(agora);
+
+    const dia = partes.find((p) => p.type === "day").value;
+    const mes = partes.find((p) => p.type === "month").value;
+    const ano = partes.find((p) => p.type === "year").value;
+    const hora = partes.find((p) => p.type === "hour").value;
+    const minuto = partes.find((p) => p.type === "minute").value;
+    const segundo = partes.find((p) => p.type === "second").value;
+
+    const isoFormat = `${ano}-${mes}-${dia} ${hora}:${minuto}:${segundo}`;
+    setDateTimeEntrada(isoFormat);
   };
 
   const formatarTelefone = (valor) => {
@@ -93,35 +99,14 @@ export default function NovaPessoa({ onAddPessoa, ...props }) {
   const handleChangeCPF = (e) => setCpf(formatarCPF(e.target.value));
 
   const handleClickBtn = () => {
-    const agora = new Date();
-    const horaAtual = pegarHora();
-    setHoraExata(horaAtual);
-
-    const dataAtual = agora.toISOString().split("T")[0];
-    setDataHoje(dataAtual);
-
-    setDateTimeEntrada(`${dataAtual} ${horaAtual}`);
     setMostrarAlert(true);
-
-    // efeito ripple
-    const button = document.querySelector(".AdicionarBtn1");
-    const ripple = document.createElement("span");
-    ripple.className = "ripple";
-    const rect = button.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    ripple.style.width = ripple.style.height = size + "px";
-    const x = rect.width / 2 - size / 2;
-    const y = rect.height / 2 - size / 2;
-    ripple.style.left = `${x}px`;
-    ripple.style.top = `${y}px`;
-    button.appendChild(ripple);
-    ripple.addEventListener("animationend", () => ripple.remove());
+    pegarDiaHora();
   };
 
   return (
     <>
       <div className="caixa-resumo">
-        <button className="AdicionarBtn1" onClick={handleClickBtn} {...props}>
+        <button className="AdicionarBtn1" onClick={handleClickBtn}>
           <strong className="strongBtn">
             Nova Pessoa -
             <svg

@@ -6,6 +6,7 @@ const connection = mysql.createConnection({
   user: "root",
   password: "root",
   database: "sistemaVisita",
+  timezone: "Z",
 });
 
 const db = connection.promise();
