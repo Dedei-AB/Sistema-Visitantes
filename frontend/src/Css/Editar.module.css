@@ -57,6 +57,13 @@
   padding-bottom: 1rem;
 }
 
+.input-nome:required:invalid {
+  border: 1px solid red;
+}
+.input-nome:required:valid:focus {
+  border: 1.5px solid green;
+}
+
 #editar-input-observacao {
   height: 4.5rem;
   font-size: 1rem;

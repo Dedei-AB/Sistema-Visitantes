@@ -25,6 +25,11 @@ export default function Editar({ idPessoa, onClick }) {
 
   const handleSalvar = async () => {
     // Monta o objeto com os dados atualizados
+    if (!nome) {
+      setMsgAlerta("O campo Nome é obrigatório!");
+      setMostrarAlerta(true);
+      return;
+    }
     const pessoaAtualizada = {
       nome,
       cpf,
@@ -131,11 +136,13 @@ export default function Editar({ idPessoa, onClick }) {
         </nav>
         <div className={style["editar-informacoes"]}>
           <div className={style["editar-caixa-input"]}>
-            <label htmlFor="nome">Nome:</label>
+            <label htmlFor="nome">Nome:*</label>
             <input
+              className={style["input-nome"]}
               type="text"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
+              required
             />
           </div>
 

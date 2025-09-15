@@ -22,7 +22,8 @@ export default function NovaPessoa() {
     e.preventDefault();
 
     if (!nome) {
-      alert("O campo Nome é obrigatório");
+      setMsgAlertaComponente("O campo Nome é obrigatório!");
+      setMostrarAlertaComponente(true);
       return;
     }
 
@@ -159,12 +160,13 @@ export default function NovaPessoa() {
 
             <div className="CabrasName">
               <div className="colun">
-                <label htmlFor="nome">Nome:</label>
+                <label htmlFor="nome">*Nome:</label>
                 <input
                   type="text"
                   id="nome"
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
+                  required
                 />
               </div>
             </div>
