@@ -2,6 +2,8 @@ import { useRef, useEffect, useState } from "react";
 import style from "./Css/Editar.module.css";
 import Alerta from "./Alerta";
 import { set } from "date-fns";
+import { VisitasContext } from "./VisitasContext";
+import { useContext } from "react";
 
 export default function Editar({ idPessoa, onClick }) {
   const [msgAlerta, setMsgAlerta] = useState("Aguarde...");
@@ -18,6 +20,7 @@ export default function Editar({ idPessoa, onClick }) {
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [observacao, setObservacao] = useState("");
+  const { carregarPessoaCadastrada } = useContext(VisitasContext);
 
   const handleChangeCPF = (e) => setCpf(formatarCPF(e.target.value));
   const handleChangeTelefone = (e) =>
@@ -53,6 +56,16 @@ export default function Editar({ idPessoa, onClick }) {
         const resultado = await response.json();
         console.log("Pessoa atualizada:", resultado);
         setMsgAlerta("Dados atualizados com sucesso!");
+        carregarPessoaCadastrada();
+        setDado([
+          {
+            idPessoa: idPessoa,
+            Nome: nome,
+            Cpf: cpf,
+            Telefone: telefone,
+            Observacao: observacao,
+          },
+        ]);
       } else {
         console.error("Erro ao atualizar pessoa");
         setMsgAlerta("Erro ao atualizar pessoa!");

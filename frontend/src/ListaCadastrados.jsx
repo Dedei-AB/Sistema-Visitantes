@@ -5,12 +5,14 @@ import "react-date-range/dist/styles.css"; // estilo principal
 import "react-date-range/dist/theme/default.css"; // tema default
 import FiltroCalendario from "./FiltroCalendario";
 import Editar from "./Editar";
+import { VisitasContext } from "./VisitasContext";
+import { useContext } from "react";
 
 function ListaCadastrados() {
   const [periodoSelecionado, setPeriodoSelecionado] = useState(null);
   const [pessoaSelecionada, setPessoaSelecionada] = useState(false);
   const [showEditar, setShowEditar] = useState(false);
-  const [dado, setDado] = useState([]);
+  const { pessoaCadastrada } = useContext(VisitasContext);
   const [busca, setBusca] = useState("");
 
   const removerAcentos = (texto) =>
@@ -22,7 +24,7 @@ function ListaCadastrados() {
     setShowEditar(true);
   };
 
-  const dadosFiltrados = dado.filter((pessoa) => {
+  const dadosFiltrados = pessoaCadastrada.filter((pessoa) => {
     const dataEntrada = new Date(pessoa.DateTimeEntrada);
     const startDate = periodoSelecionado
       ? new Date(periodoSelecionado.startDate)
@@ -52,20 +54,16 @@ function ListaCadastrados() {
     return dentroDoPeriodo && correspondeBusca;
   });
 
-  useEffect(() => {
-    fetch("http://localhost:5000/visitas/pessoa_visita")
-      .then((response) => response.json())
-      .then((data) => {
-        setDado(data);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar visitas:", error);
-      });
-  }, []);
-
-  //const listaFiltrada = visitantes.filter((pessoa) =>
-  //pessoa.Nome.toLowerCase().includes(busca.toLowerCase())
-  //);
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/visitas/pessoa_visita")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setDado(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Erro ao buscar visitas:", error);
+  //     });
+  // }, []);
 
   return (
     <div className="container-cadastro">
