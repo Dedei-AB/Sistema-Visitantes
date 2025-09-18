@@ -65,8 +65,6 @@ router.post("/entrada_de_pessoas", async (req, res) => {
     return res.status(400).json({ error: "Nome é uma área obrigatória" });
   }
 
-  console.log("Recebido DateTimeEntrada:", dtForMySQL); // Log para depuração
-
   try {
     const [result] = await db.query(
       "INSERT INTO pessoa (Nome, Cpf, Telefone, Observacao) VALUES (?,?,?,?) ",
@@ -89,7 +87,40 @@ router.post("/entrada_de_pessoas", async (req, res) => {
 });
 //
 //
-//
+// Registrar saída ( NovaPessoa ):
+
+router.post("/finalizarVisita", async (req, res) => {
+  const { Nome, Cpf, Telefone, Observacao, DateTimeEntrada } = req.body;
+
+  if (!Nome) {
+    return res.status(400).json({ error: "Nome é uma área obrigatória!" });
+  }
+
+  try {
+    const [result] = await db.query(
+      "INSERT INTO pessoa (Nome, Cpf, Telefone,  Observacao ) VALUES (?,?,?,?)",
+      [Nome, Cpf, telefone, Observacao]
+    );
+    const pessoaId = result.insertId;
+
+    const dtEntrada = DateTimeEntrada;
+    const dtSaida = DateTimeEntrada;
+
+    await db.query(
+      `INSERT INTO visitas (Pessoa_idPessoa, DateTimeEntrada, DateTimeSaida)
+      VALUES (?,?,?)`,
+      [pessoaId, dtEntrada, dtSaida]
+    );
+    res.status(201).json({
+      message: "Pessoa cadastrada e saída registrada com sucesso",
+      id: pessoaId,
+    });
+  } catch (err) {
+    console.error("Erro no Backend:", err);
+    res.status(500).json({ error: "Erro ao cadastrar pessoa com Saída" });
+  }
+});
+
 //
 // Registrar saída
 router.post("/finalizar/:id", async (req, res) => {

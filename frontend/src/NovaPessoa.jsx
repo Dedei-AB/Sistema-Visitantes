@@ -1,22 +1,30 @@
 import React, { useRef, useState } from "react";
 import Alerta from "./Alerta";
 import "./Css/NovaPessoa.css";
+import { useEffect } from "react";
 
 export default function NovaPessoa() {
+  //----------- Panorama Geral ------------------
+
   const [mostrarAlert, setMostrarAlert] = useState(false);
   const [msgAlertaComponente, setMsgAlertaComponente] = useState("Aguarde...");
   const [mostrarAlertaComponente, setMostrarAlertaComponente] = useState(false);
+
   //------------Informações----------------------
+
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [obs, setObservacao] = useState("");
+
   //------------Horario--------------------------
+
   const [dataHoje, setDataHoje] = useState("");
   const [horaExata, setHoraExata] = useState("");
   const [dateTimeEntrada, setDateTimeEntrada] = useState("");
 
-  //-------------Código de linkagem com BD---------
+  //-------------Código de linkagem com BD - Entrada ---------
+
   const handleSubmit = async (e) => {
     console.log("variavel que salva: ", dateTimeEntrada);
     e.preventDefault();
@@ -53,6 +61,42 @@ export default function NovaPessoa() {
     setMostrarAlert(false);
     setMostrarAlertaComponente(true);
   };
+
+  //-------------Código de linkagem com BD - Saída ---------
+
+  const handleSubmitSaida = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/visitas/finalizarVisita",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            Nome: nome,
+            Cpf: cpf,
+            Telefone: telefone,
+            Observacao: obs,
+            DateTimeEntrada: dateTimeEntrada,
+          }),
+        }
+      );
+
+      const dataRes = await response.json();
+      if (!response.ok) throw new Error(dataRes.error);
+
+      setMsgAlertaComponente("Pessoa registrada como 'entrada + saída'!");
+      setMostrarAlertaComponente(true);
+    } catch (error) {
+      console.error("Erro no FrontEnd:", error);
+      setMsgAlertaComponente("Erro ao registrar saída imediata.");
+      setMostrarAlertaComponente(true);
+    }
+  };
+
+  //---------------- Hora/Dia ----------------------------
+
   const pegarDiaHora = () => {
     const agora = new Date();
 
@@ -78,6 +122,33 @@ export default function NovaPessoa() {
     setDateTimeEntrada(isoFormat);
   };
 
+  useEffect(() => {
+    const atualizarDataHora = () => {
+      const inputDateTime = new Date();
+
+      const inputHora = inputDateTime.toLocaleTimeString("pt-BR", {
+        hour12: false,
+        timeZone: "America/Sao_Paulo",
+      });
+
+      const inputDate = inputDateTime.toLocaleDateString("pt-BR", {
+        timeZone: "America/Sao_Paulo",
+      });
+
+      const [inputDia, inputMes, inputAno] = inputDate.split("/");
+
+      setHoraExata(inputHora);
+      setDataHoje(`${inputAno}-${inputMes}-${inputDia}`);
+    };
+
+    atualizarDataHora();
+    const intervalo = setInterval(atualizarDataHora, 1000);
+
+    return () => clearInterval(intervalo);
+  });
+
+  //------------- CPF e Telefone --------------------------
+
   const formatarTelefone = (valor) => {
     const numeros = valor.replace(/\D/g, "").slice(0, 11);
     if (numeros.length === 0) return "";
@@ -100,6 +171,7 @@ export default function NovaPessoa() {
       .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
   };
 
+  //------------------- Handles -----------------------------
   const handleChangeTelefone = (e) =>
     setTelefone(formatarTelefone(e.target.value));
   const handleChangeCPF = (e) => setCpf(formatarCPF(e.target.value));
@@ -108,6 +180,8 @@ export default function NovaPessoa() {
     setMostrarAlert(true);
     pegarDiaHora();
   };
+
+  //------------------ Return -------------------------------
 
   return (
     <>
@@ -234,7 +308,9 @@ export default function NovaPessoa() {
               Isso irá salvar a saída da pessoa.
             </p>
             <div className="hellYeah">
-              <button id="RegistrarSaida">Registrar Saída</button>
+              <button id="RegistrarSaida" onSubmit={handleSubmitSaida}>
+                Registrar Saída
+              </button>
             </div>
           </form>
         </div>

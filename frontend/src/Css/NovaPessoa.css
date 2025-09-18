@@ -269,7 +269,7 @@ input:focus {
   box-shadow: none;
   border-bottom: 2px solid #322f41;
   transition: all 0.2s ease-in-out;
-  background-color: aliceblue;
+
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
