@@ -99,7 +99,7 @@ router.post("/finalizarVisita", async (req, res) => {
   try {
     const [result] = await db.query(
       "INSERT INTO pessoa (Nome, Cpf, Telefone,  Observacao ) VALUES (?,?,?,?)",
-      [Nome, Cpf, telefone, Observacao]
+      [Nome, Cpf, Telefone, Observacao]
     );
     const pessoaId = result.insertId;
 
