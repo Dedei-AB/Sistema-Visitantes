@@ -312,7 +312,7 @@ export default function NovaPessoa() {
               Isso irá salvar a saída da pessoa.
             </p>
             <div className={style["hellYeah"]}>
-              <button id={style["RegistrarSaida"]} onSubmit={handleSubmitSaida}>
+              <button id={style["RegistrarSaida"]} onClick={handleSubmitSaida}>
                 Registrar Saída
               </button>
             </div>
