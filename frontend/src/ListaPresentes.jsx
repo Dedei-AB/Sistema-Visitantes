@@ -34,6 +34,7 @@ export default function ListaPresentes({ onSaida }) {
   }, []);
 
   function finalizarVisitaBtn(idVisita) {
+    console.log(idVisita);
     const finalizarVisita = async () => {
       try {
         const response = await fetch(
@@ -100,7 +101,7 @@ export default function ListaPresentes({ onSaida }) {
                       pessoa.idPessoa
                     );
                   }}
-                  registrarSaida={() => finalizarVisitaBtn(pessoa.idPessoa)}
+                  registrarSaida={() => finalizarVisitaBtn(pessoa.idVisitas)}
                 />
               );
             })}
