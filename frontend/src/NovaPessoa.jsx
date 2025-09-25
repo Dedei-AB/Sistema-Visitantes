@@ -86,7 +86,9 @@ export default function NovaPessoa() {
       const dataRes = await response.json();
       if (!response.ok) throw new Error(dataRes.error);
 
-      setMsgAlertaComponente("Pessoa registrada como 'entrada + saída'!");
+      setMsgAlertaComponente(
+        `Entrada e Saída de "${nome}" Registrada com Sucesso`
+      );
       setMostrarAlertaComponente(true);
     } catch (error) {
       console.error("Erro no FrontEnd:", error);
