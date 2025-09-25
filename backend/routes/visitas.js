@@ -38,7 +38,8 @@ router.get("/pessoa_camara", async (req, res) => {
         p.Cpf, 
         v.DateTimeEntrada, 
         p.Telefone, 
-        p.Observacao
+        p.Observacao,
+        v.DateTimeSaida
       FROM pessoa p
       JOIN visitas v 
         ON p.idPessoa = v.Pessoa_idPessoa
@@ -104,12 +105,11 @@ router.post("/finalizarVisita", async (req, res) => {
     const pessoaId = result.insertId;
 
     const dtEntrada = DateTimeEntrada;
-    const dtSaida = DateTimeEntrada;
 
     await db.query(
       `INSERT INTO visitas (Pessoa_idPessoa, DateTimeEntrada, DateTimeSaida)
       VALUES (?,?,?)`,
-      [pessoaId, dtEntrada, dtSaida]
+      [pessoaId, dtEntrada, dtEntrada]
     );
     res.status(201).json({
       message: "Pessoa cadastrada e saída registrada com sucesso",

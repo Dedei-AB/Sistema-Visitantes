@@ -308,7 +308,7 @@ export default function NovaPessoa() {
               Isso irá salvar a saída da pessoa.
             </p>
             <div className="hellYeah">
-              <button id="RegistrarSaida" onSubmit={handleSubmitSaida}>
+              <button id="RegistrarSaida" onClick={handleSubmitSaida}>
                 Registrar Saída
               </button>
             </div>
