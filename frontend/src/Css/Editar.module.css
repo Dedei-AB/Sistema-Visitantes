@@ -131,3 +131,12 @@
   transform: rotate(-90deg);
   transition: 0.3s;
 }
+
+.input-date::-webkit-calendar-picker-indicator {
+  transition: 0.2s ease-in-out;
+}
+
+.input-date:hover::-webkit-calendar-picker-indicator {
+  transform: scale(1.1);
+  transition: 0.2s ease-in-out;
+}

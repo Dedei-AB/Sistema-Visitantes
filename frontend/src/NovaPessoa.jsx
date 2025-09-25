@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Alerta from "./Alerta";
-import "./Css/NovaPessoa.css";
+import style from "./Css/NovaPessoa.module.css";
 import { useEffect } from "react";
 
 export default function NovaPessoa() {
@@ -185,8 +185,8 @@ export default function NovaPessoa() {
 
   return (
     <>
-      <div className="caixa-resumo">
-        <button className="AdicionarBtn1" onClick={handleClickBtn}>
+      <div className={style["caixa-resumo"]}>
+        <button className={style["AdicionarBtn1"]} onClick={handleClickBtn}>
           <strong className="strongBtn">
             Nova Pessoa -
             <svg
@@ -204,8 +204,8 @@ export default function NovaPessoa() {
       </div>
 
       {mostrarAlert && (
-        <div className="bottomAlert">
-          <form className="boxAlert" onSubmit={handleSubmit}>
+        <div className={style["bottomAlert"]}>
+          <form className={style["boxAlert"]} onSubmit={handleSubmit}>
             <nav>
               <input
                 type="time"
@@ -215,29 +215,33 @@ export default function NovaPessoa() {
               />
               <input
                 type="date"
+                id={style["input-date"]}
                 value={dataHoje}
                 onChange={(e) => setDataHoje(e.target.value)}
               />
-              <button className="Close" onClick={() => setMostrarAlert(false)}>
+              <button
+                className={style["Close"]}
+                onClick={() => setMostrarAlert(false)}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="27"
                   height="27"
                   fill="currentColor"
                   viewBox="0 0 16 16"
-                  className="editar-fechar"
+                  className={style["editar-fechar"]}
                 >
                   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
                 </svg>
               </button>
             </nav>
 
-            <div className="CabrasName">
-              <div className="colun">
+            <div className={style["CabrasName"]}>
+              <div className={style["colun"]}>
                 <label htmlFor="nome">*Nome:</label>
                 <input
                   type="text"
-                  id="nome"
+                  id={style["nome"]}
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
                   required
@@ -245,25 +249,25 @@ export default function NovaPessoa() {
               </div>
             </div>
 
-            <div className="SelectType">
-              <div className="CPFInput">
-                <label htmlFor="inputDoc">CPF:</label>
+            <div className={style["SelectType"]}>
+              <div className={style["CPFInput"]}>
+                <label htmlFor={style["inputDoc"]}>CPF:</label>
                 <br />
                 <input
                   type="text"
-                  id="inputDoc"
+                  id={style["inputDoc"]}
                   value={cpf}
                   onChange={handleChangeCPF}
                   maxLength={14}
                 />
               </div>
 
-              <div className="PhoneArea">
+              <div className={style["PhoneArea"]}>
                 <label htmlFor="telefone">Telefone: </label>
                 <br />
                 <input
                   type="text"
-                  id="telefone"
+                  id={style["telefone"]}
                   value={telefone}
                   onChange={handleChangeTelefone}
                   maxLength={17}
@@ -271,21 +275,21 @@ export default function NovaPessoa() {
               </div>
             </div>
 
-            <div className="Observações">
-              <div className="caixaObs">
-                <nav className="obs">Observação</nav>
+            <div className={style["Observações"]}>
+              <div className={style["caixaObs"]}>
+                <nav className={style["obs"]}>Observação</nav>
                 <textarea
-                  id="Detalhes"
+                  id={style["Detalhes"]}
                   value={obs}
                   onChange={(e) => setObservacao(e.target.value)}
                 />
               </div>
 
-              <div className="tadificil">
+              <div className={style["tadificil"]}>
                 <h3>enviar</h3>
-                <button className="enviar" type="submit">
+                <button className={style["enviar"]} type="submit">
                   <svg
-                    className="imagemAdd bi bi-person-fill-add"
+                    className={style["imagemAdd bi bi-person-fill-add"]}
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
@@ -299,7 +303,7 @@ export default function NovaPessoa() {
               </div>
             </div>
 
-            <div className="SaidaInfo">
+            <div className={style["SaidaInfo"]}>
               <strong>Saída</strong>
             </div>
             <p>
@@ -307,8 +311,8 @@ export default function NovaPessoa() {
               Aperte o botão de "<strong>Registrar Saída</strong>" <br />
               Isso irá salvar a saída da pessoa.
             </p>
-            <div className="hellYeah">
-              <button id="RegistrarSaida" onClick={handleSubmitSaida}>
+            <div className={style["hellYeah"]}>
+              <button id={style["RegistrarSaida"]} onClick={handleSubmitSaida}>
                 Registrar Saída
               </button>
             </div>

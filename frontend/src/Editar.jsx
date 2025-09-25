@@ -14,12 +14,18 @@ export default function Editar({ idPessoa, onClick }) {
   const [inicialCpf, setinicialCpf] = useState("");
   const [inicialTelefone, setinicialTelefone] = useState("");
   const [inicialObservacao, setinicialObservacao] = useState("");
+  const [inicialdataEntrada, setinicialDataEntrada] = useState("");
+  const [inicialDataSaida, setinicialDataSaida] = useState("");
 
   const [dado, setDado] = useState([]);
+
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [observacao, setObservacao] = useState("");
+  const [dataEntrada, setDataEntrada] = useState("");
+  const [dataSaida, setDataSaida] = useState("");
+
   const { carregarPessoaCadastrada } = useContext(VisitasContext);
 
   const handleChangeCPF = (e) => setCpf(formatarCPF(e.target.value));
@@ -165,6 +171,18 @@ export default function Editar({ idPessoa, onClick }) {
               type="text"
               value={cpf}
               onChange={handleChangeCPF}
+              maxLength={14}
+              placeholder="XXX.XXX.XXX-XX"
+            />
+          </div>
+
+          <div className={style["editar-caixa-input"]}>
+            <label htmlFor="cpf">Data de entrada:</label>
+            <input
+              type="date"
+              className={style["input-date"]}
+              value={dataEntrada}
+              onChange={(e) => setDataEntrada(e.target.value)}
               maxLength={14}
               placeholder="XXX.XXX.XXX-XX"
             />

@@ -121,7 +121,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 input[type="time"]:hover {
   transform: scale(1.02);
 }
-input[type="date"] {
+#input-date {
   font-family: "Noto Sans", sans-serif;
   color: white;
   background-color: #555555;
@@ -130,12 +130,12 @@ input[type="date"] {
   cursor: pointer;
   border-radius: 4px;
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
+#input-date::-webkit-calendar-picker-indicator {
   filter: invert(1);
   cursor: pointer;
 }
 
-input[type="date"]:hover {
+#input-date:hover {
   transform: scale(1.02);
 }
 
