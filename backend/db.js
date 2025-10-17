@@ -1,11 +1,13 @@
-// backend/db.js
+import dotenv from "dotenv";
 const mysql = require("mysql2");
 
+dotenv.config();
+
 const connection = mysql.createConnection({
-  host: "10.1.150.10", // ou nome do container no Docker (ex: 'db')
-  user: "root",
-  password: "root",
-  database: "sistemaVisita",
+  host: process.env.DB_HOST || "db",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "root",
+  database: process.env.DB_NAME || "sistemaVisita",
   timezone: "Z",
 });
 
