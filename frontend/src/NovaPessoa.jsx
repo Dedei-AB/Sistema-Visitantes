@@ -31,6 +31,11 @@ export default function NovaPessoa() {
   const handleSubmit = async (e) => {
     console.log("variavel que salva: ", dateTimeEntrada);
     e.preventDefault();
+    setNome("");
+    setCpf("");
+    setObservacao("");
+    setTelefone("");
+    setMostrarAlert(false);
 
     if (!nome) {
       setMsgAlertaComponente("O campo Nome é obrigatório!");
