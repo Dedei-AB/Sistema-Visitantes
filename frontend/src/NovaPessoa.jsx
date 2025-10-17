@@ -100,6 +100,7 @@ export default function NovaPessoa() {
       setCpf("");
       setObservacao("");
       setTelefone("");
+      setMostrarAlert(false);
     } catch (error) {
       console.error("Erro no FrontEnd:", error);
       setMsgAlertaComponente("Erro ao registrar saída imediata.");
