@@ -128,8 +128,10 @@ router.post("/finalizar/:id", async (req, res) => {
     const idVisita = req.params.id;
 
     // Pega a hora atual
-    const agora = new Date();
-    const formatado = agora.toISOString().slice(0, 19).replace("T", " ");
+   const agora = new Date();
+  agora.setHours(agora.getHours() - 3); // Subtrai 3 horas
+    
+  const formatado = agora.toISOString().slice(0, 19).replace("T", " ");
 
     const [result] = await db.query(
       `UPDATE visitas SET DateTimeSaida = ? WHERE idVisitas = ? AND DateTimeSaida IS NULL`,
