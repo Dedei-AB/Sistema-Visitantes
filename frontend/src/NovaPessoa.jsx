@@ -96,6 +96,10 @@ export default function NovaPessoa() {
       );
       setMostrarAlertaComponente(true);
       carregarPessoaCadastrada();
+      setNome("");
+      setCpf("");
+      setObservacao("");
+      setTelefone("");
     } catch (error) {
       console.error("Erro no FrontEnd:", error);
       setMsgAlertaComponente("Erro ao registrar saída imediata.");
