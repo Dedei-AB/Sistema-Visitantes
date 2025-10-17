@@ -1,37 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Css/ListaPresentes.css";
-import NovaPessoa from "./NovaPessoa";
 import Pessoas from "./Pessoas";
 import Editar from "./Editar";
+import { VisitasContext } from "./VisitasContext";
 
 export default function ListaPresentes({ onSaida }) {
   const [pessoaSelecionada, setPessoaSelecionada] = useState(false);
   const [busca, setBusca] = useState("");
-  const [visitantes, setVisitantes] = useState([]);
+  const { visitantes, carregarVisitantes, carregarPessoaCadastrada } =
+    useContext(VisitasContext);
   const [showEditar, setShowEditar] = useState(false);
 
   const removerAcentos = (texto) =>
     texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-  const buscarVisitantes = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/visitas/pessoa_camara");
-      const data = await res.json();
-      setVisitantes(data);
-    } catch (err) {
-      console.error("Erro ao buscar visitantes:", err);
-    }
-  };
 
   const mudarPessoa = (texto, idPessoa) => {
     console.log(texto);
     setPessoaSelecionada(idPessoa);
     setShowEditar(true);
   };
-
-  useEffect(() => {
-    buscarVisitantes();
-  }, []);
 
   function finalizarVisitaBtn(idVisita) {
     console.log(idVisita);
@@ -49,7 +36,8 @@ export default function ListaPresentes({ onSaida }) {
         const data = await response.json();
         console.log(data);
         alert(data.message || "Erro ao finalizar visita");
-        buscarVisitantes();
+        carregarVisitantes();
+        carregarPessoaCadastrada();
       } catch (err) {
         console.error(err);
         alert("Erro na conexão com o servidor");

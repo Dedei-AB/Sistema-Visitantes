@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Alerta from "./Alerta";
 import style from "./Css/NovaPessoa.module.css";
 import { useEffect } from "react";
+import { VisitasContext } from "./VisitasContext";
 
 export default function NovaPessoa() {
   //----------- Panorama Geral ------------------
@@ -9,6 +10,8 @@ export default function NovaPessoa() {
   const [mostrarAlert, setMostrarAlert] = useState(false);
   const [msgAlertaComponente, setMsgAlertaComponente] = useState("Aguarde...");
   const [mostrarAlertaComponente, setMostrarAlertaComponente] = useState(false);
+  const { carregarVisitantes, carregarPessoaCadastrada } =
+    useContext(VisitasContext);
 
   //------------Informações----------------------
 
@@ -54,6 +57,8 @@ export default function NovaPessoa() {
       const dataRes = await responsePessoa.json();
       if (!responsePessoa.ok) throw new Error(dataRes.error);
       setMsgAlertaComponente("Visita cadastrada com sucesso!");
+      carregarVisitantes();
+      carregarPessoaCadastrada();
     } catch (error) {
       console.error("Erro no frontend:", error);
       setMsgAlertaComponente("Erro ao cadastrar visita.");
@@ -90,6 +95,7 @@ export default function NovaPessoa() {
         `Entrada e Saída de "${nome}" Registrada com Sucesso`
       );
       setMostrarAlertaComponente(true);
+      carregarPessoaCadastrada();
     } catch (error) {
       console.error("Erro no FrontEnd:", error);
       setMsgAlertaComponente("Erro ao registrar saída imediata.");
